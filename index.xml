@@ -6,8 +6,36 @@
     <description>Recent content on I Love To Delete Code</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2014 14:03:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 10 Mar 2016 11:10:55 +0000</lastBuildDate>
     <atom:link href="http://jernejg.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>About this blog</title>
+      <link>http://jernejg.github.io/about/</link>
+      <pubDate>Thu, 10 Mar 2016 11:10:55 +0000</pubDate>
+      
+      <guid>http://jernejg.github.io/about/</guid>
+      <description>
+
+&lt;p&gt;For many artists the act of destroying their work played an important role in their career. Embarrassing early creations they would like to forget about, artistic rebirth and doubt in their work all left them remains (ideas) which they would gradually incorporate into new pieces.&lt;/p&gt;
+
+&lt;p&gt;What do artists have in common with developers? Metaphors play a key role in constructing concepts and terminology especially in the world of Object Oriented programming. They also give you insight into programming problems and processes. As the title of a &lt;a href=&#34;https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming&#34;&gt;fundamental monograph&lt;/a&gt; implies computer programming is an art hence developers are all artists.&lt;/p&gt;
+
+&lt;p&gt;The name of this blog was inspired by one of my favorite &lt;a href=&#34;http://elegantcode.com/2010/06/06/the-best-code-you-will-ever-write/&#34;&gt;blog posts&lt;/a&gt; that deals with destroying your work:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Good developers love to delete code.&lt;/p&gt;
+
+&lt;p&gt;The only thing I love to do more than write code is delete code.  Deleting code brings me inner peace and joy.  Deleting code is violating the law of entropy and setting the universe right.&lt;/p&gt;
+
+&lt;p&gt;-John Sonmez&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&#34;about-me:390ee30f149c4424935493006091d517&#34;&gt;About me&lt;/h2&gt;
+
+&lt;p&gt;My name is Jernej Gorički. I graduated from college in Faculty of Computer and Information Science, Ljubljana Slovenia. With background knowledge of C/C++ &amp;amp; Java my weapon of choice are .NET &amp;amp; C# . I work as a freelancer with current focus on desktop and web applications for exclusive customers like &lt;a href=&#34;http://www.metrel.si/&#34;&gt;Metrel d.d.&lt;/a&gt;, &lt;a href=&#34;http://www.iskraimpuls.si/en/&#34;&gt;Iskra Impuls d.o.o.&lt;/a&gt; and &lt;a href=&#34;http://www.korona.si/en/&#34;&gt;Korona engineering d.d.&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>FileOptions Enumeration, Windows Cache Manager and Memory-Mapped Files (C#) Part 1</title>
