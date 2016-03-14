@@ -1,0 +1,264 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.15" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> FileOptions Enumeration, Windows Cache Manager and Memory-Mapped Files (C#) Part 1 &middot; I Love To Delete Code </title>
+
+  
+  <link rel="stylesheet" href="http://jernejg.github.io/css/poole.css">
+  <link rel="stylesheet" href="http://jernejg.github.io/css/syntax.css">
+  <link rel="stylesheet" href="http://jernejg.github.io/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://jernejg.github.io/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://jernejg.github.io/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="I Love To Delete Code" />
+  <style>
+      #social,
+      #links {
+          margin-top: 10px
+      }
+
+      #social i {
+          margin-left: 25px
+      }
+
+      #social a:hover,
+      #social a:focus {
+          text-decoration: none;
+          color: #bddbed
+      }
+
+      pre {
+        background-color: #202020;
+        color: white;
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+        font-size: 12px;
+      }
+
+
+
+       
+  </style>
+
+
+</head>
+
+	<body class="">
+		<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <img src="http://jernejg.github.io/logo.png" alt="Hugo Themes">
+      <a href="http://jernejg.github.io/"><h1>I Love To Delete Code</h1></a>
+      <p class="lead">
+      Deleting code is violating the law of entropy and setting the universe right.
+      </p>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="http://jernejg.github.io/">Home</a> </li>
+      
+        <li><a href="http://jernejg.github.io/post/"> Blog </a></li>
+      
+        <li><a href="http://jernejg.github.io/about/"> About </a></li>
+      
+    </ul>
+    <div id="social" class="text-center">
+      <a href="" target="new">
+        <i class="fa fa-twitter fa-2x"></i>
+      </a>
+      <a href="" target="new">
+        <i class="fa fa-linkedin fa-2x"></i>
+      </a>
+      <a href="" target="new">
+        <i class="fa fa-github fa-2x"></i>
+      </a>
+      <a href="" target="new">
+        <i class="fa fa-envelope-o fa-2x"></i>
+      </a>
+</div>
+    <p></p>
+  </div>
+</div>
+
+
+
+
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>FileOptions Enumeration, Windows Cache Manager and Memory-Mapped Files (C#) Part 1</h1>
+			  <span class="post-date">Sun, Nov 16, 2014</span>
+			      
+
+<p>Because working with files is such a common and potentially expensive operation, every operating system introduces numerous levels of indirection when serving I/O requests. This is necessary in order to execute I/O operations in a reasonable time frame. But managing complexity through abstraction of various hardware and software layers that interact during file operations also has its disadvantages: you get a false impression that you don&rsquo;t need to know what is really going on under the hood :)</p>
+
+<p>I needed to optimize a part of my code that was writing data to random locations in a binary file. After realizing that <a href="http://msdn.microsoft.com/en-us/library/system.io.fileoptions(v=vs.110">FileOptions.RandomAccess</a>.aspx) does not automagically do the trick and make seeks (in a loop!) run noticeably faster, I started to dig into the FileOptions Enumeration. A couple of days later, bursting with knowledge on internal working of Windows Cache Manager and speeding up random writes using <a href="http://msdn.microsoft.com/en-us/library/dd997372%28v=vs.110%29.aspx">Memory-Mapped Files</a> I decided to write a two part blog post about it.</p>
+
+<h2 id="fileoptions-enumeration-the-5-cache-flags:3a1af05b37fd2e36314cc75737f92e8f">FileOptions Enumeration &amp; The 5 Cache Flags</h2>
+
+<p>The description for FileOptions.RandomAccess on MSDN is pretty vague:</p>
+
+<blockquote>
+<p>&ldquo;FileOptions.RandomAccess indicates that the file is accessed randomly. The system can use this as a hint to optimize file caching.&rdquo;</p>
+</blockquote>
+
+<p>Even a general search for FileOptions.RandomAccess keyword did not result in any resources that would describe the attribute in a more detailed manner. With a little help of <a href="http://referencesource.microsoft.com/#mscorlib/system/io/filestream.cs,76ef6c04de9d0ed8">.NET Reference Source</a> you can quickly check that the FileOptions parameter you apply to FileStream&rsquo;s constructor maps to next to last parameter (dwFlagsAndAttributes) of the native <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa363858(v=vs.85">CreateFile function</a>.aspx). Lets check the flags from the native point of view.</p>
+
+<table>
+<thead>
+<tr>
+<th>.NET</th>
+<th>Native</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>FileOptions.RandomAccess</td>
+<td>FILE_FLAG_RANDOM_ACCESS</td>
+</tr>
+
+<tr>
+<td>FileOptions.SequentialScan</td>
+<td>FILE_FLAG_SEQUENTIAL_SCAN</td>
+</tr>
+
+<tr>
+<td>FileOptions.WriteThrough</td>
+<td>FILE_FLAG_WRITE_THROUGH</td>
+</tr>
+
+<tr>
+<td>FileOptions.NoBuffering</td>
+<td>FILE_FLAG_NO_BUFFERING</td>
+</tr>
+
+<tr>
+<td>FileAttributes.Temporary</td>
+<td>FILE_ATTRIBUTE_TEMPORARY</td>
+</tr>
+</tbody>
+</table>
+
+
+<figure >
+    
+        <img src="http://jernejg.github.io/img/Post4_cache_layers.png" />
+    
+    
+</figure>
+
+
+<p>These flags affect caching - not the FileStream&rsquo;s internal buffer mechanism, but caching on the OS level (Cache Manager). The picture on your right (borrowed from this <a href="http://research.microsoft.com/apps/pubs/default.aspx?id=64538">research paper</a>) clearly shows that caching is a two stage buffering process. Every time you are reading/writing in .NET you are actually copying bytes between the two buffers. With this in mind it is also easier to understand the <a href="http://stackoverflow.com/questions/4921498/whats-the-difference-between-filestream-flush-and-filestream-flushtrue">difference between Flush() and Flush(true)</a>.</p>
+
+<h2 id="windows-cache-manager-file-flag-no-buffering:3a1af05b37fd2e36314cc75737f92e8f">Windows Cache Manager &amp; FILE_FLAG_NO_BUFFERING</h2>
+
+<p>Each time you write or read data to/from disk drives the OS caches data unless FILE_FLAG_NO_BUFFERING is specified. In latter case your application has total control over the buffering process which is known as unbuffered file I/O. When inspecting .NET Reference Source 4.5.2 you can see that the FileOptions.NoBuffering enum is currently commented out. But the guard clause that validates FileOptions flags before calling native CreateFile function allows the value 0x20000000 and this value relates to the native flag FILE_FLAG_NO_BUFFERING. So the following initialization of FileStream would be legal:</p>
+
+<div class="highlight" style="background: #2f1e2e"><pre style="line-height: 125%"><span></span><span style="color: #fec418">var</span> <span style="color: #e7e9db">f</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">FileStream(</span><span style="color: #48b685">&quot;c:\\file.txt&quot;</span><span style="color: #e7e9db">,</span> <span style="color: #e7e9db">FileMode.Open,</span> <span style="color: #e7e9db">FileAccess.Read,</span> <span style="color: #e7e9db">FileShare.None,</span> <span style="color: #e7e9db">bufferSize,</span> <span style="color: #e7e9db">(FileOptions)</span><span style="color: #f99b15">0</span><span style="color: #e7e9db">x20000000);</span>
+</pre></div>
+
+
+<p>Files opened with FILE_FLAG_NO_BUFFERING do not go through the Cache Manager (all of the cache flags are ignored) and working with such files requires from our application to follow some rules regarding buffer alignment criteria. This is an <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/cc644950(v=vs.85">advanced topic</a>.aspx) and goes beyond this post. For each file that is accessed through the Cache Manager an array of internal data structures need to be created and managed. The bigger the file, the more resources it takes to successfully support caching. That is why it&rsquo;s advised to use FILE_FLAG_NO_BUFFERING when working with very large files.</p>
+
+<h2 id="cache-manager-routines:3a1af05b37fd2e36314cc75737f92e8f">Cache Manager Routines</h2>
+
+<p>Normally you would open files with Cache Manager enabled so let us look at its main routines that help us reduce I/O operations and enable our application to work faster:
+1. Reading ahead
+2. Lazy writing</p>
+
+<h2 id="intelligent-read-ahead:3a1af05b37fd2e36314cc75737f92e8f">(Intelligent) Read Ahead</h2>
+
+<p>Cache Manager, keeps a history of the last two read request, for each file handle being used. With such history in mind it tries to determine the following patterns:</p>
+
+<ol>
+<li>User is doing sequential forward reads.</li>
+<li>User is doing sequential backward reads.</li>
+<li>User is doing reads in step sizes (offset 0 10 bytes, offset 1000 10 bytes, offset 2000 10 bytes&hellip;.)</li>
+</ol>
+
+<p>If a pattern corresponds with history read requests then the Cache Manager can anticipate which bytes you are going to read next and that is a big performance improvement.</p>
+
+<h3 id="how-do-cache-flags-affect-read-ahead:3a1af05b37fd2e36314cc75737f92e8f">How do cache flags affect Read Ahead?</h3>
+
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>FileOptions.None</td>
+<td>General (previously described) pattern detection algorithm is used when no cache flags are applied.</td>
+</tr>
+
+<tr>
+<td>FileOptions.SequentialScan</td>
+<td>Cache manager does not try to determine any patterns. More aggressive read ahead is used - two times as much data is prefetched than normally (Do not use it when doing backward reads).</td>
+</tr>
+
+<tr>
+<td>FileOptions.RandomAccess</td>
+<td>If you are constantly doing seeks, you are wasting time and memory pre-emptively reading data that your application will probably not need. This option disables read-ahead.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="lazy-writing-write-back-cache:3a1af05b37fd2e36314cc75737f92e8f">Lazy Writing (Write Back Cache)</h2>
+
+<p>In order to flush as much data as possible to disk at once, write operations are piled up in memory until the decision is made by the Cache Manager. The decision about, which dirty pages should be flushed to disk and when, is made by the Cache Manager&rsquo;s lazy writer function that executes on a separate system worker thread once per second.</p>
+
+<h3 id="how-do-cache-flags-affect-lazy-writing:3a1af05b37fd2e36314cc75737f92e8f">How do cache flags affect Lazy Writing?</h3>
+
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>FileAttributes.Temporary</td>
+<td>(Disable lazy writing) File system tries to keep the data in memory and flushes it only in case of memory shortage. This attribute is commonly combined withFileOptions.DeleteOnClose. Both of these flags combined are ideal for small temporary files since there will most likely be no hits to the hard disk.</td>
+</tr>
+
+<tr>
+<td>FileOptions.WriteThrough</td>
+<td>Cache manager still caches data but only for file-read operations. Write changes are written to disk instantly. This is useful for reducing the risk for data loss. Warning! A lot of <a href="http://blogs.msdn.com/b/oldnewthing/archive/2014/03/07/10505524.aspx">resources</a> are stating that all SATA drives ignore this flag.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="cache-usage-performance-counters:3a1af05b37fd2e36314cc75737f92e8f">Cache Usage Performance Counters</h2>
+
+<p>There are a lot of counters in the Cache section of Performance monitor that can help you evaluate cache usage. The two that relate to this blog post the most are Read Aheads/sec and Lazy Write Flushes/sec. The first one displays the rate at which the Cache Manager detects that a file is being accessed sequentially and the latter displays the rate of periodical flushes that are performed by the lazy writers thread. If you want to see all flushing activity use Data Flushes/sec counter.</p>
+
+<h2 id="summary:3a1af05b37fd2e36314cc75737f92e8f">Summary</h2>
+
+<p>When you step out of your comfortable .NET bubble, wonderful things can happen. I discovered way more information when learning about native flags that I did with FileOptions Enumeration. If you, like myself, never did any native C++ Windows programming, reading about internal mechanisms like Cache Manager and how to control it really helps you to better understand and optimise your managed .NET application.</p>
+
+			</div>
+
+			
+		</div>
+
+  </body>
+</html>
