@@ -3,7 +3,7 @@
 <head>
   <link href="http://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.19" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -11,18 +11,18 @@
   <title> I Love To Delete Code &middot; I Love To Delete Code </title>
 
   
-  <link rel="stylesheet" href="http://jernejg.github.io/css/poole.css">
-  <link rel="stylesheet" href="http://jernejg.github.io/css/syntax.css">
-  <link rel="stylesheet" href="http://jernejg.github.io/css/hyde.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/poole.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/syntax.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/hyde.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://jernejg.github.io/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="http://jernejg.github.io/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://www.ilovetodeletecode.com/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://www.ilovetodeletecode.com/favicon.png">
 
   
-  <link href="http://jernejg.github.io/index.xml" rel="alternate" type="application/rss+xml" title="I Love To Delete Code" />
+  <link href="http://www.ilovetodeletecode.com/index.xml" rel="alternate" type="application/rss+xml" title="I Love To Delete Code" />
   <style>
       #social,
       #links {
@@ -61,18 +61,18 @@
 <div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <img src="http://jernejg.github.io/logo.png" alt="Hugo Themes">
-      <a href="http://jernejg.github.io/"><h1>I Love To Delete Code</h1></a>
+      <img src="http://www.ilovetodeletecode.com/logo.png" alt="Hugo Themes">
+      <a href="http://www.ilovetodeletecode.com"><h1>I Love To Delete Code</h1></a>
       <p class="lead">
       Deleting code is violating the law of entropy and setting the universe right.
       </p>
     </div>
     <ul class="sidebar-nav">
-      <li><a href="http://jernejg.github.io/">Home</a> </li>
+      <li><a href="http://www.ilovetodeletecode.com/">Home</a> </li>
       
-        <li><a href="http://jernejg.github.io/post/"> Blog </a></li>
+        <li><a href="http://www.ilovetodeletecode.com/post/"> Blog </a></li>
       
-        <li><a href="http://jernejg.github.io/about/"> About </a></li>
+        <li><a href="http://www.ilovetodeletecode.com/about/"> About </a></li>
       
     </ul>
     <div id="social" class="text-center">
@@ -98,7 +98,7 @@
       
   <div class="post">
     <h1 class="post-title">
-      <a href="http://jernejg.github.io/post/2014/11/16/fileoptions-enumeration-windows-cache-manager-and-memory-mapped-files-csharp-part-1/">
+      <a href="http://www.ilovetodeletecode.com/post/2014/11/16/fileoptions-enumeration-windows-cache-manager-and-memory-mapped-files-csharp-part-1/">
         FileOptions Enumeration, Windows Cache Manager and Memory-Mapped Files (C#) Part 1
       </a>
     </h1>
@@ -106,14 +106,15 @@
     <span class="post-date">Sun, Nov 16, 2014</span>
     <p>Because working with files is such a common and potentially expensive operation, every operating system introduces numerous levels of indirection when serving I/O requests. This is necessary in order to execute I/O operations in a reasonable time frame. But managing complexity through abstraction of various hardware and software layers that interact during file operations also has its disadvantages: you get a false impression that you don&rsquo;t need to know what is really going on under the hood :)</p>
 
-<p>I needed to optimize a part of my code that was writing data to random locations in a binary file. After realizing that <a href="http://msdn.microsoft.com/en-us/library/system.io.fileoptions(v=vs.110">FileOptions.RandomAccess</a>.aspx) does not automagically do the trick and make seeks (in a loop!) run noticeably faster, I started to dig into the FileOptions Enumeration. A couple of days later, bursting with knowledge on internal working of Windows Cache Manager and speeding up random writes using <a href="http://msdn.microsoft.com/en-us/library/dd997372%28v=vs.110%29.aspx">Memory-Mapped Files</a> I decided to write a two part blog post about it.</p>
+<p>I needed to optimize a part of my code that was writing data to random locations in a binary file. After realizing that <a href="http://msdn.microsoft.com/en-us/library/system.io.fileoptions(v=vs.110).aspx">FileOptions.RandomAccess</a> does not automagically do the trick and make seeks (in a loop!) run noticeably faster, I started to dig into the FileOptions Enumeration. A couple of days later, bursting with knowledge on internal working of Windows Cache Manager and speeding up random writes using <a href="http://msdn.microsoft.com/en-us/library/dd997372%28v=vs.110%29.aspx">Memory-Mapped Files</a> I decided to write a two part blog post about it.</p>
 
-    <a href="http://jernejg.github.io/post/2014/11/16/fileoptions-enumeration-windows-cache-manager-and-memory-mapped-files-csharp-part-1/" style="margin-right:0.3rem;float:right;">Read More…</a>
+<p></p>
+    <a href="http://www.ilovetodeletecode.com/post/2014/11/16/fileoptions-enumeration-windows-cache-manager-and-memory-mapped-files-csharp-part-1/" style="margin-right:0.3rem;float:right;">Read More…</a>
   </div>
   
   <div class="post">
     <h1 class="post-title">
-      <a href="http://jernejg.github.io/post/2014/05/19/keep-your-mercurial-revision-history-clutter-free/">
+      <a href="http://www.ilovetodeletecode.com/post/2014/05/19/keep-your-mercurial-revision-history-clutter-free/">
         Keep your Mercurial revision history clutter free
       </a>
     </h1>
@@ -121,12 +122,13 @@
     <span class="post-date">Mon, May 19, 2014</span>
     <p>I have been using Mercurial revision control system as a weapon of choice for quite some time now. For controlling changes made to source code, as for backing up to a private repository hosted at Bitbucket I used the basic commands for committing, adding, pushing and pulling files to/from the local /remote repository on a daily basis. And that was sufficient for my needs&hellip;.until recently. I stumbled upon an interesting blog post titled <a href="http://elegantcode.com/2014/02/15/segregate-your-code-commits-into-tiny-topical-changes/comment-page-1/">&ldquo;Segregate your commits into tiny topical changes&rdquo;</a> that made me think of how my current revision history on a project looks like&hellip;</p>
 
-    <a href="http://jernejg.github.io/post/2014/05/19/keep-your-mercurial-revision-history-clutter-free/" style="margin-right:0.3rem;float:right;">Read More…</a>
+<p></p>
+    <a href="http://www.ilovetodeletecode.com/post/2014/05/19/keep-your-mercurial-revision-history-clutter-free/" style="margin-right:0.3rem;float:right;">Read More…</a>
   </div>
   
   <div class="post">
     <h1 class="post-title">
-      <a href="http://jernejg.github.io/post/2014/02/05/refactoring-a-spaghetti-c-serial-communication-app-asynchronous-control-flow-modeling-with-asyncawait/">
+      <a href="http://www.ilovetodeletecode.com/post/2014/02/05/refactoring-a-spaghetti-c-serial-communication-app-asynchronous-control-flow-modeling-with-asyncawait/">
         Refactoring a spaghetti C# serial communication app &amp; asynchronous control flow modeling with async/await
       </a>
     </h1>
@@ -152,12 +154,13 @@
 <li>How to model complex asynchronous control flows, without blocking, using Task Parallel Library and C# 5.0 async/await.</li>
 </ol>
 
-    <a href="http://jernejg.github.io/post/2014/02/05/refactoring-a-spaghetti-c-serial-communication-app-asynchronous-control-flow-modeling-with-asyncawait/" style="margin-right:0.3rem;float:right;">Read More…</a>
+<p></p>
+    <a href="http://www.ilovetodeletecode.com/post/2014/02/05/refactoring-a-spaghetti-c-serial-communication-app-asynchronous-control-flow-modeling-with-asyncawait/" style="margin-right:0.3rem;float:right;">Read More…</a>
   </div>
   
   <div class="post">
     <h1 class="post-title">
-      <a href="http://jernejg.github.io/post/2013/10/31/prevent-large-file-commits-with-powershell-and-mercurial-hooks/">
+      <a href="http://www.ilovetodeletecode.com/post/2013/10/31/prevent-large-file-commits-with-powershell-and-mercurial-hooks/">
         Prevent large file commits with PowerShell and Mercurial hooks
       </a>
     </h1>
@@ -169,7 +172,8 @@
 
 <p>If you are interested in how to prevent yourself from committing large files and are more comfortable with PowerShell then please read on. If you are more of an indentation than squirrely brackets guy then you can check this similar solution in Python - <a href="http://stackoverflow.com/questions/2551719/mercurial-hook-to-disallow-committing-large-binary-files">Mercurial hook to disallow committing large binary files</a>.</p>
 
-    <a href="http://jernejg.github.io/post/2013/10/31/prevent-large-file-commits-with-powershell-and-mercurial-hooks/" style="margin-right:0.3rem;float:right;">Read More…</a>
+<p></p>
+    <a href="http://www.ilovetodeletecode.com/post/2013/10/31/prevent-large-file-commits-with-powershell-and-mercurial-hooks/" style="margin-right:0.3rem;float:right;">Read More…</a>
   </div>
   
   

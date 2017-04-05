@@ -2,34 +2,63 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://jernejg.github.io/</loc>
+    <loc>http://www.ilovetodeletecode.com/about/</loc>
+    <lastmod>2016-03-10T11:10:55+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/post/2014/11/16/fileoptions-enumeration-windows-cache-manager-and-memory-mapped-files-csharp-part-1/</loc>
+    <lastmod>2014-11-16T14:03:50+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/post/2014/05/19/keep-your-mercurial-revision-history-clutter-free/</loc>
+    <lastmod>2014-05-19T16:10:04+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/post/2014/02/05/refactoring-a-spaghetti-c-serial-communication-app-asynchronous-control-flow-modeling-with-asyncawait/</loc>
+    <lastmod>2014-02-05T11:08:28+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/post/2013/10/31/prevent-large-file-commits-with-powershell-and-mercurial-hooks/</loc>
+    <lastmod>2013-10-31T12:53:22+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/tags/development/</loc>
+    <lastmod>2013-10-31T12:53:22+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/tags/go/</loc>
+    <lastmod>2013-10-31T12:53:22+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/</loc>
     <lastmod>2016-03-10T11:10:55+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://jernejg.github.io/about/</loc>
-    <lastmod>2016-03-10T11:10:55+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://jernejg.github.io/post/2014/11/16/fileoptions-enumeration-windows-cache-manager-and-memory-mapped-files-csharp-part-1/</loc>
+    <loc>http://www.ilovetodeletecode.com/post/</loc>
     <lastmod>2014-11-16T14:03:50+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://jernejg.github.io/post/2014/05/19/keep-your-mercurial-revision-history-clutter-free/</loc>
-    <lastmod>2014-05-19T16:10:04+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://jernejg.github.io/post/2014/02/05/refactoring-a-spaghetti-c-serial-communication-app-asynchronous-control-flow-modeling-with-asyncawait/</loc>
-    <lastmod>2014-02-05T11:08:28+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://jernejg.github.io/post/2013/10/31/prevent-large-file-commits-with-powershell-and-mercurial-hooks/</loc>
+    <loc>http://www.ilovetodeletecode.com/tags/profiling/</loc>
     <lastmod>2013-10-31T12:53:22+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/tags/</loc>
+    <priority>0</priority>
   </url>
   
 </urlset>

@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>I Love To Delete Code</title>
-    <link>http://jernejg.github.io/</link>
+    <link>http://www.ilovetodeletecode.com/index.xml</link>
     <description>Recent content on I Love To Delete Code</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 10 Mar 2016 11:10:55 +0000</lastBuildDate>
-    <atom:link href="http://jernejg.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://www.ilovetodeletecode.com/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>About this blog</title>
-      <link>http://jernejg.github.io/about/</link>
+      <link>http://www.ilovetodeletecode.com/about/</link>
       <pubDate>Thu, 10 Mar 2016 11:10:55 +0000</pubDate>
       
-      <guid>http://jernejg.github.io/about/</guid>
+      <guid>http://www.ilovetodeletecode.com/about/</guid>
       <description>
 
 &lt;p&gt;For many artists the act of destroying their work played an important role in their career. Embarrassing early creations they would like to forget about, artistic rebirth and doubt in their work all left them remains (ideas) which they would gradually incorporate into new pieces.&lt;/p&gt;
@@ -31,25 +31,25 @@
 &lt;p&gt;-John Sonmez&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&#34;about-me:390ee30f149c4424935493006091d517&#34;&gt;About me&lt;/h2&gt;
+&lt;h2 id=&#34;about-me&#34;&gt;About me&lt;/h2&gt;
 
-&lt;p&gt;My name is Jernej Gorički. I graduated from college in Faculty of Computer and Information Science, Ljubljana Slovenia. With background knowledge of C/C++ &amp;amp; Java my weapon of choice are .NET &amp;amp; C# . I work as a freelancer with current focus on desktop and web applications for exclusive customers like &lt;a href=&#34;http://www.metrel.si/&#34;&gt;Metrel d.d.&lt;/a&gt;, &lt;a href=&#34;http://www.iskraimpuls.si/en/&#34;&gt;Iskra Impuls d.o.o.&lt;/a&gt; and &lt;a href=&#34;http://www.korona.si/en/&#34;&gt;Korona engineering d.d.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;My name is Jernej Gorički. I graduated from college in Faculty of Computer and Information Science, Ljubljana Slovenia. With background knowledge of C/C++ &amp;amp; Java my weapon of choice are .NET &amp;amp; C# . I worked as a freelancer with focus on desktop and web applications for exclusive customers in Automation and Test &amp;amp; Measurement Industry like &lt;a href=&#34;http://www.metrel.si/&#34;&gt;Metrel d.d.&lt;/a&gt;, &lt;a href=&#34;http://www.iskraimpuls.si/en/&#34;&gt;Iskra Impuls d.o.o.&lt;/a&gt; and &lt;a href=&#34;http://www.korona.si/en/&#34;&gt;Korona engineering d.d.&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>FileOptions Enumeration, Windows Cache Manager and Memory-Mapped Files (C#) Part 1</title>
-      <link>http://jernejg.github.io/post/2014/11/16/fileoptions-enumeration-windows-cache-manager-and-memory-mapped-files-csharp-part-1/</link>
+      <link>http://www.ilovetodeletecode.com/post/2014/11/16/fileoptions-enumeration-windows-cache-manager-and-memory-mapped-files-csharp-part-1/</link>
       <pubDate>Sun, 16 Nov 2014 14:03:50 +0000</pubDate>
       
-      <guid>http://jernejg.github.io/post/2014/11/16/fileoptions-enumeration-windows-cache-manager-and-memory-mapped-files-csharp-part-1/</guid>
-      <description>
+      <guid>http://www.ilovetodeletecode.com/post/2014/11/16/fileoptions-enumeration-windows-cache-manager-and-memory-mapped-files-csharp-part-1/</guid>
+      <description>&lt;p&gt;Because working with files is such a common and potentially expensive operation, every operating system introduces numerous levels of indirection when serving I/O requests. This is necessary in order to execute I/O operations in a reasonable time frame. But managing complexity through abstraction of various hardware and software layers that interact during file operations also has its disadvantages: you get a false impression that you don&amp;rsquo;t need to know what is really going on under the hood :)&lt;/p&gt;
 
-&lt;p&gt;Because working with files is such a common and potentially expensive operation, every operating system introduces numerous levels of indirection when serving I/O requests. This is necessary in order to execute I/O operations in a reasonable time frame. But managing complexity through abstraction of various hardware and software layers that interact during file operations also has its disadvantages: you get a false impression that you don&amp;rsquo;t need to know what is really going on under the hood :)&lt;/p&gt;
+&lt;p&gt;I needed to optimize a part of my code that was writing data to random locations in a binary file. After realizing that &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/system.io.fileoptions(v=vs.110).aspx&#34;&gt;FileOptions.RandomAccess&lt;/a&gt; does not automagically do the trick and make seeks (in a loop!) run noticeably faster, I started to dig into the FileOptions Enumeration. A couple of days later, bursting with knowledge on internal working of Windows Cache Manager and speeding up random writes using &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/dd997372%28v=vs.110%29.aspx&#34;&gt;Memory-Mapped Files&lt;/a&gt; I decided to write a two part blog post about it.&lt;/p&gt;
 
-&lt;p&gt;I needed to optimize a part of my code that was writing data to random locations in a binary file. After realizing that &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/system.io.fileoptions(v=vs.110&#34;&gt;FileOptions.RandomAccess&lt;/a&gt;.aspx) does not automagically do the trick and make seeks (in a loop!) run noticeably faster, I started to dig into the FileOptions Enumeration. A couple of days later, bursting with knowledge on internal working of Windows Cache Manager and speeding up random writes using &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/dd997372%28v=vs.110%29.aspx&#34;&gt;Memory-Mapped Files&lt;/a&gt; I decided to write a two part blog post about it.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
-&lt;h2 id=&#34;fileoptions-enumeration-the-5-cache-flags:3a1af05b37fd2e36314cc75737f92e8f&#34;&gt;FileOptions Enumeration &amp;amp; The 5 Cache Flags&lt;/h2&gt;
+&lt;h2 id=&#34;fileoptions-enumeration-the-5-cache-flags&#34;&gt;FileOptions Enumeration &amp;amp; The 5 Cache Flags&lt;/h2&gt;
 
 &lt;p&gt;The description for FileOptions.RandomAccess on MSDN is pretty vague:&lt;/p&gt;
 
@@ -57,7 +57,7 @@
 &lt;p&gt;&amp;ldquo;FileOptions.RandomAccess indicates that the file is accessed randomly. The system can use this as a hint to optimize file caching.&amp;rdquo;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Even a general search for FileOptions.RandomAccess keyword did not result in any resources that would describe the attribute in a more detailed manner. With a little help of &lt;a href=&#34;http://referencesource.microsoft.com/#mscorlib/system/io/filestream.cs,76ef6c04de9d0ed8&#34;&gt;.NET Reference Source&lt;/a&gt; you can quickly check that the FileOptions parameter you apply to FileStream&amp;rsquo;s constructor maps to next to last parameter (dwFlagsAndAttributes) of the native &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/windows/desktop/aa363858(v=vs.85&#34;&gt;CreateFile function&lt;/a&gt;.aspx). Lets check the flags from the native point of view.&lt;/p&gt;
+&lt;p&gt;Even a general search for FileOptions.RandomAccess keyword did not result in any resources that would describe the attribute in a more detailed manner. With a little help of &lt;a href=&#34;http://referencesource.microsoft.com/#mscorlib/system/io/filestream.cs,76ef6c04de9d0ed8&#34;&gt;.NET Reference Source&lt;/a&gt; you can quickly check that the FileOptions parameter you apply to FileStream&amp;rsquo;s constructor maps to next to last parameter (dwFlagsAndAttributes) of the native &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/windows/desktop/aa363858(v=vs.85).aspx&#34;&gt;CreateFile function&lt;/a&gt;. Lets check the flags from the native point of view.&lt;/p&gt;
 
 &lt;table&gt;
 &lt;thead&gt;
@@ -98,7 +98,7 @@
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post4_cache_layers.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post4_cache_layers.png&#34; /&gt;
     
     
 &lt;/figure&gt;
@@ -106,23 +106,23 @@
 
 &lt;p&gt;These flags affect caching - not the FileStream&amp;rsquo;s internal buffer mechanism, but caching on the OS level (Cache Manager). The picture on your right (borrowed from this &lt;a href=&#34;http://research.microsoft.com/apps/pubs/default.aspx?id=64538&#34;&gt;research paper&lt;/a&gt;) clearly shows that caching is a two stage buffering process. Every time you are reading/writing in .NET you are actually copying bytes between the two buffers. With this in mind it is also easier to understand the &lt;a href=&#34;http://stackoverflow.com/questions/4921498/whats-the-difference-between-filestream-flush-and-filestream-flushtrue&#34;&gt;difference between Flush() and Flush(true)&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;windows-cache-manager-file-flag-no-buffering:3a1af05b37fd2e36314cc75737f92e8f&#34;&gt;Windows Cache Manager &amp;amp; FILE_FLAG_NO_BUFFERING&lt;/h2&gt;
+&lt;h2 id=&#34;windows-cache-manager-file-flag-no-buffering&#34;&gt;Windows Cache Manager &amp;amp; FILE_FLAG_NO_BUFFERING&lt;/h2&gt;
 
 &lt;p&gt;Each time you write or read data to/from disk drives the OS caches data unless FILE_FLAG_NO_BUFFERING is specified. In latter case your application has total control over the buffering process which is known as unbuffered file I/O. When inspecting .NET Reference Source 4.5.2 you can see that the FileOptions.NoBuffering enum is currently commented out. But the guard clause that validates FileOptions flags before calling native CreateFile function allows the value 0x20000000 and this value relates to the native flag FILE_FLAG_NO_BUFFERING. So the following initialization of FileStream would be legal:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;f&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileStream(&lt;/span&gt;&lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;c:\\file.txt&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileMode.Open,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileShare.None,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bufferSize,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(FileOptions)&lt;/span&gt;&lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;x20000000);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+var f = new FileStream(&#34;c:\\file.txt&#34;, FileMode.Open, FileAccess.Read, FileShare.None, bufferSize, (FileOptions)0x20000000);
 
 
-&lt;p&gt;Files opened with FILE_FLAG_NO_BUFFERING do not go through the Cache Manager (all of the cache flags are ignored) and working with such files requires from our application to follow some rules regarding buffer alignment criteria. This is an &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/windows/desktop/cc644950(v=vs.85&#34;&gt;advanced topic&lt;/a&gt;.aspx) and goes beyond this post. For each file that is accessed through the Cache Manager an array of internal data structures need to be created and managed. The bigger the file, the more resources it takes to successfully support caching. That is why it&amp;rsquo;s advised to use FILE_FLAG_NO_BUFFERING when working with very large files.&lt;/p&gt;
+&lt;p&gt;Files opened with FILE_FLAG_NO_BUFFERING do not go through the Cache Manager (all of the cache flags are ignored) and working with such files requires from our application to follow some rules regarding buffer alignment criteria. This is an &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/windows/desktop/cc644950(v=vs.85).aspx&#34;&gt;advanced topic&lt;/a&gt; and goes beyond this post. For each file that is accessed through the Cache Manager an array of internal data structures need to be created and managed. The bigger the file, the more resources it takes to successfully support caching. That is why it&amp;rsquo;s advised to use FILE_FLAG_NO_BUFFERING when working with very large files.&lt;/p&gt;
 
-&lt;h2 id=&#34;cache-manager-routines:3a1af05b37fd2e36314cc75737f92e8f&#34;&gt;Cache Manager Routines&lt;/h2&gt;
+&lt;h2 id=&#34;cache-manager-routines&#34;&gt;Cache Manager Routines&lt;/h2&gt;
 
 &lt;p&gt;Normally you would open files with Cache Manager enabled so let us look at its main routines that help us reduce I/O operations and enable our application to work faster:
 1. Reading ahead
 2. Lazy writing&lt;/p&gt;
 
-&lt;h2 id=&#34;intelligent-read-ahead:3a1af05b37fd2e36314cc75737f92e8f&#34;&gt;(Intelligent) Read Ahead&lt;/h2&gt;
+&lt;h2 id=&#34;intelligent-read-ahead&#34;&gt;(Intelligent) Read Ahead&lt;/h2&gt;
 
 &lt;p&gt;Cache Manager, keeps a history of the last two read request, for each file handle being used. With such history in mind it tries to determine the following patterns:&lt;/p&gt;
 
@@ -134,7 +134,7 @@
 
 &lt;p&gt;If a pattern corresponds with history read requests then the Cache Manager can anticipate which bytes you are going to read next and that is a big performance improvement.&lt;/p&gt;
 
-&lt;h3 id=&#34;how-do-cache-flags-affect-read-ahead:3a1af05b37fd2e36314cc75737f92e8f&#34;&gt;How do cache flags affect Read Ahead?&lt;/h3&gt;
+&lt;h3 id=&#34;how-do-cache-flags-affect-read-ahead&#34;&gt;How do cache flags affect Read Ahead?&lt;/h3&gt;
 
 &lt;table&gt;
 &lt;thead&gt;
@@ -162,11 +162,11 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h2 id=&#34;lazy-writing-write-back-cache:3a1af05b37fd2e36314cc75737f92e8f&#34;&gt;Lazy Writing (Write Back Cache)&lt;/h2&gt;
+&lt;h2 id=&#34;lazy-writing-write-back-cache&#34;&gt;Lazy Writing (Write Back Cache)&lt;/h2&gt;
 
 &lt;p&gt;In order to flush as much data as possible to disk at once, write operations are piled up in memory until the decision is made by the Cache Manager. The decision about, which dirty pages should be flushed to disk and when, is made by the Cache Manager&amp;rsquo;s lazy writer function that executes on a separate system worker thread once per second.&lt;/p&gt;
 
-&lt;h3 id=&#34;how-do-cache-flags-affect-lazy-writing:3a1af05b37fd2e36314cc75737f92e8f&#34;&gt;How do cache flags affect Lazy Writing?&lt;/h3&gt;
+&lt;h3 id=&#34;how-do-cache-flags-affect-lazy-writing&#34;&gt;How do cache flags affect Lazy Writing?&lt;/h3&gt;
 
 &lt;table&gt;
 &lt;thead&gt;
@@ -189,30 +189,29 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h2 id=&#34;cache-usage-performance-counters:3a1af05b37fd2e36314cc75737f92e8f&#34;&gt;Cache Usage Performance Counters&lt;/h2&gt;
+&lt;h2 id=&#34;cache-usage-performance-counters&#34;&gt;Cache Usage Performance Counters&lt;/h2&gt;
 
 &lt;p&gt;There are a lot of counters in the Cache section of Performance monitor that can help you evaluate cache usage. The two that relate to this blog post the most are Read Aheads/sec and Lazy Write Flushes/sec. The first one displays the rate at which the Cache Manager detects that a file is being accessed sequentially and the latter displays the rate of periodical flushes that are performed by the lazy writers thread. If you want to see all flushing activity use Data Flushes/sec counter.&lt;/p&gt;
 
-&lt;h2 id=&#34;summary:3a1af05b37fd2e36314cc75737f92e8f&#34;&gt;Summary&lt;/h2&gt;
+&lt;h2 id=&#34;summary&#34;&gt;Summary&lt;/h2&gt;
 
-&lt;p&gt;When you step out of your comfortable .NET bubble, wonderful things can happen. I discovered way more information when learning about native flags that I did with FileOptions Enumeration. If you, like myself, never did any native C++ Windows programming, reading about internal mechanisms like Cache Manager and how to control it really helps you to better understand and optimise your managed .NET application.&lt;/p&gt;
-</description>
+&lt;p&gt;When you step out of your comfortable .NET bubble, wonderful things can happen. I discovered way more information when learning about native flags that I did with FileOptions Enumeration. If you, like myself, never did any native C++ Windows programming, reading about internal mechanisms like Cache Manager and how to control it really helps you to better understand and optimise your managed .NET application.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Keep your Mercurial revision history clutter free</title>
-      <link>http://jernejg.github.io/post/2014/05/19/keep-your-mercurial-revision-history-clutter-free/</link>
+      <link>http://www.ilovetodeletecode.com/post/2014/05/19/keep-your-mercurial-revision-history-clutter-free/</link>
       <pubDate>Mon, 19 May 2014 16:10:04 +0000</pubDate>
       
-      <guid>http://jernejg.github.io/post/2014/05/19/keep-your-mercurial-revision-history-clutter-free/</guid>
-      <description>
+      <guid>http://www.ilovetodeletecode.com/post/2014/05/19/keep-your-mercurial-revision-history-clutter-free/</guid>
+      <description>&lt;p&gt;I have been using Mercurial revision control system as a weapon of choice for quite some time now. For controlling changes made to source code, as for backing up to a private repository hosted at Bitbucket I used the basic commands for committing, adding, pushing and pulling files to/from the local /remote repository on a daily basis. And that was sufficient for my needs&amp;hellip;.until recently. I stumbled upon an interesting blog post titled &lt;a href=&#34;http://elegantcode.com/2014/02/15/segregate-your-code-commits-into-tiny-topical-changes/comment-page-1/&#34;&gt;&amp;ldquo;Segregate your commits into tiny topical changes&amp;rdquo;&lt;/a&gt; that made me think of how my current revision history on a project looks like&amp;hellip;&lt;/p&gt;
 
-&lt;p&gt;I have been using Mercurial revision control system as a weapon of choice for quite some time now. For controlling changes made to source code, as for backing up to a private repository hosted at Bitbucket I used the basic commands for committing, adding, pushing and pulling files to/from the local /remote repository on a daily basis. And that was sufficient for my needs&amp;hellip;.until recently. I stumbled upon an interesting blog post titled &lt;a href=&#34;http://elegantcode.com/2014/02/15/segregate-your-code-commits-into-tiny-topical-changes/comment-page-1/&#34;&gt;&amp;ldquo;Segregate your commits into tiny topical changes&amp;rdquo;&lt;/a&gt; that made me think of how my current revision history on a project looks like&amp;hellip;&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;
 
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_history_example.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_history_example.png&#34; /&gt;
     
     
 &lt;/figure&gt;
@@ -223,28 +222,28 @@
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_better_history_example.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_better_history_example.png&#34; /&gt;
     
     
 &lt;/figure&gt;
 
 
-&lt;h2 id=&#34;how-to-make-changesets-mutable-in-mercurial:4753c5a586d7d4d59ef322dbe2fb6ba7&#34;&gt;How to make changesets mutable in Mercurial&lt;/h2&gt;
+&lt;h2 id=&#34;how-to-make-changesets-mutable-in-mercurial&#34;&gt;How to make changesets mutable in Mercurial&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://www.mercurial-scm.org/wiki/MqExtension&#34;&gt;Mercurial Queues&lt;/a&gt; is an extension that rewrites history. Using MQ we can remove, reorder or fold (merge) committed changesets. This functionality does not come out of the box, first we must configure the extension which is being distributed along with Mercurial. In order to enable the MQ Extension, we modify the local .hgrc file. We can do this directly or through TortoiseHG repository settings dialog:&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;modifying local .hgrc file
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;[extensions]&lt;/span&gt;
-&lt;span style=&#34;color: #06b6ef&#34;&gt;mq&lt;/span&gt; &lt;span style=&#34;color: #5bc4bf&#34;&gt;=&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+[extensions]
+mq =
 &lt;/li&gt;
 &lt;li&gt;Check TortoiseHG-&amp;gt;Repository settings-&amp;gt;Extensions-&amp;gt;mq&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;After the MQ Extension is enabled, Mercurial will include additional commands which we can print with hg help mq, but since this is a TortoiseHG tutorial, I will show you how to work with MQ through TortoiseHG Workbench.&lt;/p&gt;
 
-&lt;h2 id=&#34;goals:4753c5a586d7d4d59ef322dbe2fb6ba7&#34;&gt;Goals&lt;/h2&gt;
+&lt;h2 id=&#34;goals&#34;&gt;Goals&lt;/h2&gt;
 
 &lt;p&gt;Using MQ Extensions we will modify our existing revision history, before we make it public. We will try to:&lt;/p&gt;
 
@@ -261,14 +260,14 @@
 
 &lt;p&gt;Long story short, patches deal with handling new code contributions from developers that do not have full commit access to a repository. This is useful on open source projects. But In this case we will use patches to prevent making permanent changes to our revision history and so making it more clutter free.&lt;/p&gt;
 
-&lt;h2 id=&#34;treat-changesets-as-patches:4753c5a586d7d4d59ef322dbe2fb6ba7&#34;&gt;Treat changesets as patches&lt;/h2&gt;
+&lt;h2 id=&#34;treat-changesets-as-patches&#34;&gt;Treat changesets as patches&lt;/h2&gt;
 
 &lt;p&gt;In order to manipulate changesets we must first add them to the Patch Queue. To view the Patch Queue window select &amp;ldquo;View-&amp;gt;Show Patch Queue&amp;rdquo; from TortoiseHG Workbench:&lt;/p&gt;
 
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_WorkBench.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_WorkBench.png&#34; /&gt;
     
     
 &lt;/figure&gt;
@@ -276,14 +275,14 @@
 
 &lt;p&gt;If MQ was properly enabled we should see a &amp;ldquo;Modify History&amp;rdquo; menu item in the context menu of the selected changeset.&lt;/p&gt;
 
-&lt;h2 id=&#34;goal-1-delete-changeset-4:4753c5a586d7d4d59ef322dbe2fb6ba7&#34;&gt;Goal 1: Delete changeset 4&lt;/h2&gt;
+&lt;h2 id=&#34;goal-1-delete-changeset-4&#34;&gt;Goal 1: Delete changeset 4&lt;/h2&gt;
 
 &lt;p&gt;Select changeset 4 and import it to MQ. After a successful import you should see a new patch was added to the queue named &amp;ldquo;&lt;revision&gt;.diff&amp;rdquo;. This patch was pushed on top of the repository stack and corresponds to the selected changeset:&lt;/p&gt;
 
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_delete_changeset.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_delete_changeset.png&#34; /&gt;
     
     
 &lt;/figure&gt;
@@ -294,7 +293,7 @@
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_unapply_one_patch.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_unapply_one_patch.png&#34; /&gt;
     
     
 &lt;/figure&gt;
@@ -305,7 +304,7 @@
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_grayed_out_color.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_grayed_out_color.png&#34; /&gt;
     
     
 &lt;/figure&gt;
@@ -316,20 +315,20 @@
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_delete_patch.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_delete_patch.png&#34; /&gt;
     
     
 &lt;/figure&gt;
 
 
-&lt;h2 id=&#34;goal-2-reorder-changesets:4753c5a586d7d4d59ef322dbe2fb6ba7&#34;&gt;Goal 2: Reorder changesets&lt;/h2&gt;
+&lt;h2 id=&#34;goal-2-reorder-changesets&#34;&gt;Goal 2: Reorder changesets&lt;/h2&gt;
 
 &lt;p&gt;Let’s put refactoring changes in a changeset following the Feature A implementation changesets. Select changeset 1 and import it to MQ, then unapply all patches:&lt;/p&gt;
 
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_goal2_reorder.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_goal2_reorder.png&#34; /&gt;
     
     
 &lt;/figure&gt;
@@ -340,13 +339,13 @@
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_drag_adn_drop.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_drag_adn_drop.png&#34; /&gt;
     
     
 &lt;/figure&gt;
 
 
-&lt;h2 id=&#34;goal-3-split-a-changeset:4753c5a586d7d4d59ef322dbe2fb6ba7&#34;&gt;Goal 3: Split a changeset&lt;/h2&gt;
+&lt;h2 id=&#34;goal-3-split-a-changeset&#34;&gt;Goal 3: Split a changeset&lt;/h2&gt;
 
 &lt;p&gt;Using the shelve tool TortoiseHg &amp;ldquo;Repository-&amp;gt;Shelve&amp;rdquo; we can move changes between unapplied patches. We can move all the changes made to a file or only chunks of changes inside a file. To move changes we select a target and destination patch in the left and right toolbar then we can use:&lt;/p&gt;
 
@@ -358,71 +357,68 @@
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_split.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_split.png&#34; /&gt;
     
     
 &lt;/figure&gt;
 
 
-&lt;h2 id=&#34;goal-4-fold-merge-changesets:4753c5a586d7d4d59ef322dbe2fb6ba7&#34;&gt;Goal 4: Fold (merge changesets)&lt;/h2&gt;
+&lt;h2 id=&#34;goal-4-fold-merge-changesets&#34;&gt;Goal 4: Fold (merge changesets)&lt;/h2&gt;
 
 &lt;p&gt;Re-apply patch 1 then select patches 2, 3, 5, 6, 7 and click &amp;ldquo;Fold patches&amp;rdquo;. This will merge selected patches into the topmost applied patch 1:&lt;/p&gt;
 
-&lt;p&gt;
+
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_fold.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_fold.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-&lt;/p&gt;
+
 
 &lt;p&gt;A commit dialog will appear, containing comments from all the folded patches separated by a three asterisk syntax. Edit patch message and commit changes:&lt;/p&gt;
 
-&lt;p&gt;
+
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_patch_fold.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_patch_fold.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-&lt;/p&gt;
+
 
 &lt;p&gt;Now Re-apply patch 4:&lt;/p&gt;
 
-&lt;p&gt;
+
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_reaply_patch4.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_reaply_patch4.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-&lt;/p&gt;
+
 
 &lt;p&gt;Turn the applied patches back to a regular Mercurial changeset with the &amp;ldquo;Finish Patch&amp;rdquo; command:&lt;/p&gt;
 
-&lt;p&gt;
+
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post3_finish_patch_command.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post3_finish_patch_command.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-&lt;/p&gt;
 
-&lt;p&gt;Our changesets are now ready to be pushed to a public repository and shared with the other collaborators.&lt;/p&gt;
-</description>
+
+&lt;p&gt;Our changesets are now ready to be pushed to a public repository and shared with the other collaborators.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Refactoring a spaghetti C# serial communication app &amp; asynchronous control flow modeling with async/await</title>
-      <link>http://jernejg.github.io/post/2014/02/05/refactoring-a-spaghetti-c-serial-communication-app-asynchronous-control-flow-modeling-with-asyncawait/</link>
+      <link>http://www.ilovetodeletecode.com/post/2014/02/05/refactoring-a-spaghetti-c-serial-communication-app-asynchronous-control-flow-modeling-with-asyncawait/</link>
       <pubDate>Wed, 05 Feb 2014 11:08:28 +0000</pubDate>
       
-      <guid>http://jernejg.github.io/post/2014/02/05/refactoring-a-spaghetti-c-serial-communication-app-asynchronous-control-flow-modeling-with-asyncawait/</guid>
-      <description>
-
-&lt;p&gt;A couple of months back I&amp;rsquo;ve got a task of implementing a protocol for an embedded device sending/receiving streams of data through serial communication. Together with this task I also inherited a Windows Forms C# application that already did some of the previous but in a different protocol with a different device. The more I struggled to understand and reuse some of the existing infrastructure, the more I wanted to rewrite the whole thing (sounds familiar?).&lt;/p&gt;
+      <guid>http://www.ilovetodeletecode.com/post/2014/02/05/refactoring-a-spaghetti-c-serial-communication-app-asynchronous-control-flow-modeling-with-asyncawait/</guid>
+      <description>&lt;p&gt;A couple of months back I&amp;rsquo;ve got a task of implementing a protocol for an embedded device sending/receiving streams of data through serial communication. Together with this task I also inherited a Windows Forms C# application that already did some of the previous but in a different protocol with a different device. The more I struggled to understand and reuse some of the existing infrastructure, the more I wanted to rewrite the whole thing (sounds familiar?).&lt;/p&gt;
 
 &lt;p&gt;Some facts about existing code:&lt;/p&gt;
 
@@ -442,7 +438,9 @@
 &lt;li&gt;How to model complex asynchronous control flows, without blocking, using Task Parallel Library and C# 5.0 async/await.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;use-the-state-pattern-to-get-rid-of-if-switch-statements:91c523a33ea42e4c24f2a0b35779158b&#34;&gt;Use the state pattern to get rid of if/switch statements&lt;/h2&gt;
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;use-the-state-pattern-to-get-rid-of-if-switch-statements&#34;&gt;Use the state pattern to get rid of if/switch statements&lt;/h2&gt;
 
 &lt;p&gt;According to Gang of Four we should use the state pattern in either of the following cases:&lt;/p&gt;
 
@@ -453,7 +451,7 @@
 
 &lt;p&gt;Using state pattern we can make a more object oriented state machine so that each behavior specific to one state is encapsulated into a separate object. Such separation of state specific logic simplifies our code as it reduces the need for large conditional statements and makes it flexible so that it is easy to add new states in the future.&lt;/p&gt;
 
-&lt;h4 id=&#34;players-in-the-state-pattern:91c523a33ea42e4c24f2a0b35779158b&#34;&gt;Players in the state pattern:&lt;/h4&gt;
+&lt;h4 id=&#34;players-in-the-state-pattern&#34;&gt;Players in the state pattern:&lt;/h4&gt;
 
 &lt;table&gt;
 &lt;thead&gt;
@@ -481,16 +479,16 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ICommand&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #e7e9db&#34;&gt;IEnumerable&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CommandInstruction&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;Proccess&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(IEnumerable&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;data);&lt;/span&gt;
-    &lt;span style=&#34;color: #fec418&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;IsFinished&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+public interface ICommand
+{
+    IEnumerable&lt;byte&gt; CommandInstruction { get; }
+    void Proccess(IEnumerable&lt;byte&gt; data);
+    bool IsFinished { get; }
+}
 
 
-&lt;h2 id=&#34;collaborations:91c523a33ea42e4c24f2a0b35779158b&#34;&gt;Collaborations&lt;/h2&gt;
+&lt;h2 id=&#34;collaborations&#34;&gt;Collaborations&lt;/h2&gt;
 
 &lt;ol&gt;
 &lt;li&gt;Context delegates state-specific requests to the current ConcreteState object.
@@ -506,15 +504,15 @@ EmbeddedDevice checks the state of the current command with the IsFinished prope
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post2_structure.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post2_structure.png&#34; /&gt;
     
     
 &lt;/figure&gt;
 
 
-&lt;h2 id=&#34;achieve-readable-asynchronous-control-flow:91c523a33ea42e4c24f2a0b35779158b&#34;&gt;Achieve readable asynchronous control flow&lt;/h2&gt;
+&lt;h2 id=&#34;achieve-readable-asynchronous-control-flow&#34;&gt;Achieve readable asynchronous control flow&lt;/h2&gt;
 
-&lt;p&gt;The best way to represent future I/O bound work that yet has not finished is through the &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/dd460717(v=vs.110&#34;&gt;TPL (Task Parallel Library)&lt;/a&gt;.aspx). TPL is available since C# 4.0 and is replacing obsolete asynchronous patterns like &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/ms228963(v=vs.110&#34;&gt;APM (Asynchronous Programming Model - BeginMethod, EndMethod, and IAsyncResult)&lt;/a&gt;.aspx) and &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/wewwczdw(v=vs.110&#34;&gt;EAP (Event Based Asynchronous Pattern - signaling with events)&lt;/a&gt;.aspx).&lt;/p&gt;
+&lt;p&gt;The best way to represent future I/O bound work that yet has not finished is through the &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/dd460717(v=vs.110).aspx&#34;&gt;TPL (Task Parallel Library)&lt;/a&gt;. TPL is available since C# 4.0 and is replacing obsolete asynchronous patterns like &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/ms228963(v=vs.110).aspx&#34;&gt;APM (Asynchronous Programming Model - BeginMethod, EndMethod, and IAsyncResult)&lt;/a&gt; and &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/wewwczdw(v=vs.110).aspx&#34;&gt;EAP (Event Based Asynchronous Pattern - signaling with events)&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;In the heart of TPL are the Task type and its generic subclass Task&lt;TResult&gt;. Task represents an asynchronous operation that does some initialization, maybe spawns a new thread (or maybe not) and then immediately returns without blocking the calling thread. Tasks in our case (serial communication) are all I/O bound, so there is just a lot of waiting (no new threads need to be created).
 The second most important class in TPL is TaskCompletionSource. It enables us to take any operation (that doesn&amp;rsquo;t yet follow TPL) and expose them as a Task. Exposing an asynchronous operation as a Task gives us:&lt;/p&gt;
@@ -529,16 +527,16 @@ The second most important class in TPL is TaskCompletionSource. It enables us to
 
 &lt;p&gt;Lets see how we wrap TaskCompletionSource around our external asynchronous operation. We add the command to the execution queue together with the corresponding TaskCompletionSource object. TaskCompletionSource exposes a Task object that is completely controlled by its parent. We return this Task to the caller. Providing a TaskCompletionSource for each command through the process of execution gives us a mechanism to signal back to the caller the state of the ongoing command execution (SetCanceled, SetException, SetResult). Returning a Task from the AddToExecutionQueue function enables the caller to monitor that state and utilize a continuation (callback) that executes after completion.&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;TReturn&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;AddToExecutionQueue&amp;lt;TReturn&amp;gt;(TReturn&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;command)&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;TReturn&amp;gt;();&lt;/span&gt;
-    &lt;span style=&#34;color: #e7e9db&#34;&gt;_commandQueue.Enqueue(&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CommandTaskPair(command,tsc));&lt;/span&gt;
-    &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs.Task;&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+public Task&lt;TReturn&gt; AddToExecutionQueue&lt;TReturn&gt;(TReturn command)
+{
+    var tcs = new TaskCompletionSource&lt;TReturn&gt;();
+    _commandQueue.Enqueue(new CommandTaskPair(command,tsc));
+    return tcs.Task;
+}
 
 
-&lt;h2 id=&#34;structuring-asynchronous-flow-of-control:91c523a33ea42e4c24f2a0b35779158b&#34;&gt;Structuring asynchronous flow of control&lt;/h2&gt;
+&lt;h2 id=&#34;structuring-asynchronous-flow-of-control&#34;&gt;Structuring asynchronous flow of control&lt;/h2&gt;
 
 &lt;p&gt;Lets look at a more complex asynchronous workflow example. The process of downloading a file from the device is a nice example to start with. It consists of retrieving file information, reading error handling and then cleaning up the resources at the end. These are all long-running processes that together form a more complex asynchronous flow of control which we&amp;rsquo;ll try to model using 3 different approaches:&lt;/p&gt;
 
@@ -551,181 +549,179 @@ The second most important class in TPL is TaskCompletionSource. It enables us to
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post2_workflow.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post2_workflow.png&#34; /&gt;
     
     
 &lt;/figure&gt;
 
 
-&lt;h2 id=&#34;approach-1-nesting-continuations-using-lambda-expressions:91c523a33ea42e4c24f2a0b35779158b&#34;&gt;Approach 1: Nesting continuations using lambda expressions&lt;/h2&gt;
+&lt;h2 id=&#34;approach-1-nesting-continuations-using-lambda-expressions&#34;&gt;Approach 1: Nesting continuations using lambda expressions&lt;/h2&gt;
 
 &lt;p&gt;Each next step needs to be invoked from the previously completed one. Such complex sequence of steps result in nested spaghetti continuations which are hard to follow and maintain. Next problem is that we are downloading file chunk by chunk so we need a looping construct, but looping constructs don&amp;rsquo;t go hand in hand with continuations. Because the next iteration should be triggered from the continuation itself we would have to use recursion. The only advantage with nested lambdas are closures which allow you to pass local state to the function without the need for parameters, but beware of closures if you don’t understand them fully, because funny things can happen :).&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Download()&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
-            &lt;span style=&#34;color: #815ba4&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;1024&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
- 
-            &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;();&lt;/span&gt;
- 
-            &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;openFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd(_fileInfo.Name,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read);&lt;/span&gt;
-            &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;OpenFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(openFileCmd);&lt;/span&gt;
- 
-            &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.ContinueWith(fileHandleFinished&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&amp;gt;&lt;/span&gt;
-            &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleFinished.Result.SuccessResult;&lt;/span&gt;
-                &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize);&lt;/span&gt;
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
- 
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;Action&amp;lt;Task&amp;lt;ReadBlockCmd&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;recursiveDownload&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
- 
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;recursiveDownload&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockFInished&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&amp;gt;&lt;/span&gt;
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                    &lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockFInished.Result.SuccessResult.ActualData.ToArray();&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead.Count();&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;Proccess(bytesRead);&lt;/span&gt;
- 
-                    &lt;span style=&#34;color: #815ba4&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo.Length)&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                        &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize);&lt;/span&gt;
-                        &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
-                        &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock.ContinueWith(recursiveDownload);&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-                    &lt;span style=&#34;color: #815ba4&#34;&gt;else&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                        &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CloseFileCmd(fileHandle);&lt;/span&gt;
-                        &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;CloseFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(closeFileCmd);&lt;/span&gt;
-                        &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle.ContinueWith(closedHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs.SetResult(bytesTransfered));&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;};&lt;/span&gt;
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask.ContinueWith(recursiveDownload);&lt;/span&gt;
-            &lt;span style=&#34;color: #e7e9db&#34;&gt;});&lt;/span&gt;
-            &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs.Task;&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
 
-&lt;h2 id=&#34;approach-2-writing-separate-functions:91c523a33ea42e4c24f2a0b35779158b&#34;&gt;Approach 2: Writing separate functions&lt;/h2&gt;
+public Task&lt;long&gt; Download()
+{
+            long bytesTransfered = 0;
+            const int blockSize = 32 * 1024;
+ 
+            var tcs = new TaskCompletionSource&lt;long&gt;();
+ 
+            var openFileCmd = new OpenFileCmd(_fileInfo.Name, FileAccess.Read);
+            Task&lt;OpenFileCmd&gt; fileHandleTask = _embeddedDevice.AddToExecutionQueue(openFileCmd);
+ 
+            fileHandleTask.ContinueWith(fileHandleFinished =&gt;
+            {
+                int fileHandle = fileHandleFinished.Result.SuccessResult;
+                var readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
+                Task&lt;ReadBlockCmd&gt; readBlockTask = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+ 
+                Action&lt;Task&lt;ReadBlockCmd&gt;&gt; recursiveDownload = null;
+ 
+                recursiveDownload = readBlockFInished =&gt;
+                {
+                    byte[] bytesRead = readBlockFInished.Result.SuccessResult.ActualData.ToArray();
+                    bytesTransfered += bytesRead.Count();
+                    Proccess(bytesRead);
+ 
+                    if (bytesTransfered &lt; _fileInfo.Length)
+                    {
+                        readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
+                        Task&lt;ReadBlockCmd&gt; nextBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+                        nextBlock.ContinueWith(recursiveDownload);
+                    }
+                    else
+                    {
+                        var closeFileCmd = new CloseFileCmd(fileHandle);
+                        Task&lt;CloseFileCmd&gt; closeHandle = _embeddedDevice.AddToExecutionQueue(closeFileCmd);
+                        closeHandle.ContinueWith(closedHandle =&gt; tcs.SetResult(bytesTransfered));
+                    }
+                };
+                readBlockTask.ContinueWith(recursiveDownload);
+            });
+            return tcs.Task;
+}
+
+
+&lt;h2 id=&#34;approach-2-writing-separate-functions&#34;&gt;Approach 2: Writing separate functions&lt;/h2&gt;
 
 &lt;p&gt;Splitting callbacks into separate functions gives us a more readable control flow and also an easier way to achieve looping behavior. One drawback is that we have to pass parameters or use member variables in order to preserve context. Compared with lambda expressions, we are better off splitting functions but at the end of the day nothing can bring us a more natural control flow than approach 3.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;   &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;DownloadFile&lt;/span&gt;
-   &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;readonly&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;EmbeddedDevice&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice;&lt;/span&gt;
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;DeviceFileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo;&lt;/span&gt;
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs;&lt;/span&gt;
-           &lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_bytesTransfered;&lt;/span&gt;
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileHandle;&lt;/span&gt;
-           &lt;span style=&#34;color: #815ba4&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;BlockSize&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;1024&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
-    
-           &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;DownloadFile&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(EmbeddedDevice&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;embeddedDevice)&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;embeddedDevice;&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-    
-    
-           &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;Download&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(DeviceFileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo)&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;();&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo;&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
-    
-               &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;openFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd(_fileInfo.Name,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read);&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;OpenFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(openFileCmd);&lt;/span&gt;
-    
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.ContinueWith(OnFilehandleReceived);&lt;/span&gt;
-    
-               &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs.Task;&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-    
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;OnFilehandleReceived&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(Task&amp;lt;OpenFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask)&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.Result.SuccessResult;&lt;/span&gt;
-               &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(_fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;BlockSize);&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;firstBlock&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
-    
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;firstBlock.ContinueWith(OnBlockReceived);&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-    
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;OnBlockReceived&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask)&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;IEnumerable&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask.Result.SuccessResult.ActualData;&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;ProccessData(data);&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;data.Count();&lt;/span&gt;
-    
-               &lt;span style=&#34;color: #815ba4&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(_bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo.Length)&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                   &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(_fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;BlockSize);&lt;/span&gt;
-                   &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
-                   &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock.ContinueWith(OnBlockReceived);&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-               &lt;span style=&#34;color: #815ba4&#34;&gt;else&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                   &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CloseFileCmd(_fileHandle);&lt;/span&gt;
-                   &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;CloseFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(closeFileCmd);&lt;/span&gt;
-    
-                   &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle.ContinueWith(OnResourcesCleaned);&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-    
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;OnResourcesCleaned&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(Task&amp;lt;CloseFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closedHandle)&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs.SetResult(_bytesTransfered);&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
 
-&lt;h2 id=&#34;approach-3-using-c-5-0-language-constructs-async-await:91c523a33ea42e4c24f2a0b35779158b&#34;&gt;Approach 3: Using C# 5.0 language constructs async/await&lt;/h2&gt;
+   public class DownloadFile
+   {
+           private readonly EmbeddedDevice _embeddedDevice;
+           private  DeviceFileInfo _fileInfo;
+           private TaskCompletionSource&lt;long&gt; _tcs;
+           long _bytesTransfered;
+           private int _fileHandle;
+           const int BlockSize = 32 * 1024;
+    
+           public DownloadFile(EmbeddedDevice embeddedDevice)
+           {
+               _embeddedDevice = embeddedDevice;
+           }
+    
+    
+           public Task Download(DeviceFileInfo fileInfo)
+           {
+               _tcs = new TaskCompletionSource&lt;long&gt;();
+               _bytesTransfered = 0;
+               _fileInfo = fileInfo;
+               _fileHandle = 0;
+    
+               var openFileCmd = new OpenFileCmd(_fileInfo.Name, FileAccess.Read);
+               Task&lt;OpenFileCmd&gt; fileHandleTask = _embeddedDevice.AddToExecutionQueue(openFileCmd);
+    
+               fileHandleTask.ContinueWith(OnFilehandleReceived);
+    
+               return _tcs.Task;
+           }
+    
+           private void OnFilehandleReceived(Task&lt;OpenFileCmd&gt; fileHandleTask)
+           {
+               _fileHandle = fileHandleTask.Result.SuccessResult;
+               var readBlockCmd = new ReadBlockCmd(_fileHandle, BlockSize);
+               Task&lt;ReadBlockCmd&gt; firstBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+    
+               firstBlock.ContinueWith(OnBlockReceived);
+           }
+    
+           private void OnBlockReceived(Task&lt;ReadBlockCmd&gt; readBlockTask)
+           {
+               IEnumerable&lt;byte&gt; data = readBlockTask.Result.SuccessResult.ActualData;
+               ProccessData(data);
+               _bytesTransfered += data.Count();
+    
+               if (_bytesTransfered &lt; _fileInfo.Length)
+               {
+                   var readBlockCmd = new ReadBlockCmd(_fileHandle, BlockSize);
+                   Task&lt;ReadBlockCmd&gt; nextBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+                   nextBlock.ContinueWith(OnBlockReceived);
+               }
+               else
+               {
+                   var closeFileCmd = new CloseFileCmd(_fileHandle);
+                   Task&lt;CloseFileCmd&gt; closeHandle = _embeddedDevice.AddToExecutionQueue(closeFileCmd);
+    
+                   closeHandle.ContinueWith(OnResourcesCleaned);
+               }
+           }
+    
+           private void OnResourcesCleaned(Task&lt;CloseFileCmd&gt; closedHandle)
+           {
+               _tcs.SetResult(_bytesTransfered);
+           }
+    }
+
+
+&lt;h2 id=&#34;approach-3-using-c-5-0-language-constructs-async-await&#34;&gt;Approach 3: Using C# 5.0 language constructs async/await&lt;/h2&gt;
 
 &lt;p&gt;Async/await enables us to program asynchronous workflows in a linear way, that is, we can write our program as we would synchronously but without tying up a thread. If a method, called with await, has not yet completed, the execution immediately returns to the caller. When the method completes, the execution jumps back to the method where it left of, preserving all local state. What compiler does under the covers when it stumbles upon an await operator is very similar to yield return in an iterator, that is, a lot of boiler plate code gets generated in order to achieve pause/resume functionality using state machines.&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Download(DeviceFileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo;)&lt;/span&gt;
-  &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-              &lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
-              &lt;span style=&#34;color: #815ba4&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;1024&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
-   
-              &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;openFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd(fileInfo.Name,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read);&lt;/span&gt;
-              &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(openFileCmd);&lt;/span&gt;
-              &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.SuccessResult;&lt;/span&gt;
-   
-              &lt;span style=&#34;color: #815ba4&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo.Length)&lt;/span&gt;
-              &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                  &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize);&lt;/span&gt;
-                  &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
-                  &lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask.SuccessResult.ActualData.ToArray();&lt;/span&gt;
-                  &lt;span style=&#34;color: #e7e9db&#34;&gt;Proccess(bytesRead);&lt;/span&gt;
-                  &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead.Count();&lt;/span&gt;
-              &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-   
-              &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CloseFileCmd(fileHandle);&lt;/span&gt;
-              &lt;span style=&#34;color: #815ba4&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(closeFileCmd);&lt;/span&gt;
-              &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered;&lt;/span&gt;
-  &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-  
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
 
-&lt;p&gt;In summary, hiding callbacks with async/await language asynchrony support in C# 5.0 enables us to write code like we are used to and prevents complex asynchronous workflows (completion of multiple tasks, error handling…) from becoming unreadable and difficult to maintain. Even when targeting .NET 4 there is a &lt;a href=&#34;https://www.nuget.org/packages/Microsoft.Bcl.Async/1.0.16&#34;&gt;package&lt;/a&gt; on NuGet Microsoft.Bcl.Async which enables async/await keywords and includes the new Task based extension methods.&lt;/p&gt;
-</description>
+  public async Task&lt;long&gt; Download(DeviceFileInfo fileInfo;)
+  {
+              long bytesTransfered = 0;
+              const int blockSize = 32 * 1024;
+   
+              var openFileCmd = new OpenFileCmd(fileInfo.Name, FileAccess.Read);
+              OpenFileCmd fileHandleTask = await _embeddedDevice.AddToExecutionQueue(openFileCmd);
+              int fileHandle = fileHandleTask.SuccessResult;
+   
+              while (bytesTransfered &lt; fileInfo.Length)
+              {
+                  var readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
+                  ReadBlockCmd readBlockTask = await _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+                  byte[] bytesRead = readBlockTask.SuccessResult.ActualData.ToArray();
+                  Proccess(bytesRead);
+                  bytesTransfered += bytesRead.Count();
+              }
+   
+              var closeFileCmd = new CloseFileCmd(fileHandle);
+              await _embeddedDevice.AddToExecutionQueue(closeFileCmd);
+              return bytesTransfered;
+  }
+  
+
+&lt;p&gt;In summary, hiding callbacks with async/await language asynchrony support in C# 5.0 enables us to write code like we are used to and prevents complex asynchronous workflows (completion of multiple tasks, error handling…) from becoming unreadable and difficult to maintain. Even when targeting .NET 4 there is a &lt;a href=&#34;https://www.nuget.org/packages/Microsoft.Bcl.Async/1.0.16&#34;&gt;package&lt;/a&gt; on NuGet Microsoft.Bcl.Async which enables async/await keywords and includes the new Task based extension methods.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Prevent large file commits with PowerShell and Mercurial hooks</title>
-      <link>http://jernejg.github.io/post/2013/10/31/prevent-large-file-commits-with-powershell-and-mercurial-hooks/</link>
+      <link>http://www.ilovetodeletecode.com/post/2013/10/31/prevent-large-file-commits-with-powershell-and-mercurial-hooks/</link>
       <pubDate>Thu, 31 Oct 2013 12:53:22 +0000</pubDate>
       
-      <guid>http://jernejg.github.io/post/2013/10/31/prevent-large-file-commits-with-powershell-and-mercurial-hooks/</guid>
-      <description>
-
-&lt;p&gt;Because of Mercurial&amp;rsquo;s immutable historical record of project files there is no way to make a committed file completely disappear from the history tree. Our only hope in this case it&amp;rsquo;s not Obi-Wan but the hg rollback command if we act quickly. Since this command only works for one most recent operation &lt;a href=&#34;http://stackoverflow.com/questions/3288865/how-to-keep-a-mercurial-repository-small/&#34;&gt;(How to keep a Mercurial repository small?)&lt;/a&gt; it will not work if we already committed one or more changes after the change that we would like to completely remove &lt;a href=&#34;http://stackoverflow.com/questions/8466669/accidentally-committed-a-large-amount-of-raw-data-in-mercurial-how-do-i-keep-it&#34;&gt;(Accidentally committed a large amount of raw data in Mercurial, how do I keep it from overloading my Bitbucket repository?)&lt;/a&gt;. Our problems escalate even faster if we already pushed or pulled changes to a remote repository and our bad commit propagated to other collaborators.&lt;/p&gt;
+      <guid>http://www.ilovetodeletecode.com/post/2013/10/31/prevent-large-file-commits-with-powershell-and-mercurial-hooks/</guid>
+      <description>&lt;p&gt;Because of Mercurial&amp;rsquo;s immutable historical record of project files there is no way to make a committed file completely disappear from the history tree. Our only hope in this case it&amp;rsquo;s not Obi-Wan but the hg rollback command if we act quickly. Since this command only works for one most recent operation &lt;a href=&#34;http://stackoverflow.com/questions/3288865/how-to-keep-a-mercurial-repository-small/&#34;&gt;(How to keep a Mercurial repository small?)&lt;/a&gt; it will not work if we already committed one or more changes after the change that we would like to completely remove &lt;a href=&#34;http://stackoverflow.com/questions/8466669/accidentally-committed-a-large-amount-of-raw-data-in-mercurial-how-do-i-keep-it&#34;&gt;(Accidentally committed a large amount of raw data in Mercurial, how do I keep it from overloading my Bitbucket repository?)&lt;/a&gt;. Our problems escalate even faster if we already pushed or pulled changes to a remote repository and our bad commit propagated to other collaborators.&lt;/p&gt;
 
 &lt;p&gt;Two most common cases of brown paper bag commits &lt;a href=&#34;http://hgbook.red-bean.com/read/finding-and-fixing-mistakes.html#sec:undo:aaaiiieee&#34;&gt;(a commit that is so bad you want to pull a brown paper bag over your head)&lt;/a&gt; are accidentally committing sensitive information files (passwords, connection strings&amp;hellip;) and large files. The latter case is less critical because it only increase s repository size and the time it takes to perform operations like pull or clone.&lt;/p&gt;
 
 &lt;p&gt;If you are interested in how to prevent yourself from committing large files and are more comfortable with PowerShell then please read on. If you are more of an indentation than squirrely brackets guy then you can check this similar solution in Python - &lt;a href=&#34;http://stackoverflow.com/questions/2551719/mercurial-hook-to-disallow-committing-large-binary-files&#34;&gt;Mercurial hook to disallow committing large binary files&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h2 id=&#34;workflow:72b31f74d344fd1659db485d056da730&#34;&gt;Workflow&lt;/h2&gt;
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;workflow&#34;&gt;Workflow&lt;/h2&gt;
 
 &lt;p&gt;Our solution has a simple 3 step workflow&lt;/p&gt;
 
@@ -735,7 +731,7 @@ The second most important class in TPL is TaskCompletionSource. It enables us to
 &lt;li&gt;Roll back or complete commit transaction based on the information from step 2.&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&#34;controlling-repository-events-with-hooks:72b31f74d344fd1659db485d056da730&#34;&gt;Controlling repository events with hooks&lt;/h2&gt;
+&lt;h2 id=&#34;controlling-repository-events-with-hooks&#34;&gt;Controlling repository events with hooks&lt;/h2&gt;
 
 &lt;p&gt;Triggers that allow you to perform custom actions in response to events that occur on a Mercurial repository are called hooks. Because we need to execute a custom script every time a commit occurs there are two hooks that might interest us.&lt;/p&gt;
 
@@ -746,73 +742,72 @@ The second most important class in TPL is TaskCompletionSource. It enables us to
 
 &lt;p&gt;For obvious reasons we will go with pretxncommit. This hook will not only call our custom PowerShell script every time a commit, but it will also pass parameters in form of environmental variables to it. Each Hook parameter gets prefixed with &amp;ldquo;HG_”. We can list all parameters that are available from Mercurial context applying a filter to PowerShell &amp;ldquo;Env&amp;rdquo; drive&amp;rsquo;s content:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;dir&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;-path&lt;/span&gt;&lt;span style=&#34;color: #ef6155&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;env:&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;|&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;Where-Object&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color: #ef6155&#34;&gt;$_&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;.Name&lt;/span&gt; &lt;span style=&#34;color: #5bc4bf&#34;&gt;-like&lt;/span&gt; &lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;HG_*&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;|&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;Select&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;-Property&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Name,Value&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+dir -path:&#34;env:&#34; |  Where-Object {$_.Name -like &#34;HG_*&#34;} |  Select -Property Name,Value
 
 
 &lt;p&gt;Since pretxncommit is a controlling hook we can control the success of the operation using exit codes from our PowerShell script. Return a non-zero to roll back the transaction or 0 to complete it. We will exit our PowerShell script using the number of files greater than maximum size allowed.&lt;/p&gt;
 
-&lt;h2 id=&#34;defining-the-pretxncommit-hook-as-an-external-program:72b31f74d344fd1659db485d056da730&#34;&gt;Defining the pretxncommit Hook as an external program&lt;/h2&gt;
+&lt;h2 id=&#34;defining-the-pretxncommit-hook-as-an-external-program&#34;&gt;Defining the pretxncommit Hook as an external program&lt;/h2&gt;
 
 &lt;p&gt;There are two ways in which a Hook gets executed. In our case the execution is &amp;ldquo;shell out&amp;rdquo; to another process. An alternative would be a Python function that is executed within the Mercurial process. In-process hooks are faster and have complete access to Mercurial API but you have to write code in Python.&lt;/p&gt;
 
 &lt;p&gt;Hooks are defined in the [hooks] section of your local (hg\hgrc) or global (%USERPROFILE%\mercurial.ini) settings file. Each hook is defined in a type, name and action like format. You can edit settings file directly or use TortoiseHg settings dialog:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #5bc4bf&#34;&gt;[&lt;/span&gt;hooks&lt;span style=&#34;color: #5bc4bf&#34;&gt;]&lt;/span&gt; 
-pretxncommit.fileSizeCheckHook &lt;span style=&#34;color: #5bc4bf&#34;&gt;=&lt;/span&gt; powershell.exe -File &lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+[hooks] 
+pretxncommit.fileSizeCheckHook = powershell.exe -File &#34;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&#34;
 
 
 
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post1_Configure_Hook.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post1_Configure_Hook.png&#34; /&gt;
     
     
 &lt;/figure&gt;
 
 
-&lt;h4 id=&#34;pretxcommit-ps1:72b31f74d344fd1659db485d056da730&#34;&gt;pretxcommit.ps1&lt;/h4&gt;
+&lt;h4 id=&#34;pretxcommit-ps1&#34;&gt;pretxcommit.ps1&lt;/h4&gt;
 
 &lt;script src=&#34;//gist.github.com/jernejg/7166587.js&#34;&gt;&lt;/script&gt;
 
 &lt;p&gt;As you can see I use a custom simple function called Get-HgAddedLargeFile to integrate Mercurial with PowerShell and to parse the output of hg status to PowerShell objects. You can also check out &lt;a href=&#34;https://github.com/JeremySkinner/posh-hg&#34;&gt;posh-hg&lt;/a&gt; from Jeremy Skinner that deals with Mercurial/PowerShell integration on a more advanced level.&lt;/p&gt;
 
-&lt;p&gt;
+
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post1_hook_output.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post1_hook_output.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-&lt;/p&gt;
+
 
 &lt;p&gt;Because our hook runs in a separate process the detailed error information we printed to the console window in our previous case doesn&amp;rsquo;t get pulled to TortoiseHG log window instead just the default error is printed.&lt;/p&gt;
 
-&lt;p&gt;
+
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post1_commit_abort.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post1_commit_abort.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-&lt;/p&gt;
+
 
 &lt;p&gt;We can solve this by calling a message box from PowerShell that will provide additional information about problematic files and in addition to that provide us with a dialog where we can decide on further action &lt;a href=&#34;https://gist.github.com/jernejg/7196705&#34;&gt;pretxncommit_messagebox.ps1&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;
+
 &lt;figure &gt;
     
-        &lt;img src=&#34;http://jernejg.github.io/img/Post1_message_box.png&#34; /&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Post1_message_box.png&#34; /&gt;
     
     
 &lt;/figure&gt;
-&lt;/p&gt;
 
-&lt;h2 id=&#34;hooks-do-not-propagate:72b31f74d344fd1659db485d056da730&#34;&gt;Hooks do not propagate&lt;/h2&gt;
 
-&lt;p&gt;For the end let me remind you that hooks are not version controlled and do not propagate when you clone or pull from a repository. When collaborating with other people you can&amp;rsquo;t make them to use the same hooks as you.&lt;/p&gt;
-</description>
+&lt;h2 id=&#34;hooks-do-not-propagate&#34;&gt;Hooks do not propagate&lt;/h2&gt;
+
+&lt;p&gt;For the end let me remind you that hooks are not version controlled and do not propagate when you clone or pull from a repository. When collaborating with other people you can&amp;rsquo;t make them to use the same hooks as you.&lt;/p&gt;</description>
     </item>
     
   </channel>

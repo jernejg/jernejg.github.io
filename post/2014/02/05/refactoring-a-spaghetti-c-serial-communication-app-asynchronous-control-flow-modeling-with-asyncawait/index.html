@@ -3,7 +3,7 @@
 <head>
   <link href="http://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.19" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -11,15 +11,15 @@
   <title> Refactoring a spaghetti C# serial communication app &amp; asynchronous control flow modeling with async/await &middot; I Love To Delete Code </title>
 
   
-  <link rel="stylesheet" href="http://jernejg.github.io/css/poole.css">
-  <link rel="stylesheet" href="http://jernejg.github.io/css/syntax.css">
-  <link rel="stylesheet" href="http://jernejg.github.io/css/hyde.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/poole.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/syntax.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/hyde.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://jernejg.github.io/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="http://jernejg.github.io/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://www.ilovetodeletecode.com/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://www.ilovetodeletecode.com/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="I Love To Delete Code" />
@@ -60,18 +60,18 @@
 		<div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <img src="http://jernejg.github.io/logo.png" alt="Hugo Themes">
-      <a href="http://jernejg.github.io/"><h1>I Love To Delete Code</h1></a>
+      <img src="http://www.ilovetodeletecode.com/logo.png" alt="Hugo Themes">
+      <a href="http://www.ilovetodeletecode.com"><h1>I Love To Delete Code</h1></a>
       <p class="lead">
       Deleting code is violating the law of entropy and setting the universe right.
       </p>
     </div>
     <ul class="sidebar-nav">
-      <li><a href="http://jernejg.github.io/">Home</a> </li>
+      <li><a href="http://www.ilovetodeletecode.com/">Home</a> </li>
       
-        <li><a href="http://jernejg.github.io/post/"> Blog </a></li>
+        <li><a href="http://www.ilovetodeletecode.com/post/"> Blog </a></li>
       
-        <li><a href="http://jernejg.github.io/about/"> About </a></li>
+        <li><a href="http://www.ilovetodeletecode.com/about/"> About </a></li>
       
     </ul>
     <div id="social" class="text-center">
@@ -95,9 +95,7 @@
 			<div class="post">
 			 	<h1>Refactoring a spaghetti C# serial communication app &amp; asynchronous control flow modeling with async/await</h1>
 			  <span class="post-date">Wed, Feb 5, 2014</span>
-			      
-
-<p>A couple of months back I&rsquo;ve got a task of implementing a protocol for an embedded device sending/receiving streams of data through serial communication. Together with this task I also inherited a Windows Forms C# application that already did some of the previous but in a different protocol with a different device. The more I struggled to understand and reuse some of the existing infrastructure, the more I wanted to rewrite the whole thing (sounds familiar?).</p>
+			      <p>A couple of months back I&rsquo;ve got a task of implementing a protocol for an embedded device sending/receiving streams of data through serial communication. Together with this task I also inherited a Windows Forms C# application that already did some of the previous but in a different protocol with a different device. The more I struggled to understand and reuse some of the existing infrastructure, the more I wanted to rewrite the whole thing (sounds familiar?).</p>
 
 <p>Some facts about existing code:</p>
 
@@ -117,7 +115,9 @@
 <li>How to model complex asynchronous control flows, without blocking, using Task Parallel Library and C# 5.0 async/await.</li>
 </ol>
 
-<h2 id="use-the-state-pattern-to-get-rid-of-if-switch-statements:91c523a33ea42e4c24f2a0b35779158b">Use the state pattern to get rid of if/switch statements</h2>
+<p></p>
+
+<h2 id="use-the-state-pattern-to-get-rid-of-if-switch-statements">Use the state pattern to get rid of if/switch statements</h2>
 
 <p>According to Gang of Four we should use the state pattern in either of the following cases:</p>
 
@@ -128,7 +128,7 @@
 
 <p>Using state pattern we can make a more object oriented state machine so that each behavior specific to one state is encapsulated into a separate object. Such separation of state specific logic simplifies our code as it reduces the need for large conditional statements and makes it flexible so that it is easy to add new states in the future.</p>
 
-<h4 id="players-in-the-state-pattern:91c523a33ea42e4c24f2a0b35779158b">Players in the state pattern:</h4>
+<h4 id="players-in-the-state-pattern">Players in the state pattern:</h4>
 
 <table>
 <thead>
@@ -156,16 +156,16 @@
 </tbody>
 </table>
 
-<div class="highlight" style="background: #2f1e2e"><pre style="line-height: 125%"><span></span><span style="color: #815ba4">public</span> <span style="color: #815ba4">interface</span> <span style="color: #e7e9db">ICommand</span>
-<span style="color: #e7e9db">{</span>
-    <span style="color: #e7e9db">IEnumerable&lt;</span><span style="color: #fec418">byte</span><span style="color: #e7e9db">&gt;</span> <span style="color: #e7e9db">CommandInstruction</span> <span style="color: #e7e9db">{</span> <span style="color: #815ba4">get</span><span style="color: #e7e9db">;</span> <span style="color: #e7e9db">}</span>
-    <span style="color: #815ba4">void</span> <span style="color: #06b6ef">Proccess</span><span style="color: #e7e9db">(IEnumerable&lt;</span><span style="color: #fec418">byte</span><span style="color: #e7e9db">&gt;</span> <span style="color: #e7e9db">data);</span>
-    <span style="color: #fec418">bool</span> <span style="color: #e7e9db">IsFinished</span> <span style="color: #e7e9db">{</span> <span style="color: #815ba4">get</span><span style="color: #e7e9db">;</span> <span style="color: #e7e9db">}</span>
-<span style="color: #e7e9db">}</span>
-</pre></div>
+
+public interface ICommand
+{
+    IEnumerable<byte> CommandInstruction { get; }
+    void Proccess(IEnumerable<byte> data);
+    bool IsFinished { get; }
+}
 
 
-<h2 id="collaborations:91c523a33ea42e4c24f2a0b35779158b">Collaborations</h2>
+<h2 id="collaborations">Collaborations</h2>
 
 <ol>
 <li>Context delegates state-specific requests to the current ConcreteState object.
@@ -181,15 +181,15 @@ EmbeddedDevice checks the state of the current command with the IsFinished prope
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post2_structure.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post2_structure.png" />
     
     
 </figure>
 
 
-<h2 id="achieve-readable-asynchronous-control-flow:91c523a33ea42e4c24f2a0b35779158b">Achieve readable asynchronous control flow</h2>
+<h2 id="achieve-readable-asynchronous-control-flow">Achieve readable asynchronous control flow</h2>
 
-<p>The best way to represent future I/O bound work that yet has not finished is through the <a href="http://msdn.microsoft.com/en-us/library/dd460717(v=vs.110">TPL (Task Parallel Library)</a>.aspx). TPL is available since C# 4.0 and is replacing obsolete asynchronous patterns like <a href="http://msdn.microsoft.com/en-us/library/ms228963(v=vs.110">APM (Asynchronous Programming Model - BeginMethod, EndMethod, and IAsyncResult)</a>.aspx) and <a href="http://msdn.microsoft.com/en-us/library/wewwczdw(v=vs.110">EAP (Event Based Asynchronous Pattern - signaling with events)</a>.aspx).</p>
+<p>The best way to represent future I/O bound work that yet has not finished is through the <a href="http://msdn.microsoft.com/en-us/library/dd460717(v=vs.110).aspx">TPL (Task Parallel Library)</a>. TPL is available since C# 4.0 and is replacing obsolete asynchronous patterns like <a href="http://msdn.microsoft.com/en-us/library/ms228963(v=vs.110).aspx">APM (Asynchronous Programming Model - BeginMethod, EndMethod, and IAsyncResult)</a> and <a href="http://msdn.microsoft.com/en-us/library/wewwczdw(v=vs.110).aspx">EAP (Event Based Asynchronous Pattern - signaling with events)</a>.</p>
 
 <p>In the heart of TPL are the Task type and its generic subclass Task<TResult>. Task represents an asynchronous operation that does some initialization, maybe spawns a new thread (or maybe not) and then immediately returns without blocking the calling thread. Tasks in our case (serial communication) are all I/O bound, so there is just a lot of waiting (no new threads need to be created).
 The second most important class in TPL is TaskCompletionSource. It enables us to take any operation (that doesn&rsquo;t yet follow TPL) and expose them as a Task. Exposing an asynchronous operation as a Task gives us:</p>
@@ -204,16 +204,16 @@ The second most important class in TPL is TaskCompletionSource. It enables us to
 
 <p>Lets see how we wrap TaskCompletionSource around our external asynchronous operation. We add the command to the execution queue together with the corresponding TaskCompletionSource object. TaskCompletionSource exposes a Task object that is completely controlled by its parent. We return this Task to the caller. Providing a TaskCompletionSource for each command through the process of execution gives us a mechanism to signal back to the caller the state of the ongoing command execution (SetCanceled, SetException, SetResult). Returning a Task from the AddToExecutionQueue function enables the caller to monitor that state and utilize a continuation (callback) that executes after completion.</p>
 
-<div class="highlight" style="background: #2f1e2e"><pre style="line-height: 125%"><span></span><span style="color: #815ba4">public</span> <span style="color: #e7e9db">Task&lt;TReturn&gt;</span> <span style="color: #e7e9db">AddToExecutionQueue&lt;TReturn&gt;(TReturn</span> <span style="color: #e7e9db">command)</span>
-<span style="color: #e7e9db">{</span>
-    <span style="color: #fec418">var</span> <span style="color: #e7e9db">tcs</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">TaskCompletionSource&lt;TReturn&gt;();</span>
-    <span style="color: #e7e9db">_commandQueue.Enqueue(</span><span style="color: #815ba4">new</span> <span style="color: #e7e9db">CommandTaskPair(command,tsc));</span>
-    <span style="color: #815ba4">return</span> <span style="color: #e7e9db">tcs.Task;</span>
-<span style="color: #e7e9db">}</span>
-</pre></div>
+
+public Task<TReturn> AddToExecutionQueue<TReturn>(TReturn command)
+{
+    var tcs = new TaskCompletionSource<TReturn>();
+    _commandQueue.Enqueue(new CommandTaskPair(command,tsc));
+    return tcs.Task;
+}
 
 
-<h2 id="structuring-asynchronous-flow-of-control:91c523a33ea42e4c24f2a0b35779158b">Structuring asynchronous flow of control</h2>
+<h2 id="structuring-asynchronous-flow-of-control">Structuring asynchronous flow of control</h2>
 
 <p>Lets look at a more complex asynchronous workflow example. The process of downloading a file from the device is a nice example to start with. It consists of retrieving file information, reading error handling and then cleaning up the resources at the end. These are all long-running processes that together form a more complex asynchronous flow of control which we&rsquo;ll try to model using 3 different approaches:</p>
 
@@ -226,164 +226,162 @@ The second most important class in TPL is TaskCompletionSource. It enables us to
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post2_workflow.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post2_workflow.png" />
     
     
 </figure>
 
 
-<h2 id="approach-1-nesting-continuations-using-lambda-expressions:91c523a33ea42e4c24f2a0b35779158b">Approach 1: Nesting continuations using lambda expressions</h2>
+<h2 id="approach-1-nesting-continuations-using-lambda-expressions">Approach 1: Nesting continuations using lambda expressions</h2>
 
 <p>Each next step needs to be invoked from the previously completed one. Such complex sequence of steps result in nested spaghetti continuations which are hard to follow and maintain. Next problem is that we are downloading file chunk by chunk so we need a looping construct, but looping constructs don&rsquo;t go hand in hand with continuations. Because the next iteration should be triggered from the continuation itself we would have to use recursion. The only advantage with nested lambdas are closures which allow you to pass local state to the function without the need for parameters, but beware of closures if you don’t understand them fully, because funny things can happen :).</p>
 
-<p><div class="highlight" style="background: #2f1e2e"><pre style="line-height: 125%"><span></span><span style="color: #815ba4">public</span> <span style="color: #e7e9db">Task&lt;</span><span style="color: #fec418">long</span><span style="color: #e7e9db">&gt;</span> <span style="color: #e7e9db">Download()</span>
-<span style="color: #e7e9db">{</span>
-            <span style="color: #fec418">long</span> <span style="color: #e7e9db">bytesTransfered</span> <span style="color: #e7e9db">=</span> <span style="color: #f99b15">0</span><span style="color: #e7e9db">;</span>
-            <span style="color: #815ba4">const</span> <span style="color: #fec418">int</span> <span style="color: #e7e9db">blockSize</span> <span style="color: #e7e9db">=</span> <span style="color: #f99b15">32</span> <span style="color: #e7e9db">*</span> <span style="color: #f99b15">1024</span><span style="color: #e7e9db">;</span>
- 
-            <span style="color: #fec418">var</span> <span style="color: #e7e9db">tcs</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">TaskCompletionSource&lt;</span><span style="color: #fec418">long</span><span style="color: #e7e9db">&gt;();</span>
- 
-            <span style="color: #fec418">var</span> <span style="color: #e7e9db">openFileCmd</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">OpenFileCmd(_fileInfo.Name,</span> <span style="color: #e7e9db">FileAccess.Read);</span>
-            <span style="color: #e7e9db">Task&lt;OpenFileCmd&gt;</span> <span style="color: #e7e9db">fileHandleTask</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">_embeddedDevice.AddToExecutionQueue(openFileCmd);</span>
- 
-            <span style="color: #e7e9db">fileHandleTask.ContinueWith(fileHandleFinished</span> <span style="color: #e7e9db">=&gt;</span>
-            <span style="color: #e7e9db">{</span>
-                <span style="color: #fec418">int</span> <span style="color: #e7e9db">fileHandle</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">fileHandleFinished.Result.SuccessResult;</span>
-                <span style="color: #fec418">var</span> <span style="color: #e7e9db">readBlockCmd</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">ReadBlockCmd(fileHandle,</span> <span style="color: #e7e9db">blockSize);</span>
-                <span style="color: #e7e9db">Task&lt;ReadBlockCmd&gt;</span> <span style="color: #e7e9db">readBlockTask</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">_embeddedDevice.AddToExecutionQueue(readBlockCmd);</span>
- 
-                <span style="color: #e7e9db">Action&lt;Task&lt;ReadBlockCmd&gt;&gt;</span> <span style="color: #e7e9db">recursiveDownload</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">null</span><span style="color: #e7e9db">;</span>
- 
-                <span style="color: #e7e9db">recursiveDownload</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">readBlockFInished</span> <span style="color: #e7e9db">=&gt;</span>
-                <span style="color: #e7e9db">{</span>
-                    <span style="color: #fec418">byte</span><span style="color: #e7e9db">[]</span> <span style="color: #e7e9db">bytesRead</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">readBlockFInished.Result.SuccessResult.ActualData.ToArray();</span>
-                    <span style="color: #e7e9db">bytesTransfered</span> <span style="color: #e7e9db">+=</span> <span style="color: #e7e9db">bytesRead.Count();</span>
-                    <span style="color: #e7e9db">Proccess(bytesRead);</span>
- 
-                    <span style="color: #815ba4">if</span> <span style="color: #e7e9db">(bytesTransfered</span> <span style="color: #e7e9db">&lt;</span> <span style="color: #e7e9db">_fileInfo.Length)</span>
-                    <span style="color: #e7e9db">{</span>
-                        <span style="color: #e7e9db">readBlockCmd</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">ReadBlockCmd(fileHandle,</span> <span style="color: #e7e9db">blockSize);</span>
-                        <span style="color: #e7e9db">Task&lt;ReadBlockCmd&gt;</span> <span style="color: #e7e9db">nextBlock</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">_embeddedDevice.AddToExecutionQueue(readBlockCmd);</span>
-                        <span style="color: #e7e9db">nextBlock.ContinueWith(recursiveDownload);</span>
-                    <span style="color: #e7e9db">}</span>
-                    <span style="color: #815ba4">else</span>
-                    <span style="color: #e7e9db">{</span>
-                        <span style="color: #fec418">var</span> <span style="color: #e7e9db">closeFileCmd</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">CloseFileCmd(fileHandle);</span>
-                        <span style="color: #e7e9db">Task&lt;CloseFileCmd&gt;</span> <span style="color: #e7e9db">closeHandle</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">_embeddedDevice.AddToExecutionQueue(closeFileCmd);</span>
-                        <span style="color: #e7e9db">closeHandle.ContinueWith(closedHandle</span> <span style="color: #e7e9db">=&gt;</span> <span style="color: #e7e9db">tcs.SetResult(bytesTransfered));</span>
-                    <span style="color: #e7e9db">}</span>
-                <span style="color: #e7e9db">};</span>
-                <span style="color: #e7e9db">readBlockTask.ContinueWith(recursiveDownload);</span>
-            <span style="color: #e7e9db">});</span>
-            <span style="color: #815ba4">return</span> <span style="color: #e7e9db">tcs.Task;</span>
-<span style="color: #e7e9db">}</span>
-</pre></div>
-</p>
 
-<h2 id="approach-2-writing-separate-functions:91c523a33ea42e4c24f2a0b35779158b">Approach 2: Writing separate functions</h2>
+public Task<long> Download()
+{
+            long bytesTransfered = 0;
+            const int blockSize = 32 * 1024;
+ 
+            var tcs = new TaskCompletionSource<long>();
+ 
+            var openFileCmd = new OpenFileCmd(_fileInfo.Name, FileAccess.Read);
+            Task<OpenFileCmd> fileHandleTask = _embeddedDevice.AddToExecutionQueue(openFileCmd);
+ 
+            fileHandleTask.ContinueWith(fileHandleFinished =>
+            {
+                int fileHandle = fileHandleFinished.Result.SuccessResult;
+                var readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
+                Task<ReadBlockCmd> readBlockTask = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+ 
+                Action<Task<ReadBlockCmd>> recursiveDownload = null;
+ 
+                recursiveDownload = readBlockFInished =>
+                {
+                    byte[] bytesRead = readBlockFInished.Result.SuccessResult.ActualData.ToArray();
+                    bytesTransfered += bytesRead.Count();
+                    Proccess(bytesRead);
+ 
+                    if (bytesTransfered < _fileInfo.Length)
+                    {
+                        readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
+                        Task<ReadBlockCmd> nextBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+                        nextBlock.ContinueWith(recursiveDownload);
+                    }
+                    else
+                    {
+                        var closeFileCmd = new CloseFileCmd(fileHandle);
+                        Task<CloseFileCmd> closeHandle = _embeddedDevice.AddToExecutionQueue(closeFileCmd);
+                        closeHandle.ContinueWith(closedHandle => tcs.SetResult(bytesTransfered));
+                    }
+                };
+                readBlockTask.ContinueWith(recursiveDownload);
+            });
+            return tcs.Task;
+}
+
+
+<h2 id="approach-2-writing-separate-functions">Approach 2: Writing separate functions</h2>
 
 <p>Splitting callbacks into separate functions gives us a more readable control flow and also an easier way to achieve looping behavior. One drawback is that we have to pass parameters or use member variables in order to preserve context. Compared with lambda expressions, we are better off splitting functions but at the end of the day nothing can bring us a more natural control flow than approach 3.</p>
 
-<p><div class="highlight" style="background: #2f1e2e"><pre style="line-height: 125%"><span></span>   <span style="color: #815ba4">public</span> <span style="color: #815ba4">class</span> <span style="color: #fec418">DownloadFile</span>
-   <span style="color: #e7e9db">{</span>
-           <span style="color: #815ba4">private</span> <span style="color: #815ba4">readonly</span> <span style="color: #e7e9db">EmbeddedDevice</span> <span style="color: #e7e9db">_embeddedDevice;</span>
-           <span style="color: #815ba4">private</span>  <span style="color: #e7e9db">DeviceFileInfo</span> <span style="color: #e7e9db">_fileInfo;</span>
-           <span style="color: #815ba4">private</span> <span style="color: #e7e9db">TaskCompletionSource&lt;</span><span style="color: #fec418">long</span><span style="color: #e7e9db">&gt;</span> <span style="color: #e7e9db">_tcs;</span>
-           <span style="color: #fec418">long</span> <span style="color: #e7e9db">_bytesTransfered;</span>
-           <span style="color: #815ba4">private</span> <span style="color: #fec418">int</span> <span style="color: #e7e9db">_fileHandle;</span>
-           <span style="color: #815ba4">const</span> <span style="color: #fec418">int</span> <span style="color: #e7e9db">BlockSize</span> <span style="color: #e7e9db">=</span> <span style="color: #f99b15">32</span> <span style="color: #e7e9db">*</span> <span style="color: #f99b15">1024</span><span style="color: #e7e9db">;</span>
-    
-           <span style="color: #815ba4">public</span> <span style="color: #06b6ef">DownloadFile</span><span style="color: #e7e9db">(EmbeddedDevice</span> <span style="color: #e7e9db">embeddedDevice)</span>
-           <span style="color: #e7e9db">{</span>
-               <span style="color: #e7e9db">_embeddedDevice</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">embeddedDevice;</span>
-           <span style="color: #e7e9db">}</span>
-    
-    
-           <span style="color: #815ba4">public</span> <span style="color: #e7e9db">Task</span> <span style="color: #06b6ef">Download</span><span style="color: #e7e9db">(DeviceFileInfo</span> <span style="color: #e7e9db">fileInfo)</span>
-           <span style="color: #e7e9db">{</span>
-               <span style="color: #e7e9db">_tcs</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">TaskCompletionSource&lt;</span><span style="color: #fec418">long</span><span style="color: #e7e9db">&gt;();</span>
-               <span style="color: #e7e9db">_bytesTransfered</span> <span style="color: #e7e9db">=</span> <span style="color: #f99b15">0</span><span style="color: #e7e9db">;</span>
-               <span style="color: #e7e9db">_fileInfo</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">fileInfo;</span>
-               <span style="color: #e7e9db">_fileHandle</span> <span style="color: #e7e9db">=</span> <span style="color: #f99b15">0</span><span style="color: #e7e9db">;</span>
-    
-               <span style="color: #fec418">var</span> <span style="color: #e7e9db">openFileCmd</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">OpenFileCmd(_fileInfo.Name,</span> <span style="color: #e7e9db">FileAccess.Read);</span>
-               <span style="color: #e7e9db">Task&lt;OpenFileCmd&gt;</span> <span style="color: #e7e9db">fileHandleTask</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">_embeddedDevice.AddToExecutionQueue(openFileCmd);</span>
-    
-               <span style="color: #e7e9db">fileHandleTask.ContinueWith(OnFilehandleReceived);</span>
-    
-               <span style="color: #815ba4">return</span> <span style="color: #e7e9db">_tcs.Task;</span>
-           <span style="color: #e7e9db">}</span>
-    
-           <span style="color: #815ba4">private</span> <span style="color: #815ba4">void</span> <span style="color: #06b6ef">OnFilehandleReceived</span><span style="color: #e7e9db">(Task&lt;OpenFileCmd&gt;</span> <span style="color: #e7e9db">fileHandleTask)</span>
-           <span style="color: #e7e9db">{</span>
-               <span style="color: #e7e9db">_fileHandle</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">fileHandleTask.Result.SuccessResult;</span>
-               <span style="color: #fec418">var</span> <span style="color: #e7e9db">readBlockCmd</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">ReadBlockCmd(_fileHandle,</span> <span style="color: #e7e9db">BlockSize);</span>
-               <span style="color: #e7e9db">Task&lt;ReadBlockCmd&gt;</span> <span style="color: #e7e9db">firstBlock</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">_embeddedDevice.AddToExecutionQueue(readBlockCmd);</span>
-    
-               <span style="color: #e7e9db">firstBlock.ContinueWith(OnBlockReceived);</span>
-           <span style="color: #e7e9db">}</span>
-    
-           <span style="color: #815ba4">private</span> <span style="color: #815ba4">void</span> <span style="color: #06b6ef">OnBlockReceived</span><span style="color: #e7e9db">(Task&lt;ReadBlockCmd&gt;</span> <span style="color: #e7e9db">readBlockTask)</span>
-           <span style="color: #e7e9db">{</span>
-               <span style="color: #e7e9db">IEnumerable&lt;</span><span style="color: #fec418">byte</span><span style="color: #e7e9db">&gt;</span> <span style="color: #e7e9db">data</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">readBlockTask.Result.SuccessResult.ActualData;</span>
-               <span style="color: #e7e9db">ProccessData(data);</span>
-               <span style="color: #e7e9db">_bytesTransfered</span> <span style="color: #e7e9db">+=</span> <span style="color: #e7e9db">data.Count();</span>
-    
-               <span style="color: #815ba4">if</span> <span style="color: #e7e9db">(_bytesTransfered</span> <span style="color: #e7e9db">&lt;</span> <span style="color: #e7e9db">_fileInfo.Length)</span>
-               <span style="color: #e7e9db">{</span>
-                   <span style="color: #fec418">var</span> <span style="color: #e7e9db">readBlockCmd</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">ReadBlockCmd(_fileHandle,</span> <span style="color: #e7e9db">BlockSize);</span>
-                   <span style="color: #e7e9db">Task&lt;ReadBlockCmd&gt;</span> <span style="color: #e7e9db">nextBlock</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">_embeddedDevice.AddToExecutionQueue(readBlockCmd);</span>
-                   <span style="color: #e7e9db">nextBlock.ContinueWith(OnBlockReceived);</span>
-               <span style="color: #e7e9db">}</span>
-               <span style="color: #815ba4">else</span>
-               <span style="color: #e7e9db">{</span>
-                   <span style="color: #fec418">var</span> <span style="color: #e7e9db">closeFileCmd</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">CloseFileCmd(_fileHandle);</span>
-                   <span style="color: #e7e9db">Task&lt;CloseFileCmd&gt;</span> <span style="color: #e7e9db">closeHandle</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">_embeddedDevice.AddToExecutionQueue(closeFileCmd);</span>
-    
-                   <span style="color: #e7e9db">closeHandle.ContinueWith(OnResourcesCleaned);</span>
-               <span style="color: #e7e9db">}</span>
-           <span style="color: #e7e9db">}</span>
-    
-           <span style="color: #815ba4">private</span> <span style="color: #815ba4">void</span> <span style="color: #06b6ef">OnResourcesCleaned</span><span style="color: #e7e9db">(Task&lt;CloseFileCmd&gt;</span> <span style="color: #e7e9db">closedHandle)</span>
-           <span style="color: #e7e9db">{</span>
-               <span style="color: #e7e9db">_tcs.SetResult(_bytesTransfered);</span>
-           <span style="color: #e7e9db">}</span>
-    <span style="color: #e7e9db">}</span>
-</pre></div>
-</p>
 
-<h2 id="approach-3-using-c-5-0-language-constructs-async-await:91c523a33ea42e4c24f2a0b35779158b">Approach 3: Using C# 5.0 language constructs async/await</h2>
+   public class DownloadFile
+   {
+           private readonly EmbeddedDevice _embeddedDevice;
+           private  DeviceFileInfo _fileInfo;
+           private TaskCompletionSource<long> _tcs;
+           long _bytesTransfered;
+           private int _fileHandle;
+           const int BlockSize = 32 * 1024;
+    
+           public DownloadFile(EmbeddedDevice embeddedDevice)
+           {
+               _embeddedDevice = embeddedDevice;
+           }
+    
+    
+           public Task Download(DeviceFileInfo fileInfo)
+           {
+               _tcs = new TaskCompletionSource<long>();
+               _bytesTransfered = 0;
+               _fileInfo = fileInfo;
+               _fileHandle = 0;
+    
+               var openFileCmd = new OpenFileCmd(_fileInfo.Name, FileAccess.Read);
+               Task<OpenFileCmd> fileHandleTask = _embeddedDevice.AddToExecutionQueue(openFileCmd);
+    
+               fileHandleTask.ContinueWith(OnFilehandleReceived);
+    
+               return _tcs.Task;
+           }
+    
+           private void OnFilehandleReceived(Task<OpenFileCmd> fileHandleTask)
+           {
+               _fileHandle = fileHandleTask.Result.SuccessResult;
+               var readBlockCmd = new ReadBlockCmd(_fileHandle, BlockSize);
+               Task<ReadBlockCmd> firstBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+    
+               firstBlock.ContinueWith(OnBlockReceived);
+           }
+    
+           private void OnBlockReceived(Task<ReadBlockCmd> readBlockTask)
+           {
+               IEnumerable<byte> data = readBlockTask.Result.SuccessResult.ActualData;
+               ProccessData(data);
+               _bytesTransfered += data.Count();
+    
+               if (_bytesTransfered < _fileInfo.Length)
+               {
+                   var readBlockCmd = new ReadBlockCmd(_fileHandle, BlockSize);
+                   Task<ReadBlockCmd> nextBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+                   nextBlock.ContinueWith(OnBlockReceived);
+               }
+               else
+               {
+                   var closeFileCmd = new CloseFileCmd(_fileHandle);
+                   Task<CloseFileCmd> closeHandle = _embeddedDevice.AddToExecutionQueue(closeFileCmd);
+    
+                   closeHandle.ContinueWith(OnResourcesCleaned);
+               }
+           }
+    
+           private void OnResourcesCleaned(Task<CloseFileCmd> closedHandle)
+           {
+               _tcs.SetResult(_bytesTransfered);
+           }
+    }
+
+
+<h2 id="approach-3-using-c-5-0-language-constructs-async-await">Approach 3: Using C# 5.0 language constructs async/await</h2>
 
 <p>Async/await enables us to program asynchronous workflows in a linear way, that is, we can write our program as we would synchronously but without tying up a thread. If a method, called with await, has not yet completed, the execution immediately returns to the caller. When the method completes, the execution jumps back to the method where it left of, preserving all local state. What compiler does under the covers when it stumbles upon an await operator is very similar to yield return in an iterator, that is, a lot of boiler plate code gets generated in order to achieve pause/resume functionality using state machines.</p>
 
-<p><div class="highlight" style="background: #2f1e2e"><pre style="line-height: 125%"><span></span>  <span style="color: #815ba4">public</span> <span style="color: #815ba4">async</span> <span style="color: #e7e9db">Task&lt;</span><span style="color: #fec418">long</span><span style="color: #e7e9db">&gt;</span> <span style="color: #e7e9db">Download(DeviceFileInfo</span> <span style="color: #e7e9db">fileInfo;)</span>
-  <span style="color: #e7e9db">{</span>
-              <span style="color: #fec418">long</span> <span style="color: #e7e9db">bytesTransfered</span> <span style="color: #e7e9db">=</span> <span style="color: #f99b15">0</span><span style="color: #e7e9db">;</span>
-              <span style="color: #815ba4">const</span> <span style="color: #fec418">int</span> <span style="color: #e7e9db">blockSize</span> <span style="color: #e7e9db">=</span> <span style="color: #f99b15">32</span> <span style="color: #e7e9db">*</span> <span style="color: #f99b15">1024</span><span style="color: #e7e9db">;</span>
+
+  public async Task<long> Download(DeviceFileInfo fileInfo;)
+  {
+              long bytesTransfered = 0;
+              const int blockSize = 32 * 1024;
    
-              <span style="color: #fec418">var</span> <span style="color: #e7e9db">openFileCmd</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">OpenFileCmd(fileInfo.Name,</span> <span style="color: #e7e9db">FileAccess.Read);</span>
-              <span style="color: #e7e9db">OpenFileCmd</span> <span style="color: #e7e9db">fileHandleTask</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">await</span> <span style="color: #e7e9db">_embeddedDevice.AddToExecutionQueue(openFileCmd);</span>
-              <span style="color: #fec418">int</span> <span style="color: #e7e9db">fileHandle</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">fileHandleTask.SuccessResult;</span>
+              var openFileCmd = new OpenFileCmd(fileInfo.Name, FileAccess.Read);
+              OpenFileCmd fileHandleTask = await _embeddedDevice.AddToExecutionQueue(openFileCmd);
+              int fileHandle = fileHandleTask.SuccessResult;
    
-              <span style="color: #815ba4">while</span> <span style="color: #e7e9db">(bytesTransfered</span> <span style="color: #e7e9db">&lt;</span> <span style="color: #e7e9db">fileInfo.Length)</span>
-              <span style="color: #e7e9db">{</span>
-                  <span style="color: #fec418">var</span> <span style="color: #e7e9db">readBlockCmd</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">ReadBlockCmd(fileHandle,</span> <span style="color: #e7e9db">blockSize);</span>
-                  <span style="color: #e7e9db">ReadBlockCmd</span> <span style="color: #e7e9db">readBlockTask</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">await</span> <span style="color: #e7e9db">_embeddedDevice.AddToExecutionQueue(readBlockCmd);</span>
-                  <span style="color: #fec418">byte</span><span style="color: #e7e9db">[]</span> <span style="color: #e7e9db">bytesRead</span> <span style="color: #e7e9db">=</span> <span style="color: #e7e9db">readBlockTask.SuccessResult.ActualData.ToArray();</span>
-                  <span style="color: #e7e9db">Proccess(bytesRead);</span>
-                  <span style="color: #e7e9db">bytesTransfered</span> <span style="color: #e7e9db">+=</span> <span style="color: #e7e9db">bytesRead.Count();</span>
-              <span style="color: #e7e9db">}</span>
+              while (bytesTransfered < fileInfo.Length)
+              {
+                  var readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
+                  ReadBlockCmd readBlockTask = await _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+                  byte[] bytesRead = readBlockTask.SuccessResult.ActualData.ToArray();
+                  Proccess(bytesRead);
+                  bytesTransfered += bytesRead.Count();
+              }
    
-              <span style="color: #fec418">var</span> <span style="color: #e7e9db">closeFileCmd</span> <span style="color: #e7e9db">=</span> <span style="color: #815ba4">new</span> <span style="color: #e7e9db">CloseFileCmd(fileHandle);</span>
-              <span style="color: #815ba4">await</span> <span style="color: #e7e9db">_embeddedDevice.AddToExecutionQueue(closeFileCmd);</span>
-              <span style="color: #815ba4">return</span> <span style="color: #e7e9db">bytesTransfered;</span>
-  <span style="color: #e7e9db">}</span>
+              var closeFileCmd = new CloseFileCmd(fileHandle);
+              await _embeddedDevice.AddToExecutionQueue(closeFileCmd);
+              return bytesTransfered;
+  }
   
-</pre></div>
-</p>
 
 <p>In summary, hiding callbacks with async/await language asynchrony support in C# 5.0 enables us to write code like we are used to and prevents complex asynchronous workflows (completion of multiple tasks, error handling…) from becoming unreadable and difficult to maintain. Even when targeting .NET 4 there is a <a href="https://www.nuget.org/packages/Microsoft.Bcl.Async/1.0.16">package</a> on NuGet Microsoft.Bcl.Async which enables async/await keywords and includes the new Task based extension methods.</p>
-
 			</div>
 
 			

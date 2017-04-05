@@ -3,7 +3,7 @@
 <head>
   <link href="http://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.19" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -11,15 +11,15 @@
   <title> Prevent large file commits with PowerShell and Mercurial hooks &middot; I Love To Delete Code </title>
 
   
-  <link rel="stylesheet" href="http://jernejg.github.io/css/poole.css">
-  <link rel="stylesheet" href="http://jernejg.github.io/css/syntax.css">
-  <link rel="stylesheet" href="http://jernejg.github.io/css/hyde.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/poole.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/syntax.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/hyde.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://jernejg.github.io/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="http://jernejg.github.io/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://www.ilovetodeletecode.com/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://www.ilovetodeletecode.com/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="I Love To Delete Code" />
@@ -60,18 +60,18 @@
 		<div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <img src="http://jernejg.github.io/logo.png" alt="Hugo Themes">
-      <a href="http://jernejg.github.io/"><h1>I Love To Delete Code</h1></a>
+      <img src="http://www.ilovetodeletecode.com/logo.png" alt="Hugo Themes">
+      <a href="http://www.ilovetodeletecode.com"><h1>I Love To Delete Code</h1></a>
       <p class="lead">
       Deleting code is violating the law of entropy and setting the universe right.
       </p>
     </div>
     <ul class="sidebar-nav">
-      <li><a href="http://jernejg.github.io/">Home</a> </li>
+      <li><a href="http://www.ilovetodeletecode.com/">Home</a> </li>
       
-        <li><a href="http://jernejg.github.io/post/"> Blog </a></li>
+        <li><a href="http://www.ilovetodeletecode.com/post/"> Blog </a></li>
       
-        <li><a href="http://jernejg.github.io/about/"> About </a></li>
+        <li><a href="http://www.ilovetodeletecode.com/about/"> About </a></li>
       
     </ul>
     <div id="social" class="text-center">
@@ -95,15 +95,15 @@
 			<div class="post">
 			 	<h1>Prevent large file commits with PowerShell and Mercurial hooks</h1>
 			  <span class="post-date">Thu, Oct 31, 2013</span>
-			      
-
-<p>Because of Mercurial&rsquo;s immutable historical record of project files there is no way to make a committed file completely disappear from the history tree. Our only hope in this case it&rsquo;s not Obi-Wan but the hg rollback command if we act quickly. Since this command only works for one most recent operation <a href="http://stackoverflow.com/questions/3288865/how-to-keep-a-mercurial-repository-small/">(How to keep a Mercurial repository small?)</a> it will not work if we already committed one or more changes after the change that we would like to completely remove <a href="http://stackoverflow.com/questions/8466669/accidentally-committed-a-large-amount-of-raw-data-in-mercurial-how-do-i-keep-it">(Accidentally committed a large amount of raw data in Mercurial, how do I keep it from overloading my Bitbucket repository?)</a>. Our problems escalate even faster if we already pushed or pulled changes to a remote repository and our bad commit propagated to other collaborators.</p>
+			      <p>Because of Mercurial&rsquo;s immutable historical record of project files there is no way to make a committed file completely disappear from the history tree. Our only hope in this case it&rsquo;s not Obi-Wan but the hg rollback command if we act quickly. Since this command only works for one most recent operation <a href="http://stackoverflow.com/questions/3288865/how-to-keep-a-mercurial-repository-small/">(How to keep a Mercurial repository small?)</a> it will not work if we already committed one or more changes after the change that we would like to completely remove <a href="http://stackoverflow.com/questions/8466669/accidentally-committed-a-large-amount-of-raw-data-in-mercurial-how-do-i-keep-it">(Accidentally committed a large amount of raw data in Mercurial, how do I keep it from overloading my Bitbucket repository?)</a>. Our problems escalate even faster if we already pushed or pulled changes to a remote repository and our bad commit propagated to other collaborators.</p>
 
 <p>Two most common cases of brown paper bag commits <a href="http://hgbook.red-bean.com/read/finding-and-fixing-mistakes.html#sec:undo:aaaiiieee">(a commit that is so bad you want to pull a brown paper bag over your head)</a> are accidentally committing sensitive information files (passwords, connection strings&hellip;) and large files. The latter case is less critical because it only increase s repository size and the time it takes to perform operations like pull or clone.</p>
 
 <p>If you are interested in how to prevent yourself from committing large files and are more comfortable with PowerShell then please read on. If you are more of an indentation than squirrely brackets guy then you can check this similar solution in Python - <a href="http://stackoverflow.com/questions/2551719/mercurial-hook-to-disallow-committing-large-binary-files">Mercurial hook to disallow committing large binary files</a>.</p>
 
-<h2 id="workflow:72b31f74d344fd1659db485d056da730">Workflow</h2>
+<p></p>
+
+<h2 id="workflow">Workflow</h2>
 
 <p>Our solution has a simple 3 step workflow</p>
 
@@ -113,7 +113,7 @@
 <li>Roll back or complete commit transaction based on the information from step 2.</li>
 </ol>
 
-<h2 id="controlling-repository-events-with-hooks:72b31f74d344fd1659db485d056da730">Controlling repository events with hooks</h2>
+<h2 id="controlling-repository-events-with-hooks">Controlling repository events with hooks</h2>
 
 <p>Triggers that allow you to perform custom actions in response to events that occur on a Mercurial repository are called hooks. Because we need to execute a custom script every time a commit occurs there are two hooks that might interest us.</p>
 
@@ -124,73 +124,72 @@
 
 <p>For obvious reasons we will go with pretxncommit. This hook will not only call our custom PowerShell script every time a commit, but it will also pass parameters in form of environmental variables to it. Each Hook parameter gets prefixed with &ldquo;HG_”. We can list all parameters that are available from Mercurial context applying a filter to PowerShell &ldquo;Env&rdquo; drive&rsquo;s content:</p>
 
-<div class="highlight" style="background: #2f1e2e"><pre style="line-height: 125%"><span></span><span style="color: #e7e9db">dir</span> <span style="color: #e7e9db">-path</span><span style="color: #ef6155">:</span><span style="color: #48b685">&quot;env:&quot;</span> <span style="color: #e7e9db">|</span>  <span style="color: #e7e9db">Where-Object</span> <span style="color: #e7e9db">{</span><span style="color: #ef6155">$_</span><span style="color: #e7e9db">.Name</span> <span style="color: #5bc4bf">-like</span> <span style="color: #48b685">&quot;HG_*&quot;</span><span style="color: #e7e9db">}</span> <span style="color: #e7e9db">|</span>  <span style="color: #e7e9db">Select</span> <span style="color: #e7e9db">-Property</span> <span style="color: #e7e9db">Name,Value</span>
-</pre></div>
+
+dir -path:"env:" |  Where-Object {$_.Name -like "HG_*"} |  Select -Property Name,Value
 
 
 <p>Since pretxncommit is a controlling hook we can control the success of the operation using exit codes from our PowerShell script. Return a non-zero to roll back the transaction or 0 to complete it. We will exit our PowerShell script using the number of files greater than maximum size allowed.</p>
 
-<h2 id="defining-the-pretxncommit-hook-as-an-external-program:72b31f74d344fd1659db485d056da730">Defining the pretxncommit Hook as an external program</h2>
+<h2 id="defining-the-pretxncommit-hook-as-an-external-program">Defining the pretxncommit Hook as an external program</h2>
 
 <p>There are two ways in which a Hook gets executed. In our case the execution is &ldquo;shell out&rdquo; to another process. An alternative would be a Python function that is executed within the Mercurial process. In-process hooks are faster and have complete access to Mercurial API but you have to write code in Python.</p>
 
 <p>Hooks are defined in the [hooks] section of your local (hg\hgrc) or global (%USERPROFILE%\mercurial.ini) settings file. Each hook is defined in a type, name and action like format. You can edit settings file directly or use TortoiseHg settings dialog:</p>
 
-<div class="highlight" style="background: #2f1e2e"><pre style="line-height: 125%"><span></span><span style="color: #5bc4bf">[</span>hooks<span style="color: #5bc4bf">]</span> 
-pretxncommit.fileSizeCheckHook <span style="color: #5bc4bf">=</span> powershell.exe -File <span style="color: #48b685">&quot;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&quot;</span>
-</pre></div>
+
+[hooks] 
+pretxncommit.fileSizeCheckHook = powershell.exe -File "C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1"
 
 
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post1_Configure_Hook.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post1_Configure_Hook.png" />
     
     
 </figure>
 
 
-<h4 id="pretxcommit-ps1:72b31f74d344fd1659db485d056da730">pretxcommit.ps1</h4>
+<h4 id="pretxcommit-ps1">pretxcommit.ps1</h4>
 
 <script src="//gist.github.com/jernejg/7166587.js"></script>
 
 <p>As you can see I use a custom simple function called Get-HgAddedLargeFile to integrate Mercurial with PowerShell and to parse the output of hg status to PowerShell objects. You can also check out <a href="https://github.com/JeremySkinner/posh-hg">posh-hg</a> from Jeremy Skinner that deals with Mercurial/PowerShell integration on a more advanced level.</p>
 
-<p>
+
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post1_hook_output.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post1_hook_output.png" />
     
     
 </figure>
-</p>
+
 
 <p>Because our hook runs in a separate process the detailed error information we printed to the console window in our previous case doesn&rsquo;t get pulled to TortoiseHG log window instead just the default error is printed.</p>
 
-<p>
+
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post1_commit_abort.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post1_commit_abort.png" />
     
     
 </figure>
-</p>
+
 
 <p>We can solve this by calling a message box from PowerShell that will provide additional information about problematic files and in addition to that provide us with a dialog where we can decide on further action <a href="https://gist.github.com/jernejg/7196705">pretxncommit_messagebox.ps1</a>.</p>
 
-<p>
+
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post1_message_box.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post1_message_box.png" />
     
     
 </figure>
-</p>
 
-<h2 id="hooks-do-not-propagate:72b31f74d344fd1659db485d056da730">Hooks do not propagate</h2>
+
+<h2 id="hooks-do-not-propagate">Hooks do not propagate</h2>
 
 <p>For the end let me remind you that hooks are not version controlled and do not propagate when you clone or pull from a repository. When collaborating with other people you can&rsquo;t make them to use the same hooks as you.</p>
-
 			</div>
 
 			

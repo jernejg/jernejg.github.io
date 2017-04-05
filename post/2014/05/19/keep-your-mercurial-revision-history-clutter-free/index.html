@@ -3,7 +3,7 @@
 <head>
   <link href="http://gmpg.org/xfn/11" rel="profile">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="generator" content="Hugo 0.15" />
+  <meta name="generator" content="Hugo 0.19" />
 
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
@@ -11,15 +11,15 @@
   <title> Keep your Mercurial revision history clutter free &middot; I Love To Delete Code </title>
 
   
-  <link rel="stylesheet" href="http://jernejg.github.io/css/poole.css">
-  <link rel="stylesheet" href="http://jernejg.github.io/css/syntax.css">
-  <link rel="stylesheet" href="http://jernejg.github.io/css/hyde.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/poole.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/syntax.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.comcss/hyde.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://jernejg.github.io/apple-touch-icon-144-precomposed.png">
-  <link rel="shortcut icon" href="http://jernejg.github.io/favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://www.ilovetodeletecode.com/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://www.ilovetodeletecode.com/favicon.png">
 
   
   <link href="" rel="alternate" type="application/rss+xml" title="I Love To Delete Code" />
@@ -60,18 +60,18 @@
 		<div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
-      <img src="http://jernejg.github.io/logo.png" alt="Hugo Themes">
-      <a href="http://jernejg.github.io/"><h1>I Love To Delete Code</h1></a>
+      <img src="http://www.ilovetodeletecode.com/logo.png" alt="Hugo Themes">
+      <a href="http://www.ilovetodeletecode.com"><h1>I Love To Delete Code</h1></a>
       <p class="lead">
       Deleting code is violating the law of entropy and setting the universe right.
       </p>
     </div>
     <ul class="sidebar-nav">
-      <li><a href="http://jernejg.github.io/">Home</a> </li>
+      <li><a href="http://www.ilovetodeletecode.com/">Home</a> </li>
       
-        <li><a href="http://jernejg.github.io/post/"> Blog </a></li>
+        <li><a href="http://www.ilovetodeletecode.com/post/"> Blog </a></li>
       
-        <li><a href="http://jernejg.github.io/about/"> About </a></li>
+        <li><a href="http://www.ilovetodeletecode.com/about/"> About </a></li>
       
     </ul>
     <div id="social" class="text-center">
@@ -95,14 +95,14 @@
 			<div class="post">
 			 	<h1>Keep your Mercurial revision history clutter free</h1>
 			  <span class="post-date">Mon, May 19, 2014</span>
-			      
+			      <p>I have been using Mercurial revision control system as a weapon of choice for quite some time now. For controlling changes made to source code, as for backing up to a private repository hosted at Bitbucket I used the basic commands for committing, adding, pushing and pulling files to/from the local /remote repository on a daily basis. And that was sufficient for my needs&hellip;.until recently. I stumbled upon an interesting blog post titled <a href="http://elegantcode.com/2014/02/15/segregate-your-code-commits-into-tiny-topical-changes/comment-page-1/">&ldquo;Segregate your commits into tiny topical changes&rdquo;</a> that made me think of how my current revision history on a project looks like&hellip;</p>
 
-<p>I have been using Mercurial revision control system as a weapon of choice for quite some time now. For controlling changes made to source code, as for backing up to a private repository hosted at Bitbucket I used the basic commands for committing, adding, pushing and pulling files to/from the local /remote repository on a daily basis. And that was sufficient for my needs&hellip;.until recently. I stumbled upon an interesting blog post titled <a href="http://elegantcode.com/2014/02/15/segregate-your-code-commits-into-tiny-topical-changes/comment-page-1/">&ldquo;Segregate your commits into tiny topical changes&rdquo;</a> that made me think of how my current revision history on a project looks like&hellip;</p>
+<p></p>
 
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_history_example.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_history_example.png" />
     
     
 </figure>
@@ -113,28 +113,28 @@
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_better_history_example.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_better_history_example.png" />
     
     
 </figure>
 
 
-<h2 id="how-to-make-changesets-mutable-in-mercurial:4753c5a586d7d4d59ef322dbe2fb6ba7">How to make changesets mutable in Mercurial</h2>
+<h2 id="how-to-make-changesets-mutable-in-mercurial">How to make changesets mutable in Mercurial</h2>
 
 <p><a href="https://www.mercurial-scm.org/wiki/MqExtension">Mercurial Queues</a> is an extension that rewrites history. Using MQ we can remove, reorder or fold (merge) committed changesets. This functionality does not come out of the box, first we must configure the extension which is being distributed along with Mercurial. In order to enable the MQ Extension, we modify the local .hgrc file. We can do this directly or through TortoiseHG repository settings dialog:</p>
 
 <ol>
 <li>modifying local .hgrc file
-<div class="highlight" style="background: #2f1e2e"><pre style="line-height: 125%"><span></span><span style="color: #815ba4">[extensions]</span>
-<span style="color: #06b6ef">mq</span> <span style="color: #5bc4bf">=</span>
-</pre></div>
+
+[extensions]
+mq =
 </li>
 <li>Check TortoiseHG-&gt;Repository settings-&gt;Extensions-&gt;mq</li>
 </ol>
 
 <p>After the MQ Extension is enabled, Mercurial will include additional commands which we can print with hg help mq, but since this is a TortoiseHG tutorial, I will show you how to work with MQ through TortoiseHG Workbench.</p>
 
-<h2 id="goals:4753c5a586d7d4d59ef322dbe2fb6ba7">Goals</h2>
+<h2 id="goals">Goals</h2>
 
 <p>Using MQ Extensions we will modify our existing revision history, before we make it public. We will try to:</p>
 
@@ -151,14 +151,14 @@
 
 <p>Long story short, patches deal with handling new code contributions from developers that do not have full commit access to a repository. This is useful on open source projects. But In this case we will use patches to prevent making permanent changes to our revision history and so making it more clutter free.</p>
 
-<h2 id="treat-changesets-as-patches:4753c5a586d7d4d59ef322dbe2fb6ba7">Treat changesets as patches</h2>
+<h2 id="treat-changesets-as-patches">Treat changesets as patches</h2>
 
 <p>In order to manipulate changesets we must first add them to the Patch Queue. To view the Patch Queue window select &ldquo;View-&gt;Show Patch Queue&rdquo; from TortoiseHG Workbench:</p>
 
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_WorkBench.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_WorkBench.png" />
     
     
 </figure>
@@ -166,14 +166,14 @@
 
 <p>If MQ was properly enabled we should see a &ldquo;Modify History&rdquo; menu item in the context menu of the selected changeset.</p>
 
-<h2 id="goal-1-delete-changeset-4:4753c5a586d7d4d59ef322dbe2fb6ba7">Goal 1: Delete changeset 4</h2>
+<h2 id="goal-1-delete-changeset-4">Goal 1: Delete changeset 4</h2>
 
 <p>Select changeset 4 and import it to MQ. After a successful import you should see a new patch was added to the queue named &ldquo;<revision>.diff&rdquo;. This patch was pushed on top of the repository stack and corresponds to the selected changeset:</p>
 
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_delete_changeset.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_delete_changeset.png" />
     
     
 </figure>
@@ -184,7 +184,7 @@
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_unapply_one_patch.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_unapply_one_patch.png" />
     
     
 </figure>
@@ -195,7 +195,7 @@
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_grayed_out_color.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_grayed_out_color.png" />
     
     
 </figure>
@@ -206,20 +206,20 @@
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_delete_patch.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_delete_patch.png" />
     
     
 </figure>
 
 
-<h2 id="goal-2-reorder-changesets:4753c5a586d7d4d59ef322dbe2fb6ba7">Goal 2: Reorder changesets</h2>
+<h2 id="goal-2-reorder-changesets">Goal 2: Reorder changesets</h2>
 
 <p>Let’s put refactoring changes in a changeset following the Feature A implementation changesets. Select changeset 1 and import it to MQ, then unapply all patches:</p>
 
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_goal2_reorder.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_goal2_reorder.png" />
     
     
 </figure>
@@ -230,13 +230,13 @@
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_drag_adn_drop.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_drag_adn_drop.png" />
     
     
 </figure>
 
 
-<h2 id="goal-3-split-a-changeset:4753c5a586d7d4d59ef322dbe2fb6ba7">Goal 3: Split a changeset</h2>
+<h2 id="goal-3-split-a-changeset">Goal 3: Split a changeset</h2>
 
 <p>Using the shelve tool TortoiseHg &ldquo;Repository-&gt;Shelve&rdquo; we can move changes between unapplied patches. We can move all the changes made to a file or only chunks of changes inside a file. To move changes we select a target and destination patch in the left and right toolbar then we can use:</p>
 
@@ -248,60 +248,59 @@
 
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_split.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_split.png" />
     
     
 </figure>
 
 
-<h2 id="goal-4-fold-merge-changesets:4753c5a586d7d4d59ef322dbe2fb6ba7">Goal 4: Fold (merge changesets)</h2>
+<h2 id="goal-4-fold-merge-changesets">Goal 4: Fold (merge changesets)</h2>
 
 <p>Re-apply patch 1 then select patches 2, 3, 5, 6, 7 and click &ldquo;Fold patches&rdquo;. This will merge selected patches into the topmost applied patch 1:</p>
 
-<p>
+
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_fold.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_fold.png" />
     
     
 </figure>
-</p>
+
 
 <p>A commit dialog will appear, containing comments from all the folded patches separated by a three asterisk syntax. Edit patch message and commit changes:</p>
 
-<p>
+
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_patch_fold.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_patch_fold.png" />
     
     
 </figure>
-</p>
+
 
 <p>Now Re-apply patch 4:</p>
 
-<p>
+
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_reaply_patch4.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_reaply_patch4.png" />
     
     
 </figure>
-</p>
+
 
 <p>Turn the applied patches back to a regular Mercurial changeset with the &ldquo;Finish Patch&rdquo; command:</p>
 
-<p>
+
 <figure >
     
-        <img src="http://jernejg.github.io/img/Post3_finish_patch_command.png" />
+        <img src="http://www.ilovetodeletecode.com/img/Post3_finish_patch_command.png" />
     
     
 </figure>
-</p>
+
 
 <p>Our changesets are now ready to be pushed to a public repository and shared with the other collaborators.</p>
-
 			</div>
 
 			
