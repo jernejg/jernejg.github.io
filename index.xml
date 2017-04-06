@@ -10,12 +10,20 @@
     <atom:link href="http://www.ilovetodeletecode.com/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>About this blog</title>
+      <title>About</title>
       <link>http://www.ilovetodeletecode.com/about/</link>
       <pubDate>Thu, 10 Mar 2016 11:10:55 +0000</pubDate>
       
       <guid>http://www.ilovetodeletecode.com/about/</guid>
       <description>
+
+&lt;h2 id=&#34;about-me&#34;&gt;About me&lt;/h2&gt;
+
+&lt;p&gt;My name is Jernej Gorički. I graduated from college in Faculty of Computer and Information Science, Ljubljana Slovenia. With background knowledge of C/C++ &amp;amp; Java my weapon of choice are .NET &amp;amp; C# . I worked as a freelancer with focus on desktop and web applications for exclusive customers in Automation and Test &amp;amp; Measurement Industry like &lt;a href=&#34;http://www.metrel.si/&#34;&gt;Metrel d.d.&lt;/a&gt;, &lt;a href=&#34;http://www.iskraimpuls.si/en/&#34;&gt;Iskra Impuls d.o.o.&lt;/a&gt; and &lt;a href=&#34;http://www.korona.si/en/&#34;&gt;Korona engineering d.d.&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In 2015 I moved to London and started working in Legal Industry. At the moment I work for Mishcon de Reya LLP as a senior .NET developer.&lt;/p&gt;
+
+&lt;h2 id=&#34;about-this-blog&#34;&gt;About this blog&lt;/h2&gt;
 
 &lt;p&gt;For many artists the act of destroying their work played an important role in their career. Embarrassing early creations they would like to forget about, artistic rebirth and doubt in their work all left them remains (ideas) which they would gradually incorporate into new pieces.&lt;/p&gt;
 
@@ -30,10 +38,6 @@
 
 &lt;p&gt;-John Sonmez&lt;/p&gt;
 &lt;/blockquote&gt;
-
-&lt;h2 id=&#34;about-me&#34;&gt;About me&lt;/h2&gt;
-
-&lt;p&gt;My name is Jernej Gorički. I graduated from college in Faculty of Computer and Information Science, Ljubljana Slovenia. With background knowledge of C/C++ &amp;amp; Java my weapon of choice are .NET &amp;amp; C# . I worked as a freelancer with focus on desktop and web applications for exclusive customers in Automation and Test &amp;amp; Measurement Industry like &lt;a href=&#34;http://www.metrel.si/&#34;&gt;Metrel d.d.&lt;/a&gt;, &lt;a href=&#34;http://www.iskraimpuls.si/en/&#34;&gt;Iskra Impuls d.o.o.&lt;/a&gt; and &lt;a href=&#34;http://www.korona.si/en/&#34;&gt;Korona engineering d.d.&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
