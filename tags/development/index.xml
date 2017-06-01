@@ -43,8 +43,8 @@
 
 &lt;p&gt;For obvious reasons we will go with pretxncommit. This hook will not only call our custom PowerShell script every time a commit, but it will also pass parameters in form of environmental variables to it. Each Hook parameter gets prefixed with &amp;ldquo;HG_”. We can list all parameters that are available from Mercurial context applying a filter to PowerShell &amp;ldquo;Env&amp;rdquo; drive&amp;rsquo;s content:&lt;/p&gt;
 
-
-dir -path:&#34;env:&#34; |  Where-Object {$_.Name -like &#34;HG_*&#34;} |  Select -Property Name,Value
+&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;dir&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;-path&lt;/span&gt;&lt;span style=&#34;color: #ef6155&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;env:&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;|&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;Where-Object&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color: #ef6155&#34;&gt;$_&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;.Name&lt;/span&gt; &lt;span style=&#34;color: #5bc4bf&#34;&gt;-like&lt;/span&gt; &lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;HG_*&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;|&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;Select&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;-Property&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Name,Value&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Since pretxncommit is a controlling hook we can control the success of the operation using exit codes from our PowerShell script. Return a non-zero to roll back the transaction or 0 to complete it. We will exit our PowerShell script using the number of files greater than maximum size allowed.&lt;/p&gt;
@@ -55,9 +55,9 @@ dir -path:&#34;env:&#34; |  Where-Object {$_.Name -like &#34;HG_*&#34;} |  Selec
 
 &lt;p&gt;Hooks are defined in the [hooks] section of your local (hg\hgrc) or global (%USERPROFILE%\mercurial.ini) settings file. Each hook is defined in a type, name and action like format. You can edit settings file directly or use TortoiseHg settings dialog:&lt;/p&gt;
 
-
-[hooks] 
-pretxncommit.fileSizeCheckHook = powershell.exe -File &#34;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&#34;
+&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #5bc4bf&#34;&gt;[&lt;/span&gt;hooks&lt;span style=&#34;color: #5bc4bf&#34;&gt;]&lt;/span&gt; 
+pretxncommit.fileSizeCheckHook &lt;span style=&#34;color: #5bc4bf&#34;&gt;=&lt;/span&gt; powershell.exe -File &lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
 
 

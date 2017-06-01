@@ -27,7 +27,7 @@
 
 &lt;p&gt;For many artists the act of destroying their work played an important role in their career. Embarrassing early creations they would like to forget about, artistic rebirth and doubt in their work all left them remains (ideas) which they would gradually incorporate into new pieces.&lt;/p&gt;
 
-&lt;p&gt;What do artists have in common with developers? Metaphors play a key role in constructing concepts and terminology especially in the world of Object Oriented programming. They also give you insight into programming problems and processes. As the title of a &lt;a href=&#34;https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming&#34;&gt;fundamental monograph&lt;/a&gt; implies computer programming is an art hence developers are all artists.&lt;/p&gt;
+&lt;p&gt;What do artists have in common with developers? Metaphors play a key role in constructing concepts and terminology especially in the world of Object Oriented Programming. They also give you insight into programming problems and processes. As the title of a &lt;a href=&#34;https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming&#34;&gt;fundamental monograph&lt;/a&gt; implies computer programming is an art hence developers are all artists.&lt;/p&gt;
 
 &lt;p&gt;The name of this blog was inspired by one of my favorite &lt;a href=&#34;http://elegantcode.com/2010/06/06/the-best-code-you-will-ever-write/&#34;&gt;blog posts&lt;/a&gt; that deals with destroying your work:&lt;/p&gt;
 
@@ -114,8 +114,8 @@
 
 &lt;p&gt;Each time you write or read data to/from disk drives the OS caches data unless FILE_FLAG_NO_BUFFERING is specified. In latter case your application has total control over the buffering process which is known as unbuffered file I/O. When inspecting .NET Reference Source 4.5.2 you can see that the FileOptions.NoBuffering enum is currently commented out. But the guard clause that validates FileOptions flags before calling native CreateFile function allows the value 0x20000000 and this value relates to the native flag FILE_FLAG_NO_BUFFERING. So the following initialization of FileStream would be legal:&lt;/p&gt;
 
-
-var f = new FileStream(&#34;c:\\file.txt&#34;, FileMode.Open, FileAccess.Read, FileShare.None, bufferSize, (FileOptions)0x20000000);
+&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;f&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileStream(&lt;/span&gt;&lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;c:\\file.txt&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileMode.Open,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileShare.None,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bufferSize,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(FileOptions)&lt;/span&gt;&lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;x20000000);&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Files opened with FILE_FLAG_NO_BUFFERING do not go through the Cache Manager (all of the cache flags are ignored) and working with such files requires from our application to follow some rules regarding buffer alignment criteria. This is an &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/windows/desktop/cc644950(v=vs.85).aspx&#34;&gt;advanced topic&lt;/a&gt; and goes beyond this post. For each file that is accessed through the Cache Manager an array of internal data structures need to be created and managed. The bigger the file, the more resources it takes to successfully support caching. That is why it&amp;rsquo;s advised to use FILE_FLAG_NO_BUFFERING when working with very large files.&lt;/p&gt;
@@ -238,9 +238,9 @@ var f = new FileStream(&#34;c:\\file.txt&#34;, FileMode.Open, FileAccess.Read, F
 
 &lt;ol&gt;
 &lt;li&gt;modifying local .hgrc file
-
-[extensions]
-mq =
+&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;[extensions]&lt;/span&gt;
+&lt;span style=&#34;color: #06b6ef&#34;&gt;mq&lt;/span&gt; &lt;span style=&#34;color: #5bc4bf&#34;&gt;=&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;Check TortoiseHG-&amp;gt;Repository settings-&amp;gt;Extensions-&amp;gt;mq&lt;/li&gt;
 &lt;/ol&gt;
@@ -483,13 +483,13 @@ mq =
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-
-public interface ICommand
-{
-    IEnumerable&lt;byte&gt; CommandInstruction { get; }
-    void Proccess(IEnumerable&lt;byte&gt; data);
-    bool IsFinished { get; }
-}
+&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ICommand&lt;/span&gt;
+&lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color: #e7e9db&#34;&gt;IEnumerable&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CommandInstruction&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;Proccess&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(IEnumerable&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;data);&lt;/span&gt;
+    &lt;span style=&#34;color: #fec418&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;IsFinished&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2 id=&#34;collaborations&#34;&gt;Collaborations&lt;/h2&gt;
@@ -531,13 +531,13 @@ The second most important class in TPL is TaskCompletionSource. It enables us to
 
 &lt;p&gt;Lets see how we wrap TaskCompletionSource around our external asynchronous operation. We add the command to the execution queue together with the corresponding TaskCompletionSource object. TaskCompletionSource exposes a Task object that is completely controlled by its parent. We return this Task to the caller. Providing a TaskCompletionSource for each command through the process of execution gives us a mechanism to signal back to the caller the state of the ongoing command execution (SetCanceled, SetException, SetResult). Returning a Task from the AddToExecutionQueue function enables the caller to monitor that state and utilize a continuation (callback) that executes after completion.&lt;/p&gt;
 
-
-public Task&lt;TReturn&gt; AddToExecutionQueue&lt;TReturn&gt;(TReturn command)
-{
-    var tcs = new TaskCompletionSource&lt;TReturn&gt;();
-    _commandQueue.Enqueue(new CommandTaskPair(command,tsc));
-    return tcs.Task;
-}
+&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;TReturn&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;AddToExecutionQueue&amp;lt;TReturn&amp;gt;(TReturn&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;command)&lt;/span&gt;
+&lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+    &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;TReturn&amp;gt;();&lt;/span&gt;
+    &lt;span style=&#34;color: #e7e9db&#34;&gt;_commandQueue.Enqueue(&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CommandTaskPair(command,tsc));&lt;/span&gt;
+    &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs.Task;&lt;/span&gt;
+&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2 id=&#34;structuring-asynchronous-flow-of-control&#34;&gt;Structuring asynchronous flow of control&lt;/h2&gt;
@@ -563,150 +563,151 @@ public Task&lt;TReturn&gt; AddToExecutionQueue&lt;TReturn&gt;(TReturn command)
 
 &lt;p&gt;Each next step needs to be invoked from the previously completed one. Such complex sequence of steps result in nested spaghetti continuations which are hard to follow and maintain. Next problem is that we are downloading file chunk by chunk so we need a looping construct, but looping constructs don&amp;rsquo;t go hand in hand with continuations. Because the next iteration should be triggered from the continuation itself we would have to use recursion. The only advantage with nested lambdas are closures which allow you to pass local state to the function without the need for parameters, but beware of closures if you don’t understand them fully, because funny things can happen :).&lt;/p&gt;
 
-
-public Task&lt;long&gt; Download()
-{
-            long bytesTransfered = 0;
-            const int blockSize = 32 * 1024;
+&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Download()&lt;/span&gt;
+&lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+            &lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
+            &lt;span style=&#34;color: #815ba4&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;1024&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
  
-            var tcs = new TaskCompletionSource&lt;long&gt;();
+            &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;();&lt;/span&gt;
  
-            var openFileCmd = new OpenFileCmd(_fileInfo.Name, FileAccess.Read);
-            Task&lt;OpenFileCmd&gt; fileHandleTask = _embeddedDevice.AddToExecutionQueue(openFileCmd);
+            &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;openFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd(_fileInfo.Name,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read);&lt;/span&gt;
+            &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;OpenFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(openFileCmd);&lt;/span&gt;
  
-            fileHandleTask.ContinueWith(fileHandleFinished =&gt;
-            {
-                int fileHandle = fileHandleFinished.Result.SuccessResult;
-                var readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
-                Task&lt;ReadBlockCmd&gt; readBlockTask = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+            &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.ContinueWith(fileHandleFinished&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&amp;gt;&lt;/span&gt;
+            &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+                &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleFinished.Result.SuccessResult;&lt;/span&gt;
+                &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize);&lt;/span&gt;
+                &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
  
-                Action&lt;Task&lt;ReadBlockCmd&gt;&gt; recursiveDownload = null;
+                &lt;span style=&#34;color: #e7e9db&#34;&gt;Action&amp;lt;Task&amp;lt;ReadBlockCmd&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;recursiveDownload&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
  
-                recursiveDownload = readBlockFInished =&gt;
-                {
-                    byte[] bytesRead = readBlockFInished.Result.SuccessResult.ActualData.ToArray();
-                    bytesTransfered += bytesRead.Count();
-                    Proccess(bytesRead);
+                &lt;span style=&#34;color: #e7e9db&#34;&gt;recursiveDownload&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockFInished&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&amp;gt;&lt;/span&gt;
+                &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+                    &lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockFInished.Result.SuccessResult.ActualData.ToArray();&lt;/span&gt;
+                    &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead.Count();&lt;/span&gt;
+                    &lt;span style=&#34;color: #e7e9db&#34;&gt;Proccess(bytesRead);&lt;/span&gt;
  
-                    if (bytesTransfered &lt; _fileInfo.Length)
-                    {
-                        readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
-                        Task&lt;ReadBlockCmd&gt; nextBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
-                        nextBlock.ContinueWith(recursiveDownload);
-                    }
-                    else
-                    {
-                        var closeFileCmd = new CloseFileCmd(fileHandle);
-                        Task&lt;CloseFileCmd&gt; closeHandle = _embeddedDevice.AddToExecutionQueue(closeFileCmd);
-                        closeHandle.ContinueWith(closedHandle =&gt; tcs.SetResult(bytesTransfered));
-                    }
-                };
-                readBlockTask.ContinueWith(recursiveDownload);
-            });
-            return tcs.Task;
-}
+                    &lt;span style=&#34;color: #815ba4&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo.Length)&lt;/span&gt;
+                    &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+                        &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize);&lt;/span&gt;
+                        &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
+                        &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock.ContinueWith(recursiveDownload);&lt;/span&gt;
+                    &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+                    &lt;span style=&#34;color: #815ba4&#34;&gt;else&lt;/span&gt;
+                    &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+                        &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CloseFileCmd(fileHandle);&lt;/span&gt;
+                        &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;CloseFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(closeFileCmd);&lt;/span&gt;
+                        &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle.ContinueWith(closedHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs.SetResult(bytesTransfered));&lt;/span&gt;
+                    &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+                &lt;span style=&#34;color: #e7e9db&#34;&gt;};&lt;/span&gt;
+                &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask.ContinueWith(recursiveDownload);&lt;/span&gt;
+            &lt;span style=&#34;color: #e7e9db&#34;&gt;});&lt;/span&gt;
+            &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs.Task;&lt;/span&gt;
+&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2 id=&#34;approach-2-writing-separate-functions&#34;&gt;Approach 2: Writing separate functions&lt;/h2&gt;
 
 &lt;p&gt;Splitting callbacks into separate functions gives us a more readable control flow and also an easier way to achieve looping behavior. One drawback is that we have to pass parameters or use member variables in order to preserve context. Compared with lambda expressions, we are better off splitting functions but at the end of the day nothing can bring us a more natural control flow than approach 3.&lt;/p&gt;
 
-
-   public class DownloadFile
-   {
-           private readonly EmbeddedDevice _embeddedDevice;
-           private  DeviceFileInfo _fileInfo;
-           private TaskCompletionSource&lt;long&gt; _tcs;
-           long _bytesTransfered;
-           private int _fileHandle;
-           const int BlockSize = 32 * 1024;
+&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;   &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;DownloadFile&lt;/span&gt;
+   &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;readonly&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;EmbeddedDevice&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice;&lt;/span&gt;
+           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;DeviceFileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo;&lt;/span&gt;
+           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs;&lt;/span&gt;
+           &lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_bytesTransfered;&lt;/span&gt;
+           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileHandle;&lt;/span&gt;
+           &lt;span style=&#34;color: #815ba4&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;BlockSize&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;1024&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
     
-           public DownloadFile(EmbeddedDevice embeddedDevice)
-           {
-               _embeddedDevice = embeddedDevice;
-           }
+           &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;DownloadFile&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(EmbeddedDevice&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;embeddedDevice)&lt;/span&gt;
+           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;embeddedDevice;&lt;/span&gt;
+           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
     
     
-           public Task Download(DeviceFileInfo fileInfo)
-           {
-               _tcs = new TaskCompletionSource&lt;long&gt;();
-               _bytesTransfered = 0;
-               _fileInfo = fileInfo;
-               _fileHandle = 0;
+           &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;Download&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(DeviceFileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo)&lt;/span&gt;
+           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;();&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;_bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo;&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
     
-               var openFileCmd = new OpenFileCmd(_fileInfo.Name, FileAccess.Read);
-               Task&lt;OpenFileCmd&gt; fileHandleTask = _embeddedDevice.AddToExecutionQueue(openFileCmd);
+               &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;openFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd(_fileInfo.Name,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read);&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;OpenFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(openFileCmd);&lt;/span&gt;
     
-               fileHandleTask.ContinueWith(OnFilehandleReceived);
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.ContinueWith(OnFilehandleReceived);&lt;/span&gt;
     
-               return _tcs.Task;
-           }
+               &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs.Task;&lt;/span&gt;
+           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
     
-           private void OnFilehandleReceived(Task&lt;OpenFileCmd&gt; fileHandleTask)
-           {
-               _fileHandle = fileHandleTask.Result.SuccessResult;
-               var readBlockCmd = new ReadBlockCmd(_fileHandle, BlockSize);
-               Task&lt;ReadBlockCmd&gt; firstBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;OnFilehandleReceived&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(Task&amp;lt;OpenFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask)&lt;/span&gt;
+           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.Result.SuccessResult;&lt;/span&gt;
+               &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(_fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;BlockSize);&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;firstBlock&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
     
-               firstBlock.ContinueWith(OnBlockReceived);
-           }
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;firstBlock.ContinueWith(OnBlockReceived);&lt;/span&gt;
+           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
     
-           private void OnBlockReceived(Task&lt;ReadBlockCmd&gt; readBlockTask)
-           {
-               IEnumerable&lt;byte&gt; data = readBlockTask.Result.SuccessResult.ActualData;
-               ProccessData(data);
-               _bytesTransfered += data.Count();
+           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;OnBlockReceived&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask)&lt;/span&gt;
+           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;IEnumerable&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask.Result.SuccessResult.ActualData;&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;ProccessData(data);&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;_bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;data.Count();&lt;/span&gt;
     
-               if (_bytesTransfered &lt; _fileInfo.Length)
-               {
-                   var readBlockCmd = new ReadBlockCmd(_fileHandle, BlockSize);
-                   Task&lt;ReadBlockCmd&gt; nextBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
-                   nextBlock.ContinueWith(OnBlockReceived);
-               }
-               else
-               {
-                   var closeFileCmd = new CloseFileCmd(_fileHandle);
-                   Task&lt;CloseFileCmd&gt; closeHandle = _embeddedDevice.AddToExecutionQueue(closeFileCmd);
+               &lt;span style=&#34;color: #815ba4&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(_bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo.Length)&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+                   &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(_fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;BlockSize);&lt;/span&gt;
+                   &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
+                   &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock.ContinueWith(OnBlockReceived);&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+               &lt;span style=&#34;color: #815ba4&#34;&gt;else&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+                   &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CloseFileCmd(_fileHandle);&lt;/span&gt;
+                   &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;CloseFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(closeFileCmd);&lt;/span&gt;
     
-                   closeHandle.ContinueWith(OnResourcesCleaned);
-               }
-           }
+                   &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle.ContinueWith(OnResourcesCleaned);&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
     
-           private void OnResourcesCleaned(Task&lt;CloseFileCmd&gt; closedHandle)
-           {
-               _tcs.SetResult(_bytesTransfered);
-           }
-    }
+           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;OnResourcesCleaned&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(Task&amp;lt;CloseFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closedHandle)&lt;/span&gt;
+           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+               &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs.SetResult(_bytesTransfered);&lt;/span&gt;
+           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+    &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h2 id=&#34;approach-3-using-c-5-0-language-constructs-async-await&#34;&gt;Approach 3: Using C# 5.0 language constructs async/await&lt;/h2&gt;
 
 &lt;p&gt;Async/await enables us to program asynchronous workflows in a linear way, that is, we can write our program as we would synchronously but without tying up a thread. If a method, called with await, has not yet completed, the execution immediately returns to the caller. When the method completes, the execution jumps back to the method where it left of, preserving all local state. What compiler does under the covers when it stumbles upon an await operator is very similar to yield return in an iterator, that is, a lot of boiler plate code gets generated in order to achieve pause/resume functionality using state machines.&lt;/p&gt;
 
-
-  public async Task&lt;long&gt; Download(DeviceFileInfo fileInfo;)
-  {
-              long bytesTransfered = 0;
-              const int blockSize = 32 * 1024;
+&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Download(DeviceFileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo;)&lt;/span&gt;
+  &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+              &lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
+              &lt;span style=&#34;color: #815ba4&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;1024&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
    
-              var openFileCmd = new OpenFileCmd(fileInfo.Name, FileAccess.Read);
-              OpenFileCmd fileHandleTask = await _embeddedDevice.AddToExecutionQueue(openFileCmd);
-              int fileHandle = fileHandleTask.SuccessResult;
+              &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;openFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd(fileInfo.Name,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read);&lt;/span&gt;
+              &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(openFileCmd);&lt;/span&gt;
+              &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.SuccessResult;&lt;/span&gt;
    
-              while (bytesTransfered &lt; fileInfo.Length)
-              {
-                  var readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
-                  ReadBlockCmd readBlockTask = await _embeddedDevice.AddToExecutionQueue(readBlockCmd);
-                  byte[] bytesRead = readBlockTask.SuccessResult.ActualData.ToArray();
-                  Proccess(bytesRead);
-                  bytesTransfered += bytesRead.Count();
-              }
+              &lt;span style=&#34;color: #815ba4&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo.Length)&lt;/span&gt;
+              &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
+                  &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize);&lt;/span&gt;
+                  &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
+                  &lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask.SuccessResult.ActualData.ToArray();&lt;/span&gt;
+                  &lt;span style=&#34;color: #e7e9db&#34;&gt;Proccess(bytesRead);&lt;/span&gt;
+                  &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead.Count();&lt;/span&gt;
+              &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
    
-              var closeFileCmd = new CloseFileCmd(fileHandle);
-              await _embeddedDevice.AddToExecutionQueue(closeFileCmd);
-              return bytesTransfered;
-  }
+              &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CloseFileCmd(fileHandle);&lt;/span&gt;
+              &lt;span style=&#34;color: #815ba4&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(closeFileCmd);&lt;/span&gt;
+              &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered;&lt;/span&gt;
+  &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
   
+&lt;/pre&gt;&lt;/div&gt;
+
 
 &lt;p&gt;In summary, hiding callbacks with async/await language asynchrony support in C# 5.0 enables us to write code like we are used to and prevents complex asynchronous workflows (completion of multiple tasks, error handling…) from becoming unreadable and difficult to maintain. Even when targeting .NET 4 there is a &lt;a href=&#34;https://www.nuget.org/packages/Microsoft.Bcl.Async/1.0.16&#34;&gt;package&lt;/a&gt; on NuGet Microsoft.Bcl.Async which enables async/await keywords and includes the new Task based extension methods.&lt;/p&gt;</description>
     </item>
@@ -746,8 +747,8 @@ public Task&lt;long&gt; Download()
 
 &lt;p&gt;For obvious reasons we will go with pretxncommit. This hook will not only call our custom PowerShell script every time a commit, but it will also pass parameters in form of environmental variables to it. Each Hook parameter gets prefixed with &amp;ldquo;HG_”. We can list all parameters that are available from Mercurial context applying a filter to PowerShell &amp;ldquo;Env&amp;rdquo; drive&amp;rsquo;s content:&lt;/p&gt;
 
-
-dir -path:&#34;env:&#34; |  Where-Object {$_.Name -like &#34;HG_*&#34;} |  Select -Property Name,Value
+&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;dir&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;-path&lt;/span&gt;&lt;span style=&#34;color: #ef6155&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;env:&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;|&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;Where-Object&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color: #ef6155&#34;&gt;$_&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;.Name&lt;/span&gt; &lt;span style=&#34;color: #5bc4bf&#34;&gt;-like&lt;/span&gt; &lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;HG_*&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;|&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;Select&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;-Property&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Name,Value&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Since pretxncommit is a controlling hook we can control the success of the operation using exit codes from our PowerShell script. Return a non-zero to roll back the transaction or 0 to complete it. We will exit our PowerShell script using the number of files greater than maximum size allowed.&lt;/p&gt;
@@ -758,9 +759,9 @@ dir -path:&#34;env:&#34; |  Where-Object {$_.Name -like &#34;HG_*&#34;} |  Selec
 
 &lt;p&gt;Hooks are defined in the [hooks] section of your local (hg\hgrc) or global (%USERPROFILE%\mercurial.ini) settings file. Each hook is defined in a type, name and action like format. You can edit settings file directly or use TortoiseHg settings dialog:&lt;/p&gt;
 
-
-[hooks] 
-pretxncommit.fileSizeCheckHook = powershell.exe -File &#34;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&#34;
+&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #5bc4bf&#34;&gt;[&lt;/span&gt;hooks&lt;span style=&#34;color: #5bc4bf&#34;&gt;]&lt;/span&gt; 
+pretxncommit.fileSizeCheckHook &lt;span style=&#34;color: #5bc4bf&#34;&gt;=&lt;/span&gt; powershell.exe -File &lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
 
 
 
