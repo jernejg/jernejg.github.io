@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Golang on I Love To Delete Code</title>
+    <link>http://www.ilovetodeletecode.com/categories/golang/index.xml</link>
+    <description>Recent content in Golang on I Love To Delete Code</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <atom:link href="http://www.ilovetodeletecode.com/categories/golang/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Post5SolrAzure</title>
+      <link>http://www.ilovetodeletecode.com/post/2017/06/01/post5solrazure/</link>
+      <pubDate>Thu, 01 Jun 2017 22:35:15 +0100</pubDate>
+      
+      <guid>http://www.ilovetodeletecode.com/post/2017/06/01/post5solrazure/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

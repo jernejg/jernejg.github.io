@@ -6,8 +6,17 @@
     <description>Recent content in Posts on I Love To Delete Code</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Nov 2014 14:03:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Jun 2017 22:35:15 +0100</lastBuildDate>
     <atom:link href="http://www.ilovetodeletecode.com/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Post5SolrAzure</title>
+      <link>http://www.ilovetodeletecode.com/post/2017/06/01/post5solrazure/</link>
+      <pubDate>Thu, 01 Jun 2017 22:35:15 +0100</pubDate>
+      
+      <guid>http://www.ilovetodeletecode.com/post/2017/06/01/post5solrazure/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>FileOptions Enumeration, Windows Cache Manager and Memory-Mapped Files (C#) Part 1</title>
