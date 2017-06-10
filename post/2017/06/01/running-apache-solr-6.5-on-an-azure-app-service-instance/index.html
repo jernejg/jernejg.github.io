@@ -1,0 +1,191 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.19" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Running Apache Solr 6.5 on an Azure App Service instance &middot; I Love To Delete Code </title>
+
+  
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.com/css/poole.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.com/css/syntax.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.com/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://www.ilovetodeletecode.com/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://www.ilovetodeletecode.com/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="I Love To Delete Code" />
+  <style>
+      #social,
+      #links {
+          margin-top: 10px
+      }
+
+      #social i {
+          margin-left: 25px
+      }
+
+      #social a:hover,
+      #social a:focus {
+          text-decoration: none;
+          color: #bddbed
+      }
+
+      pre {
+        background-color: #202020;
+        color: white;
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+        font-size: 12px;
+      }
+
+
+
+       
+  </style>
+
+
+</head>
+
+	<body class="">
+		<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <img src="http://www.ilovetodeletecode.com/logo.png" alt="Hugo Themes">
+      <a href="http://www.ilovetodeletecode.com/"><h1>I Love To Delete Code</h1></a>
+      <p class="lead">
+      Deleting code is violating the law of entropy and setting the universe right.
+      </p>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="http://www.ilovetodeletecode.com/">Home</a> </li>
+      
+        <li><a href="http://www.ilovetodeletecode.com/post/"> Blog </a></li>
+      
+        <li><a href="http://www.ilovetodeletecode.com/about/"> About </a></li>
+      
+    </ul>
+    <div id="social" class="text-center">
+      <a href="https://twitter.com/JernejGoricki" target="new">
+        <i class="fa fa-twitter fa-2x"></i>
+      </a>
+      <a href="http://uk.linkedin.com/in/jernejgoricki" target="new">
+        <i class="fa fa-linkedin fa-2x"></i>
+      </a>
+</div>
+    <p></p>
+  </div>
+</div>
+
+
+
+
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Running Apache Solr 6.5 on an Azure App Service instance</h1>
+			  <span class="post-date">Thu, Jun 1, 2017</span>
+			      
+
+<p>This post describes a daring way to attempt to deploy a single Solr node to an Azure App Service. I say daring because I could not find a copy paste solution on Stack Overflow. I saw some light at the end of the tunnel after reading the <a href="https://docs.microsoft.com/en-us/azure/app-service-web/web-sites-java-custom-upload">Upload a custom Java web app to Azure</a> article on Azure documentation which mentions Jetty and since Solr is running in a Jetty Servlet container by default I guessed I should at least give it a try.</p>
+
+<h2 id="why-azure-app-services">Why Azure App Services?</h2>
+
+<p>I have a small amount of data to index and I will never need more than one Solr node running, so why not. A pre-configured Linux VM would be an overkill. I haven&rsquo;t tried Azure Search yet, but with Solr I can retrieve all the stats data for my filters and search results in a single request, not to mention its powerful natural language processing capabilities.</p>
+
+<p>Let&rsquo;s get to work&hellip;</p>
+
+<h2 id="azure-portal-s-configuration-ui">Azure Portal&rsquo;s configuration UI</h2>
+
+<p>You only need to enable Java (at least version 1.8 for Solr &gt; 6.x) and Jetty as a Web Container.</p>
+
+
+<figure >
+    <a href="http://www.ilovetodeletecode.com/img/Post5_azure_portal_configuration.png">
+        <img src="http://www.ilovetodeletecode.com/img/Post5_azure_portal_configuration.png" />
+    </a>
+    
+</figure>
+
+
+<h2 id="web-config-httpplatform-configuration">Web.config httpPlatform configuration</h2>
+
+<p>Extract contents of <a href="http://www-eu.apache.org/dist/lucene/solr/6.5.1/">solr-6.5.1.zip</a> to <b>%HOME%\site\wwwroot</b> folder of your App Service and add a Web.config with the following settings:</p>
+
+<div class="highlight" style="background: #202020"><pre style="line-height: 125%"><span></span><span style="color: #cd2828; font-weight: bold">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span style="color: #6ab825; font-weight: bold">&lt;configuration&gt;</span>
+  <span style="color: #6ab825; font-weight: bold">&lt;system.webServer&gt;</span>    
+    <span style="color: #6ab825; font-weight: bold">&lt;handlers&gt;</span>
+      <span style="color: #6ab825; font-weight: bold">&lt;add</span>  <span style="color: #bbbbbb">name=</span><span style="color: #ed9d13">&quot;httppPlatformHandler&quot;</span> 
+            <span style="color: #bbbbbb">path=</span><span style="color: #ed9d13">&quot;*&quot;</span> 
+            <span style="color: #bbbbbb">verb=</span><span style="color: #ed9d13">&quot;*&quot;</span> 
+            <span style="color: #bbbbbb">modules=</span><span style="color: #ed9d13">&quot;httpPlatformHandler&quot;</span> 
+            <span style="color: #bbbbbb">resourceType=</span><span style="color: #ed9d13">&quot;Unspecified&quot;</span> <span style="color: #6ab825; font-weight: bold">/&gt;</span>
+    <span style="color: #6ab825; font-weight: bold">&lt;/handlers&gt;</span>
+    <span style="color: #6ab825; font-weight: bold">&lt;httpPlatform</span> <span style="color: #bbbbbb">processPath=</span><span style="color: #ed9d13">&quot;%HOME%\site\wwwroot\bin\solr.cmd&quot;</span> 
+        <span style="color: #bbbbbb">arguments=</span><span style="color: #ed9d13">&quot;start -p %HTTP_PLATFORM_PORT%&quot;</span>
+        <span style="color: #bbbbbb">startupTimeLimit=</span><span style="color: #ed9d13">&quot;20&quot;</span>
+        <span style="color: #bbbbbb">startupRetryCount=</span><span style="color: #ed9d13">&quot;10&quot;</span>
+        <span style="color: #bbbbbb">stdoutLogEnabled=</span><span style="color: #ed9d13">&quot;true&quot;</span><span style="color: #6ab825; font-weight: bold">&gt;</span>
+    <span style="color: #6ab825; font-weight: bold">&lt;/httpPlatform&gt;</span>
+  <span style="color: #6ab825; font-weight: bold">&lt;/system.webServer&gt;</span>
+<span style="color: #6ab825; font-weight: bold">&lt;/configuration&gt;</span>
+</pre></div>
+
+
+<p><code>HTTP_PLATFORM_PORT</code> is the environment variable that holds the port number Azure has dynamically assigned to the Java process. We use its value as a parameter to the <b>-p</b> switch so that Solr does not start on the default port which is <b>8983</b>.</p>
+
+<p>Having <code>stdoutLogEnabled</code> enabled causes the <b>stdout</b> and <b>stderr</b> for the process specified in the <b>processPath</b> setting to be redirected to location defined in <b>stdoutLogFile</b>.</p>
+
+<p>The default value of <b>stdoutLogFile</b> should be <b> %HOME%\LogFiles\ </b> but in my case the logs were actually written to <b>%HOME%\site\wwwroot\ </b></p>
+
+<p>Although there seem to be some problems during the startup, Solr starts up successfully and you can access the Admin panel at &lt;yoursite&gt;.azurewebsites.net</p>
+
+<p><div class="highlight" style="background: #202020"><pre style="line-height: 125%"><span></span><span style="color: #d0d0d0">Access</span> <span style="color: #d0d0d0">is</span> <span style="color: #d0d0d0">denied.</span>
+<span style="color: #d0d0d0">Waiting</span> <span style="color: #d0d0d0">up</span> <span style="color: #d0d0d0">to</span> <span style="color: #3677a9">30</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">see</span> <span style="color: #d0d0d0">Solr</span> <span style="color: #d0d0d0">running</span> <span style="color: #d0d0d0">on</span> <span style="color: #d0d0d0">port</span> <span style="color: #3677a9">16055</span>
+<span style="color: #40ffff">INFO</span>  <span style="color: #d0d0d0">-</span> <span style="color: #3677a9">2017</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">06</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">09</span> <span style="color: #3677a9">12</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">44</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">49.394</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">org.apache.http.impl.client.DefaultRequestDirector;</span> <span style="color: #40ffff">I</span><span style="color: #d0d0d0">/</span><span style="color: #40ffff">O</span> <span style="color: #d0d0d0">exception</span> <span style="color: #d0d0d0">(java.net.SocketException)</span> <span style="color: #d0d0d0">caught</span> <span style="color: #d0d0d0">when</span> <span style="color: #d0d0d0">connecting</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">{}-&gt;http:</span><span style="color: #999999; font-style: italic">//localhost:16055: Permission denied: connect</span>
+<span style="color: #40ffff">INFO</span>  <span style="color: #d0d0d0">-</span> <span style="color: #3677a9">2017</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">06</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">09</span> <span style="color: #3677a9">12</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">44</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">49.521</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">org.apache.http.impl.client.DefaultRequestDirector;</span> <span style="color: #d0d0d0">Retrying</span> <span style="color: #d0d0d0">connect</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">{}-&gt;http:</span><span style="color: #999999; font-style: italic">//localhost:16055</span>
+<span style="color: #40ffff">INFO</span>  <span style="color: #d0d0d0">-</span> <span style="color: #3677a9">2017</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">06</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">09</span> <span style="color: #3677a9">12</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">44</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">49.659</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">org.apache.http.impl.client.DefaultRequestDirector;</span> <span style="color: #40ffff">I</span><span style="color: #d0d0d0">/</span><span style="color: #40ffff">O</span> <span style="color: #d0d0d0">exception</span> <span style="color: #d0d0d0">(java.net.SocketException)</span> <span style="color: #d0d0d0">caught</span> <span style="color: #d0d0d0">when</span> <span style="color: #d0d0d0">connecting</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">{}-&gt;http:</span><span style="color: #999999; font-style: italic">//localhost:16055: Permission denied: connect</span>
+<span style="color: #40ffff">INFO</span>  <span style="color: #d0d0d0">-</span> <span style="color: #3677a9">2017</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">06</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">09</span> <span style="color: #3677a9">12</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">44</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">49.659</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">org.apache.http.impl.client.DefaultRequestDirector;</span> <span style="color: #d0d0d0">Retrying</span> <span style="color: #d0d0d0">connect</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">{}-&gt;http:</span><span style="color: #999999; font-style: italic">//localhost:16055</span>
+<span style="color: #d0d0d0">Started</span> <span style="color: #d0d0d0">Solr</span> <span style="color: #d0d0d0">server</span> <span style="color: #d0d0d0">on</span> <span style="color: #d0d0d0">port</span> <span style="color: #3677a9">16055.</span> <span style="color: #d0d0d0">Happy</span> <span style="color: #d0d0d0">searching!</span>
+</pre></div>
+</p>
+
+<p>That&rsquo;s it! And oh yeah, don&rsquo;t forget to enable Authentication (Azure App Service / Solr Authentication Plugins) or else everyone will have access to your Admin panel and Solr API.</p>
+
+			</div>
+
+	
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'ilovetodeletecode';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+		
+		</div>
+
+  </body>
+</html>
