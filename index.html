@@ -163,24 +163,6 @@
     <span class="post-date">Wed, Feb 5, 2014</span>
     <p>A couple of months back I&rsquo;ve got a task of implementing a protocol for an embedded device sending/receiving streams of data through serial communication. Together with this task I also inherited a Windows Forms C# application that already did some of the previous but in a different protocol with a different device. The more I struggled to understand and reuse some of the existing infrastructure, the more I wanted to rewrite the whole thing (sounds familiar?).</p>
 
-<p>Some facts about existing code:</p>
-
-<ul>
-<li>Each scenario was implemented as a complex state machine with long switch statements.</li>
-<li>For each scenario a heavy weight enum with all possible states was defined.</li>
-<li>State machine transitions were implemented with a table of Action delegates paired with already mentioned enumerations in a key/value dictionary.</li>
-<li>Events were used to signal status of long running operations.</li>
-</ul>
-
-<p>Such code was really hard to read and even harder to maintain. And if you don’t have the documentation for the device&rsquo;s programming interface it&rsquo;s all even harder.</p>
-
-<p>In this post I&rsquo;m trying to solve two things:</p>
-
-<ol>
-<li>How to design a more robust flexible issue/response system used for communicating with the serial device.</li>
-<li>How to model complex asynchronous control flows, without blocking, using Task Parallel Library and C# 5.0 async/await.</li>
-</ol>
-
 <p></p>
     <a href="http://www.ilovetodeletecode.com/post/2014/02/05/refactoring-a-spaghetti-c-serial-communication-app-asynchronous-control-flow-modeling-with-asyncawait/" style="margin-right:0.3rem;float:right;">Read More…</a>
   </div>
