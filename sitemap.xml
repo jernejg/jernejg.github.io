@@ -2,13 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.ilovetodeletecode.com/post/2017/06/01/running-apache-solr-6.5-on-an-azure-app-service-instance/</loc>
-    <lastmod>2017-06-01T22:35:15+01:00</lastmod>
+    <loc>http://www.ilovetodeletecode.com/post/2020/02/17/resetting-your-hp-bios-password-by-modifying-the-main-bios-chip/</loc>
+    <lastmod>2020-02-17T22:35:15+01:00</lastmod>
   </url>
   
   <url>
     <loc>http://www.ilovetodeletecode.com/about/</loc>
-    <lastmod>2016-03-10T11:10:55+00:00</lastmod>
+    <lastmod>2020-01-30T20:10:55+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/post/2017/06/01/running-apache-solr-6.5-on-an-azure-app-service-instance/</loc>
+    <lastmod>2017-06-01T22:35:15+01:00</lastmod>
   </url>
   
   <url>
@@ -32,8 +37,26 @@
   </url>
   
   <url>
+    <loc>http://www.ilovetodeletecode.com/tags/840-g1/</loc>
+    <lastmod>2020-02-17T22:35:15+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/tags/bios/</loc>
+    <lastmod>2020-02-17T22:35:15+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://www.ilovetodeletecode.com/tags/development/</loc>
     <lastmod>2017-06-01T22:35:15+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/tags/elitebook/</loc>
+    <lastmod>2020-02-17T22:35:15+01:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -44,14 +67,26 @@
   </url>
   
   <url>
+    <loc>http://www.ilovetodeletecode.com/tags/hp/</loc>
+    <lastmod>2020-02-17T22:35:15+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://www.ilovetodeletecode.com/</loc>
-    <lastmod>2017-06-01T22:35:15+01:00</lastmod>
+    <lastmod>2020-02-17T22:35:15+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://www.ilovetodeletecode.com/tags/password/</loc>
+    <lastmod>2020-02-17T22:35:15+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://www.ilovetodeletecode.com/post/</loc>
-    <lastmod>2017-06-01T22:35:15+01:00</lastmod>
+    <lastmod>2020-02-17T22:35:15+01:00</lastmod>
     <priority>0</priority>
   </url>
   

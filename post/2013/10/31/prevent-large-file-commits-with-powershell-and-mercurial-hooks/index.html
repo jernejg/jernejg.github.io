@@ -124,8 +124,8 @@
 
 <p>For obvious reasons we will go with pretxncommit. This hook will not only call our custom PowerShell script every time a commit, but it will also pass parameters in form of environmental variables to it. Each Hook parameter gets prefixed with &ldquo;HG_”. We can list all parameters that are available from Mercurial context applying a filter to PowerShell &ldquo;Env&rdquo; drive&rsquo;s content:</p>
 
-<div class="highlight" style="background: #2f1e2e"><pre style="line-height: 125%"><span></span><span style="color: #e7e9db">dir</span> <span style="color: #e7e9db">-path</span><span style="color: #ef6155">:</span><span style="color: #48b685">&quot;env:&quot;</span> <span style="color: #e7e9db">|</span>  <span style="color: #e7e9db">Where-Object</span> <span style="color: #e7e9db">{</span><span style="color: #ef6155">$_</span><span style="color: #e7e9db">.Name</span> <span style="color: #5bc4bf">-like</span> <span style="color: #48b685">&quot;HG_*&quot;</span><span style="color: #e7e9db">}</span> <span style="color: #e7e9db">|</span>  <span style="color: #e7e9db">Select</span> <span style="color: #e7e9db">-Property</span> <span style="color: #e7e9db">Name,Value</span>
-</pre></div>
+
+dir -path:"env:" |  Where-Object {$_.Name -like "HG_*"} |  Select -Property Name,Value
 
 
 <p>Since pretxncommit is a controlling hook we can control the success of the operation using exit codes from our PowerShell script. Return a non-zero to roll back the transaction or 0 to complete it. We will exit our PowerShell script using the number of files greater than maximum size allowed.</p>
@@ -136,9 +136,9 @@
 
 <p>Hooks are defined in the [hooks] section of your local (hg\hgrc) or global (%USERPROFILE%\mercurial.ini) settings file. Each hook is defined in a type, name and action like format. You can edit settings file directly or use TortoiseHg settings dialog:</p>
 
-<div class="highlight" style="background: #2f1e2e"><pre style="line-height: 125%"><span></span><span style="color: #5bc4bf">[</span>hooks<span style="color: #5bc4bf">]</span> 
-pretxncommit.fileSizeCheckHook <span style="color: #5bc4bf">=</span> powershell.exe -File <span style="color: #48b685">&quot;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&quot;</span>
-</pre></div>
+
+[hooks] 
+pretxncommit.fileSizeCheckHook = powershell.exe -File "C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1"
 
 
 

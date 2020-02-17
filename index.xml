@@ -6,8 +6,197 @@
     <description>Recent content on I Love To Delete Code</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jun 2017 22:35:15 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 17 Feb 2020 22:35:15 +0100</lastBuildDate>
     <atom:link href="http://www.ilovetodeletecode.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Resetting your HP BIOS password by modifying the main BIOS chip</title>
+      <link>http://www.ilovetodeletecode.com/post/2020/02/17/resetting-your-hp-bios-password-by-modifying-the-main-bios-chip/</link>
+      <pubDate>Mon, 17 Feb 2020 22:35:15 +0100</pubDate>
+      
+      <guid>http://www.ilovetodeletecode.com/post/2020/02/17/resetting-your-hp-bios-password-by-modifying-the-main-bios-chip/</guid>
+      <description>&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;My inner security expert turned on the BIOS password on an HP laptop (EliteBook 840 G1), right after I bought it, around 6 years ago. Of course I forgot what the password was after a while, since I did not have a reason to change any of the settings, but this changed recently. I really wanted to play with &lt;a href=&#34;https://docs.microsoft.com/en-us/windows/wsl/wsl2-index&#34;&gt;WSL2&lt;/a&gt; (Windows subtype for Linux) and Docker for Windows, and one of the prerequisites for both is to &lt;a href=&#34;https://docs.microsoft.com/en-us/windows/wsl/wsl2-faq&#34;&gt;enable Hyper-V&lt;/a&gt; which is a setting in BIOS.&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Is there a way I can remove the BIOS password? This blog post describes my attempts which have finally resulted in success.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;solutions-i-decided-not-to-go-for&#34;&gt;Solutions I decided not to go for&lt;/h2&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;These are the solutions I have considered, but ended up not going for, because they weren&amp;rsquo;t reasonable or were simply no longer applicable (due to the discountinued HP support). Note, that both item 4 and the solution I ended up with need the BIOS chip to be desoldered. This might sound scary, but it&amp;rsquo;s actually quite simple with a little bit of hardware skills and the necessary equipment (or having a friend with both).&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Contact official HP support&lt;/li&gt;
+&lt;li&gt;Buy a new laptop&lt;/li&gt;
+&lt;li&gt;HP BIOS Unlock&lt;/li&gt;
+&lt;li&gt;Buy an unlocked BIOS chip on Ebay&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h5 id=&#34;contact-official-hp-support&#34;&gt;Contact official HP support&lt;/h5&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;This was the way to go until &lt;a href=&#34;https://support.hp.com/us-en/document/c06368824&#34;&gt;HP decided to stop providing the solution&lt;/a&gt; sometime in the middle of 2019. The process was to send HP the serial number of your laptop, for which they would generate a SMC.bin file and provide the instructions how to override the existing BIOS. Note that any SMC.bin files you will find on the internet, will not work for you, because the serial numbers will not match. I assume the serial number in the binary file is encrypted, which makes it impossible for you to replace.&lt;/p&gt;
+
+&lt;h5 id=&#34;buy-a-new-laptop&#34;&gt;Buy a new laptop&lt;/h5&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;To much of an overkill, even though the &lt;a href=&#34;https://support.hp.com/gb-en/document/c03961746&#34;&gt;laptop&lt;/a&gt; is 6 years old I7 with 16 GB of RAM it is still in mint condition and does everything I need.&lt;/p&gt;
+
+&lt;h5 id=&#34;hp-bios-unlock-tool&#34;&gt;HP BIOS Unlock tool&lt;/h5&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;There is a &lt;a href=&#34;http://mazzifsoftware.blogspot.com/p/hp-bios-unlock.html&#34;&gt;tool&lt;/a&gt; that works with some HP models, but not all of them. I think the newer HP models have extra security that does not allow you to flash the BIOS just like this tool does.&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;This is not the same tool as mentioned and used later in the solution.&lt;/p&gt;
+
+&lt;h5 id=&#34;buy-unlocked-bios-chip-on-ebay&#34;&gt;Buy unlocked BIOS chip on Ebay&lt;/h5&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;This involves replacing the main BIOS chip on your motherboard with an unlocked one you buy on Ebay. In fact the seller recommended replacing two chips. Main BIOS chip + EC (Embed Controller) chip, but they don&amp;rsquo;t explain why.&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;You also need to let them know the SKU, serial number and the model of your laptop. BIOS image dumps are not transferable, you can&amp;rsquo;t use the same dump on two machines - even if they are of exactly the same model. They will take this information to &lt;a href=&#34;https://www.win-raid.com/t1658f39-Guide-Clean-Dumped-Intel-Engine-CS-ME-CS-TXE-Regions-with-Data-Initialization.html&#34;&gt;initialize the ME region (Data section)&lt;/a&gt;.&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;I have not decided to go for this solution because I found a more elegant one. Solution presented below will specifically target only the BIOS password and will leave the ME Data region unchanged.&lt;/p&gt;
+
+&lt;h2 id=&#34;solution&#34;&gt;Solution&lt;/h2&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;In the end I decided to go with the least invasive solution that doesn&amp;rsquo;t involve changing any hardware parts or making massive modifications to the BIOS dump file.&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;None of the work in this post is my own. This post is just an aggregate of everything I learned during my research, that gave me the understanding and confidence I needed to get the job done. The amount of information you can find about the hardware components is incredible. Next time one of my gadgets breaks, I will definitely put more effort into trying to get it fixed rather than throwing it away and buying a new one :). You can find all the links to hardware forums used in this project down below.&lt;/p&gt;
+
+&lt;p&gt;The final solution includes:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Identifying the correct chip&lt;/li&gt;
+&lt;li&gt;Desoldering main bios chip&lt;/li&gt;
+&lt;li&gt;Modifying the content&lt;/li&gt;
+&lt;li&gt;Putting the main BIOS chip back&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h5 id=&#34;identifying-the-correct-chip&#34;&gt;Identifying the correct chip&lt;/h5&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;There are two BIOS flash memory chips and first we need to identify which out of the two we need. I&amp;rsquo;m not sure why there are motherboards with multiple BIOS chips. Separation of concerns, I guess. Anyone interested in this can read about it &lt;a href=&#34;http://www.bios-chip24.com/epages/63730052.sf/en_GB/?ObjectPath=/Shops/63730052/Categories/Informationen_zum_Bios/Bios_Chip_lokalisierung&#34;&gt;here&lt;/a&gt;. As I already mentioned, some sellers on Ebay are offering 2 unlocked bios chips, but after reading up online, I learnt this is not necessary.&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;In my case the correct chip was marked with a red dot, and was located right above the CMOS battery.&lt;/p&gt;
+
+
+&lt;figure &gt;
+    &lt;a href=&#34;http://www.ilovetodeletecode.com/img/chip_location.png&#34;&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/chip_location_small.png&#34; alt=&#34;main BIOS memory chip above the CMOS battery&#34; /&gt;
+    &lt;/a&gt;
+    
+    &lt;figcaption&gt;
+        &lt;p&gt;
+        main BIOS memory chip above the CMOS battery
+        
+            
+        
+        &lt;/p&gt; 
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+
+&lt;figure &gt;
+    &lt;a href=&#34;http://www.ilovetodeletecode.com/img/winbond_25q128fvsq.jpg&#34;&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/winbond_25q128fvsq_small.jpg&#34; alt=&#34;Winbond 25Q128FVSQ-1318&#34; /&gt;
+    &lt;/a&gt;
+    
+    &lt;figcaption&gt;
+        &lt;p&gt;
+        Winbond 25Q128FVSQ-1318
+        
+            
+        
+        &lt;/p&gt; 
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;h5 id=&#34;desoldering-main-bios-chip&#34;&gt;Desoldering main BIOS chip&lt;/h5&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;This step is easy if you have the right tools and experience (it took a hobby enthusiast 10 minutes). Place the chip into the adapter and plug it into an EEPROM programmer. In my case the main BIOS chip was a &amp;ldquo;Winbond 25Q128FVSQ-1318&amp;rdquo; and when copied its contents I got a dump of size 16MB. You can find all of the equipment used in the post listed below. Make sure you keep a copy of your original BIOS dump&amp;hellip;just in case!!&lt;/p&gt;
+
+
+&lt;figure &gt;
+    &lt;a href=&#34;http://www.ilovetodeletecode.com/img/Programmer_Adapter_Socket.png&#34;&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/Programmer_Adapter_Socket_small.png&#34; alt=&#34;SOIC8 SOP8 to DIP8 adapter for the BIOS chip&#34; /&gt;
+    &lt;/a&gt;
+    
+    &lt;figcaption&gt;
+        &lt;p&gt;
+        SOIC8 SOP8 to DIP8 adapter for the BIOS chip
+        
+            
+        
+        &lt;/p&gt; 
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;h5 id=&#34;modifying-the-content&#34;&gt;Modifying the content&lt;/h5&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;It is easy if you know what you need to do. In my case I had to clear 87 bytes starting at address 0DB3470. I learned this on &lt;a href=&#34;https://forums.mydigitallife.net/threads/solved-hp-elitebook-840-g1-bios-admin-password.61719/&#34;&gt;HP EliteBook 840 G1 BIOS Admin Password&lt;/a&gt;, there is also an elegant Python application called &lt;a href=&#34;https://www.badcaps.net/forum/showthread.php?t=79956&#34;&gt;HP BIOS unlock tool&lt;/a&gt;. I ended up using the Python script. The application takes a single argument which should be the path to your 16MB BIOS image. After running it, the script should create an unlocked version of your original image. You can view the result in the hex editor below (unlocked vs. locked BIOS dump content).&lt;/p&gt;
+
+
+&lt;figure &gt;
+    &lt;a href=&#34;http://www.ilovetodeletecode.com/img/bios_dump.png&#34;&gt;
+        &lt;img src=&#34;http://www.ilovetodeletecode.com/img/bios_dump.png&#34; /&gt;
+    &lt;/a&gt;
+    
+&lt;/figure&gt;
+
+
+&lt;h5 id=&#34;putting-the-main-bios-chip-back&#34;&gt;Putting the main BIOS chip back&lt;/h5&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Not much to add here. Clean the pads a bit and solder the chip back. Make sure you pay attention to markings on the motherboard in order to connect pin 1 correctly (or just take a picture of the chip&amp;rsquo;s rotation before you desolder it).&lt;/p&gt;
+
+&lt;p&gt;That&amp;rsquo;s it, you have successfully unlocked your BIOS.&lt;/p&gt;
+
+&lt;h2 id=&#34;bitlocker&#34;&gt;Bitlocker&lt;/h2&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;First thing I did after removing the BIOS password was upgrading the BIOS version (you can&amp;rsquo;t upgrade your BIOS if your BIOS is locked). I was swapping between two primary hard-drives and after I re-connected the bootable drive that was encrypted using Bitlocker I could not boot anymore without providing the Bitlocker backup key.&lt;br /&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;It was either upgrading the BIOS or modifying the BIOS dump that changed the fingerprint of my laptop, so make sure you have the Bitlocker backup key ready in case your hard drive is encrypted using this technology.&lt;/p&gt;
+
+&lt;h2 id=&#34;equipment-used&#34;&gt;Equipment Used&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Adapter&lt;/strong&gt; - SOIC8 SOP8 to DIP8 Wide-body Seat Wide 150mil 200mil Programmer Adapter&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Programmer&lt;/strong&gt; - TL866A Tall Speed in-circuit Programmer USB&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Soldering station&lt;/strong&gt; - soldering iron + hot air gun&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.badcaps.net/forum/showthread.php?t=79956&#34;&gt;HP Unlocking tool&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;It took me a while to realise the main BIOS chip will have to be taken off the motherboard. My main concern was this &amp;ldquo;surgical&amp;rdquo; procedure would render the laptop useless. But it turned out that the 8 pin memory chip is quite big, easy to work with and located separately from all critical components. And if there had been a problem with the modified BIOS dump, I could just copy back the original content I backed up before the modification.&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;Two online resources I got a lot of information from:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.badcaps.net/forum/&#34;&gt;Badcaps Forums - Salvation For Your Electronics!&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://forums.mydigitallife.net/&#34;&gt;My Digital Life Forums&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>http://www.ilovetodeletecode.com/about/</link>
+      <pubDate>Thu, 30 Jan 2020 20:10:55 +0000</pubDate>
+      
+      <guid>http://www.ilovetodeletecode.com/about/</guid>
+      <description>
+
+&lt;h2 id=&#34;about-me&#34;&gt;About me&lt;/h2&gt;
+
+&lt;p&gt;My name is Jernej Gorički. I graduated from college in Faculty of Computer and Information Science, Ljubljana Slovenia. With background knowledge of C/C++ my weapon of choice are C# &amp;amp; Java . I worked as a freelancer with focus on desktop and web applications for exclusive customers in Automation and Test &amp;amp; Measurement Industry like &lt;a href=&#34;http://www.metrel.si/&#34;&gt;Metrel d.d.&lt;/a&gt;, &lt;a href=&#34;http://www.iskraimpuls.si/en/&#34;&gt;Iskra Impuls d.o.o.&lt;/a&gt; and &lt;a href=&#34;http://www.korona.si/en/&#34;&gt;Korona engineering d.d.&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In 2015 I moved to London and started working in Legal and Finance Industry. At the moment I work for &lt;a href=&#34;https://www.firstderivatives.com/&#34;&gt;First Derivatives&lt;/a&gt; as a senior developer.&lt;/p&gt;
+
+&lt;h2 id=&#34;about-this-blog&#34;&gt;About this blog&lt;/h2&gt;
+
+&lt;p&gt;For many artists the act of destroying their work played an important role in their career. Embarrassing early creations they would like to forget about, artistic rebirth and doubt in their work all left them remains (ideas) which they would gradually incorporate into new pieces.&lt;/p&gt;
+
+&lt;p&gt;What do artists have in common with developers? Metaphors play a key role in constructing concepts and terminology especially in the world of Object Oriented Programming. They also give you insight into programming problems and processes. As the title of a &lt;a href=&#34;https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming&#34;&gt;fundamental monograph&lt;/a&gt; implies computer programming is an art hence developers are all artists.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The only thing I love to do more than write code is delete code.  Deleting code brings me inner peace and joy.  Deleting code is violating the law of entropy and setting the universe right.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>Running Apache Solr 6.5 on an Azure App Service instance</title>
@@ -42,25 +231,25 @@
 
 &lt;p&gt;Extract contents of &lt;a href=&#34;http://www-eu.apache.org/dist/lucene/solr/6.5.1/&#34;&gt;solr-6.5.1.zip&lt;/a&gt; to &lt;b&gt;%HOME%\site\wwwroot&lt;/b&gt; folder of your App Service and add a Web.config with the following settings:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #202020&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #cd2828; font-weight: bold&#34;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;system.webServer&amp;gt;&lt;/span&gt;    
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;handlers&amp;gt;&lt;/span&gt;
-      &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;add&lt;/span&gt;  &lt;span style=&#34;color: #bbbbbb&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;httppPlatformHandler&amp;quot;&lt;/span&gt; 
-            &lt;span style=&#34;color: #bbbbbb&#34;&gt;path=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;*&amp;quot;&lt;/span&gt; 
-            &lt;span style=&#34;color: #bbbbbb&#34;&gt;verb=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;*&amp;quot;&lt;/span&gt; 
-            &lt;span style=&#34;color: #bbbbbb&#34;&gt;modules=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;httpPlatformHandler&amp;quot;&lt;/span&gt; 
-            &lt;span style=&#34;color: #bbbbbb&#34;&gt;resourceType=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;Unspecified&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;/handlers&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;httpPlatform&lt;/span&gt; &lt;span style=&#34;color: #bbbbbb&#34;&gt;processPath=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;%HOME%\site\wwwroot\bin\solr.cmd&amp;quot;&lt;/span&gt; 
-        &lt;span style=&#34;color: #bbbbbb&#34;&gt;arguments=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;start -p %HTTP_PLATFORM_PORT%&amp;quot;&lt;/span&gt;
-        &lt;span style=&#34;color: #bbbbbb&#34;&gt;startupTimeLimit=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;20&amp;quot;&lt;/span&gt;
-        &lt;span style=&#34;color: #bbbbbb&#34;&gt;startupRetryCount=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;10&amp;quot;&lt;/span&gt;
-        &lt;span style=&#34;color: #bbbbbb&#34;&gt;stdoutLogEnabled=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;/httpPlatform&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;/system.webServer&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;
+&lt;configuration&gt;
+  &lt;system.webServer&gt;    
+    &lt;handlers&gt;
+      &lt;add  name=&#34;httppPlatformHandler&#34; 
+            path=&#34;*&#34; 
+            verb=&#34;*&#34; 
+            modules=&#34;httpPlatformHandler&#34; 
+            resourceType=&#34;Unspecified&#34; /&gt;
+    &lt;/handlers&gt;
+    &lt;httpPlatform processPath=&#34;%HOME%\site\wwwroot\bin\solr.cmd&#34; 
+        arguments=&#34;start -p %HTTP_PLATFORM_PORT%&#34;
+        startupTimeLimit=&#34;20&#34;
+        startupRetryCount=&#34;10&#34;
+        stdoutLogEnabled=&#34;true&#34;&gt;
+    &lt;/httpPlatform&gt;
+  &lt;/system.webServer&gt;
+&lt;/configuration&gt;
 
 
 &lt;p&gt;&lt;code&gt;HTTP_PLATFORM_PORT&lt;/code&gt; is the environment variable that holds the port number Azure has dynamically assigned to the Java process. We use its value as a parameter to the &lt;b&gt;-p&lt;/b&gt; switch so that Solr does not start on the default port which is &lt;b&gt;8983&lt;/b&gt;.&lt;/p&gt;
@@ -71,41 +260,17 @@
 
 &lt;p&gt;Although there seem to be some problems during the startup, Solr starts up successfully and you can access the Admin panel at &amp;lt;yoursite&amp;gt;.azurewebsites.net&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #202020&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;Access&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;is&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;denied.&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;Waiting&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;up&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;30&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;see&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Solr&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;running&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;on&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;port&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;16055&lt;/span&gt;
-&lt;span style=&#34;color: #40ffff&#34;&gt;INFO&lt;/span&gt;  &lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;2017&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;06&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;09&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;12&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;44&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;49.394&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;org.apache.http.impl.client.DefaultRequestDirector;&lt;/span&gt; &lt;span style=&#34;color: #40ffff&#34;&gt;I&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color: #40ffff&#34;&gt;O&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;exception&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(java.net.SocketException)&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;caught&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;when&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;connecting&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{}-&amp;gt;http:&lt;/span&gt;&lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;//localhost:16055: Permission denied: connect&lt;/span&gt;
-&lt;span style=&#34;color: #40ffff&#34;&gt;INFO&lt;/span&gt;  &lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;2017&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;06&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;09&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;12&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;44&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;49.521&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;org.apache.http.impl.client.DefaultRequestDirector;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Retrying&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;connect&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{}-&amp;gt;http:&lt;/span&gt;&lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;//localhost:16055&lt;/span&gt;
-&lt;span style=&#34;color: #40ffff&#34;&gt;INFO&lt;/span&gt;  &lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;2017&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;06&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;09&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;12&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;44&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;49.659&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;org.apache.http.impl.client.DefaultRequestDirector;&lt;/span&gt; &lt;span style=&#34;color: #40ffff&#34;&gt;I&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color: #40ffff&#34;&gt;O&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;exception&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(java.net.SocketException)&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;caught&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;when&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;connecting&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{}-&amp;gt;http:&lt;/span&gt;&lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;//localhost:16055: Permission denied: connect&lt;/span&gt;
-&lt;span style=&#34;color: #40ffff&#34;&gt;INFO&lt;/span&gt;  &lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;2017&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;06&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;09&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;12&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;44&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;49.659&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;org.apache.http.impl.client.DefaultRequestDirector;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Retrying&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;connect&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{}-&amp;gt;http:&lt;/span&gt;&lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;//localhost:16055&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;Started&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Solr&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;server&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;on&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;port&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;16055.&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Happy&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;searching!&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+
+Access is denied.
+Waiting up to 30 to see Solr running on port 16055
+INFO  - 2017-06-09 12:44:49.394; org.apache.http.impl.client.DefaultRequestDirector; I/O exception (java.net.SocketException) caught when connecting to {}-&gt;http://localhost:16055: Permission denied: connect
+INFO  - 2017-06-09 12:44:49.521; org.apache.http.impl.client.DefaultRequestDirector; Retrying connect to {}-&gt;http://localhost:16055
+INFO  - 2017-06-09 12:44:49.659; org.apache.http.impl.client.DefaultRequestDirector; I/O exception (java.net.SocketException) caught when connecting to {}-&gt;http://localhost:16055: Permission denied: connect
+INFO  - 2017-06-09 12:44:49.659; org.apache.http.impl.client.DefaultRequestDirector; Retrying connect to {}-&gt;http://localhost:16055
+Started Solr server on port 16055. Happy searching!
+
 
 &lt;p&gt;That&amp;rsquo;s it! And oh yeah, don&amp;rsquo;t forget to enable Authentication (Azure App Service / Solr Authentication Plugins) or else everyone will have access to your Admin panel and Solr API.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>http://www.ilovetodeletecode.com/about/</link>
-      <pubDate>Thu, 10 Mar 2016 11:10:55 +0000</pubDate>
-      
-      <guid>http://www.ilovetodeletecode.com/about/</guid>
-      <description>
-
-&lt;h2 id=&#34;about-me&#34;&gt;About me&lt;/h2&gt;
-
-&lt;p&gt;My name is Jernej Gorički. I graduated from college in Faculty of Computer and Information Science, Ljubljana Slovenia. With background knowledge of C/C++ &amp;amp; Java my weapon of choice are .NET &amp;amp; C# . I worked as a freelancer with focus on desktop and web applications for exclusive customers in Automation and Test &amp;amp; Measurement Industry like &lt;a href=&#34;http://www.metrel.si/&#34;&gt;Metrel d.d.&lt;/a&gt;, &lt;a href=&#34;http://www.iskraimpuls.si/en/&#34;&gt;Iskra Impuls d.o.o.&lt;/a&gt; and &lt;a href=&#34;http://www.korona.si/en/&#34;&gt;Korona engineering d.d.&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;In 2015 I moved to London and started working in Legal Industry. At the moment I work for Mishcon de Reya LLP as a senior .NET developer.&lt;/p&gt;
-
-&lt;h2 id=&#34;about-this-blog&#34;&gt;About this blog&lt;/h2&gt;
-
-&lt;p&gt;For many artists the act of destroying their work played an important role in their career. Embarrassing early creations they would like to forget about, artistic rebirth and doubt in their work all left them remains (ideas) which they would gradually incorporate into new pieces.&lt;/p&gt;
-
-&lt;p&gt;What do artists have in common with developers? Metaphors play a key role in constructing concepts and terminology especially in the world of Object Oriented Programming. They also give you insight into programming problems and processes. As the title of a &lt;a href=&#34;https://en.wikipedia.org/wiki/The_Art_of_Computer_Programming&#34;&gt;fundamental monograph&lt;/a&gt; implies computer programming is an art hence developers are all artists.&lt;/p&gt;
-
-&lt;p&gt;The name of this blog was inspired by one of my favorite &lt;a href=&#34;http://elegantcode.com/2010/06/06/the-best-code-you-will-ever-write/&#34;&gt;blog posts&lt;/a&gt; that deals with destroying your work.&lt;/p&gt;
 </description>
     </item>
     
@@ -182,8 +347,8 @@
 
 &lt;p&gt;Each time you write or read data to/from disk drives the OS caches data unless FILE_FLAG_NO_BUFFERING is specified. In latter case your application has total control over the buffering process which is known as unbuffered file I/O. When inspecting .NET Reference Source 4.5.2 you can see that the FileOptions.NoBuffering enum is currently commented out. But the guard clause that validates FileOptions flags before calling native CreateFile function allows the value 0x20000000 and this value relates to the native flag FILE_FLAG_NO_BUFFERING. So the following initialization of FileStream would be legal:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;f&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileStream(&lt;/span&gt;&lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;c:\\file.txt&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileMode.Open,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileShare.None,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bufferSize,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(FileOptions)&lt;/span&gt;&lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;x20000000);&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+var f = new FileStream(&#34;c:\\file.txt&#34;, FileMode.Open, FileAccess.Read, FileShare.None, bufferSize, (FileOptions)0x20000000);
 
 
 &lt;p&gt;Files opened with FILE_FLAG_NO_BUFFERING do not go through the Cache Manager (all of the cache flags are ignored) and working with such files requires from our application to follow some rules regarding buffer alignment criteria. This is an &lt;a href=&#34;http://msdn.microsoft.com/en-us/library/windows/desktop/cc644950(v=vs.85).aspx&#34;&gt;advanced topic&lt;/a&gt; and goes beyond this post. For each file that is accessed through the Cache Manager an array of internal data structures need to be created and managed. The bigger the file, the more resources it takes to successfully support caching. That is why it&amp;rsquo;s advised to use FILE_FLAG_NO_BUFFERING when working with very large files.&lt;/p&gt;
@@ -306,9 +471,9 @@
 
 &lt;ol&gt;
 &lt;li&gt;modifying local .hgrc file
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;[extensions]&lt;/span&gt;
-&lt;span style=&#34;color: #06b6ef&#34;&gt;mq&lt;/span&gt; &lt;span style=&#34;color: #5bc4bf&#34;&gt;=&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+[extensions]
+mq =
 &lt;/li&gt;
 &lt;li&gt;Check TortoiseHG-&amp;gt;Repository settings-&amp;gt;Extensions-&amp;gt;mq&lt;/li&gt;
 &lt;/ol&gt;
@@ -551,13 +716,13 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ICommand&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #e7e9db&#34;&gt;IEnumerable&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CommandInstruction&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;Proccess&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(IEnumerable&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;data);&lt;/span&gt;
-    &lt;span style=&#34;color: #fec418&#34;&gt;bool&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;IsFinished&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;get&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+public interface ICommand
+{
+    IEnumerable&lt;byte&gt; CommandInstruction { get; }
+    void Proccess(IEnumerable&lt;byte&gt; data);
+    bool IsFinished { get; }
+}
 
 
 &lt;h2 id=&#34;collaborations&#34;&gt;Collaborations&lt;/h2&gt;
@@ -599,13 +764,13 @@ The second most important class in TPL is TaskCompletionSource. It enables us to
 
 &lt;p&gt;Lets see how we wrap TaskCompletionSource around our external asynchronous operation. We add the command to the execution queue together with the corresponding TaskCompletionSource object. TaskCompletionSource exposes a Task object that is completely controlled by its parent. We return this Task to the caller. Providing a TaskCompletionSource for each command through the process of execution gives us a mechanism to signal back to the caller the state of the ongoing command execution (SetCanceled, SetException, SetResult). Returning a Task from the AddToExecutionQueue function enables the caller to monitor that state and utilize a continuation (callback) that executes after completion.&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;TReturn&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;AddToExecutionQueue&amp;lt;TReturn&amp;gt;(TReturn&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;command)&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-    &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;TReturn&amp;gt;();&lt;/span&gt;
-    &lt;span style=&#34;color: #e7e9db&#34;&gt;_commandQueue.Enqueue(&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CommandTaskPair(command,tsc));&lt;/span&gt;
-    &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs.Task;&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+public Task&lt;TReturn&gt; AddToExecutionQueue&lt;TReturn&gt;(TReturn command)
+{
+    var tcs = new TaskCompletionSource&lt;TReturn&gt;();
+    _commandQueue.Enqueue(new CommandTaskPair(command,tsc));
+    return tcs.Task;
+}
 
 
 &lt;h2 id=&#34;structuring-asynchronous-flow-of-control&#34;&gt;Structuring asynchronous flow of control&lt;/h2&gt;
@@ -631,151 +796,150 @@ The second most important class in TPL is TaskCompletionSource. It enables us to
 
 &lt;p&gt;Each next step needs to be invoked from the previously completed one. Such complex sequence of steps result in nested spaghetti continuations which are hard to follow and maintain. Next problem is that we are downloading file chunk by chunk so we need a looping construct, but looping constructs don&amp;rsquo;t go hand in hand with continuations. Because the next iteration should be triggered from the continuation itself we would have to use recursion. The only advantage with nested lambdas are closures which allow you to pass local state to the function without the need for parameters, but beware of closures if you don’t understand them fully, because funny things can happen :).&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Download()&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-            &lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
-            &lt;span style=&#34;color: #815ba4&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;1024&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
+
+public Task&lt;long&gt; Download()
+{
+            long bytesTransfered = 0;
+            const int blockSize = 32 * 1024;
  
-            &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;();&lt;/span&gt;
+            var tcs = new TaskCompletionSource&lt;long&gt;();
  
-            &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;openFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd(_fileInfo.Name,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read);&lt;/span&gt;
-            &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;OpenFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(openFileCmd);&lt;/span&gt;
+            var openFileCmd = new OpenFileCmd(_fileInfo.Name, FileAccess.Read);
+            Task&lt;OpenFileCmd&gt; fileHandleTask = _embeddedDevice.AddToExecutionQueue(openFileCmd);
  
-            &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.ContinueWith(fileHandleFinished&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&amp;gt;&lt;/span&gt;
-            &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleFinished.Result.SuccessResult;&lt;/span&gt;
-                &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize);&lt;/span&gt;
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
+            fileHandleTask.ContinueWith(fileHandleFinished =&gt;
+            {
+                int fileHandle = fileHandleFinished.Result.SuccessResult;
+                var readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
+                Task&lt;ReadBlockCmd&gt; readBlockTask = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
  
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;Action&amp;lt;Task&amp;lt;ReadBlockCmd&amp;gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;recursiveDownload&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;null&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
+                Action&lt;Task&lt;ReadBlockCmd&gt;&gt; recursiveDownload = null;
  
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;recursiveDownload&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockFInished&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&amp;gt;&lt;/span&gt;
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                    &lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockFInished.Result.SuccessResult.ActualData.ToArray();&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead.Count();&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;Proccess(bytesRead);&lt;/span&gt;
+                recursiveDownload = readBlockFInished =&gt;
+                {
+                    byte[] bytesRead = readBlockFInished.Result.SuccessResult.ActualData.ToArray();
+                    bytesTransfered += bytesRead.Count();
+                    Proccess(bytesRead);
  
-                    &lt;span style=&#34;color: #815ba4&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo.Length)&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                        &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize);&lt;/span&gt;
-                        &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
-                        &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock.ContinueWith(recursiveDownload);&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-                    &lt;span style=&#34;color: #815ba4&#34;&gt;else&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                        &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CloseFileCmd(fileHandle);&lt;/span&gt;
-                        &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;CloseFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(closeFileCmd);&lt;/span&gt;
-                        &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle.ContinueWith(closedHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs.SetResult(bytesTransfered));&lt;/span&gt;
-                    &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;};&lt;/span&gt;
-                &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask.ContinueWith(recursiveDownload);&lt;/span&gt;
-            &lt;span style=&#34;color: #e7e9db&#34;&gt;});&lt;/span&gt;
-            &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;tcs.Task;&lt;/span&gt;
-&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+                    if (bytesTransfered &lt; _fileInfo.Length)
+                    {
+                        readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
+                        Task&lt;ReadBlockCmd&gt; nextBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+                        nextBlock.ContinueWith(recursiveDownload);
+                    }
+                    else
+                    {
+                        var closeFileCmd = new CloseFileCmd(fileHandle);
+                        Task&lt;CloseFileCmd&gt; closeHandle = _embeddedDevice.AddToExecutionQueue(closeFileCmd);
+                        closeHandle.ContinueWith(closedHandle =&gt; tcs.SetResult(bytesTransfered));
+                    }
+                };
+                readBlockTask.ContinueWith(recursiveDownload);
+            });
+            return tcs.Task;
+}
 
 
 &lt;h2 id=&#34;approach-2-writing-separate-functions&#34;&gt;Approach 2: Writing separate functions&lt;/h2&gt;
 
 &lt;p&gt;Splitting callbacks into separate functions gives us a more readable control flow and also an easier way to achieve looping behavior. One drawback is that we have to pass parameters or use member variables in order to preserve context. Compared with lambda expressions, we are better off splitting functions but at the end of the day nothing can bring us a more natural control flow than approach 3.&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;   &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;DownloadFile&lt;/span&gt;
-   &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;readonly&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;EmbeddedDevice&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice;&lt;/span&gt;
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;DeviceFileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo;&lt;/span&gt;
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs;&lt;/span&gt;
-           &lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_bytesTransfered;&lt;/span&gt;
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileHandle;&lt;/span&gt;
-           &lt;span style=&#34;color: #815ba4&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;BlockSize&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;1024&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
+
+   public class DownloadFile
+   {
+           private readonly EmbeddedDevice _embeddedDevice;
+           private  DeviceFileInfo _fileInfo;
+           private TaskCompletionSource&lt;long&gt; _tcs;
+           long _bytesTransfered;
+           private int _fileHandle;
+           const int BlockSize = 32 * 1024;
     
-           &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;DownloadFile&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(EmbeddedDevice&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;embeddedDevice)&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;embeddedDevice;&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+           public DownloadFile(EmbeddedDevice embeddedDevice)
+           {
+               _embeddedDevice = embeddedDevice;
+           }
     
     
-           &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;Download&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(DeviceFileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo)&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;TaskCompletionSource&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;();&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo;&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
+           public Task Download(DeviceFileInfo fileInfo)
+           {
+               _tcs = new TaskCompletionSource&lt;long&gt;();
+               _bytesTransfered = 0;
+               _fileInfo = fileInfo;
+               _fileHandle = 0;
     
-               &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;openFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd(_fileInfo.Name,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read);&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;OpenFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(openFileCmd);&lt;/span&gt;
+               var openFileCmd = new OpenFileCmd(_fileInfo.Name, FileAccess.Read);
+               Task&lt;OpenFileCmd&gt; fileHandleTask = _embeddedDevice.AddToExecutionQueue(openFileCmd);
     
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.ContinueWith(OnFilehandleReceived);&lt;/span&gt;
+               fileHandleTask.ContinueWith(OnFilehandleReceived);
     
-               &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs.Task;&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+               return _tcs.Task;
+           }
     
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;OnFilehandleReceived&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(Task&amp;lt;OpenFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask)&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.Result.SuccessResult;&lt;/span&gt;
-               &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(_fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;BlockSize);&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;firstBlock&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
+           private void OnFilehandleReceived(Task&lt;OpenFileCmd&gt; fileHandleTask)
+           {
+               _fileHandle = fileHandleTask.Result.SuccessResult;
+               var readBlockCmd = new ReadBlockCmd(_fileHandle, BlockSize);
+               Task&lt;ReadBlockCmd&gt; firstBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
     
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;firstBlock.ContinueWith(OnBlockReceived);&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+               firstBlock.ContinueWith(OnBlockReceived);
+           }
     
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;OnBlockReceived&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask)&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;IEnumerable&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;data&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask.Result.SuccessResult.ActualData;&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;ProccessData(data);&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;data.Count();&lt;/span&gt;
+           private void OnBlockReceived(Task&lt;ReadBlockCmd&gt; readBlockTask)
+           {
+               IEnumerable&lt;byte&gt; data = readBlockTask.Result.SuccessResult.ActualData;
+               ProccessData(data);
+               _bytesTransfered += data.Count();
     
-               &lt;span style=&#34;color: #815ba4&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(_bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_fileInfo.Length)&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                   &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(_fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;BlockSize);&lt;/span&gt;
-                   &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;ReadBlockCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
-                   &lt;span style=&#34;color: #e7e9db&#34;&gt;nextBlock.ContinueWith(OnBlockReceived);&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-               &lt;span style=&#34;color: #815ba4&#34;&gt;else&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                   &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CloseFileCmd(_fileHandle);&lt;/span&gt;
-                   &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;CloseFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(closeFileCmd);&lt;/span&gt;
+               if (_bytesTransfered &lt; _fileInfo.Length)
+               {
+                   var readBlockCmd = new ReadBlockCmd(_fileHandle, BlockSize);
+                   Task&lt;ReadBlockCmd&gt; nextBlock = _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+                   nextBlock.ContinueWith(OnBlockReceived);
+               }
+               else
+               {
+                   var closeFileCmd = new CloseFileCmd(_fileHandle);
+                   Task&lt;CloseFileCmd&gt; closeHandle = _embeddedDevice.AddToExecutionQueue(closeFileCmd);
     
-                   &lt;span style=&#34;color: #e7e9db&#34;&gt;closeHandle.ContinueWith(OnResourcesCleaned);&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
+                   closeHandle.ContinueWith(OnResourcesCleaned);
+               }
+           }
     
-           &lt;span style=&#34;color: #815ba4&#34;&gt;private&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color: #06b6ef&#34;&gt;OnResourcesCleaned&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;(Task&amp;lt;CloseFileCmd&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closedHandle)&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-               &lt;span style=&#34;color: #e7e9db&#34;&gt;_tcs.SetResult(_bytesTransfered);&lt;/span&gt;
-           &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+           private void OnResourcesCleaned(Task&lt;CloseFileCmd&gt; closedHandle)
+           {
+               _tcs.SetResult(_bytesTransfered);
+           }
+    }
 
 
 &lt;h2 id=&#34;approach-3-using-c-5-0-language-constructs-async-await&#34;&gt;Approach 3: Using C# 5.0 language constructs async/await&lt;/h2&gt;
 
 &lt;p&gt;Async/await enables us to program asynchronous workflows in a linear way, that is, we can write our program as we would synchronously but without tying up a thread. If a method, called with await, has not yet completed, the execution immediately returns to the caller. When the method completes, the execution jumps back to the method where it left of, preserving all local state. What compiler does under the covers when it stumbles upon an await operator is very similar to yield return in an iterator, that is, a lot of boiler plate code gets generated in order to achieve pause/resume functionality using state machines.&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;  &lt;span style=&#34;color: #815ba4&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;async&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Task&amp;lt;&lt;/span&gt;&lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Download(DeviceFileInfo&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo;)&lt;/span&gt;
-  &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-              &lt;span style=&#34;color: #fec418&#34;&gt;long&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;0&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
-              &lt;span style=&#34;color: #815ba4&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;32&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color: #f99b15&#34;&gt;1024&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;;&lt;/span&gt;
-   
-              &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;openFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd(fileInfo.Name,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;FileAccess.Read);&lt;/span&gt;
-              &lt;span style=&#34;color: #e7e9db&#34;&gt;OpenFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(openFileCmd);&lt;/span&gt;
-              &lt;span style=&#34;color: #fec418&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandle&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileHandleTask.SuccessResult;&lt;/span&gt;
-   
-              &lt;span style=&#34;color: #815ba4&#34;&gt;while&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;(bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;fileInfo.Length)&lt;/span&gt;
-              &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;
-                  &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd(fileHandle,&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;blockSize);&lt;/span&gt;
-                  &lt;span style=&#34;color: #e7e9db&#34;&gt;ReadBlockCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(readBlockCmd);&lt;/span&gt;
-                  &lt;span style=&#34;color: #fec418&#34;&gt;byte&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;[]&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;readBlockTask.SuccessResult.ActualData.ToArray();&lt;/span&gt;
-                  &lt;span style=&#34;color: #e7e9db&#34;&gt;Proccess(bytesRead);&lt;/span&gt;
-                  &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesRead.Count();&lt;/span&gt;
-              &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-   
-              &lt;span style=&#34;color: #fec418&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;closeFileCmd&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color: #815ba4&#34;&gt;new&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;CloseFileCmd(fileHandle);&lt;/span&gt;
-              &lt;span style=&#34;color: #815ba4&#34;&gt;await&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;_embeddedDevice.AddToExecutionQueue(closeFileCmd);&lt;/span&gt;
-              &lt;span style=&#34;color: #815ba4&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;bytesTransfered;&lt;/span&gt;
-  &lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt;
-  
-&lt;/pre&gt;&lt;/div&gt;
 
+  public async Task&lt;long&gt; Download(DeviceFileInfo fileInfo;)
+  {
+              long bytesTransfered = 0;
+              const int blockSize = 32 * 1024;
+   
+              var openFileCmd = new OpenFileCmd(fileInfo.Name, FileAccess.Read);
+              OpenFileCmd fileHandleTask = await _embeddedDevice.AddToExecutionQueue(openFileCmd);
+              int fileHandle = fileHandleTask.SuccessResult;
+   
+              while (bytesTransfered &lt; fileInfo.Length)
+              {
+                  var readBlockCmd = new ReadBlockCmd(fileHandle, blockSize);
+                  ReadBlockCmd readBlockTask = await _embeddedDevice.AddToExecutionQueue(readBlockCmd);
+                  byte[] bytesRead = readBlockTask.SuccessResult.ActualData.ToArray();
+                  Proccess(bytesRead);
+                  bytesTransfered += bytesRead.Count();
+              }
+   
+              var closeFileCmd = new CloseFileCmd(fileHandle);
+              await _embeddedDevice.AddToExecutionQueue(closeFileCmd);
+              return bytesTransfered;
+  }
+  
 
 &lt;p&gt;In summary, hiding callbacks with async/await language asynchrony support in C# 5.0 enables us to write code like we are used to and prevents complex asynchronous workflows (completion of multiple tasks, error handling…) from becoming unreadable and difficult to maintain. Even when targeting .NET 4 there is a &lt;a href=&#34;https://www.nuget.org/packages/Microsoft.Bcl.Async/1.0.16&#34;&gt;package&lt;/a&gt; on NuGet Microsoft.Bcl.Async which enables async/await keywords and includes the new Task based extension methods.&lt;/p&gt;</description>
     </item>
@@ -815,8 +979,8 @@ The second most important class in TPL is TaskCompletionSource. It enables us to
 
 &lt;p&gt;For obvious reasons we will go with pretxncommit. This hook will not only call our custom PowerShell script every time a commit, but it will also pass parameters in form of environmental variables to it. Each Hook parameter gets prefixed with &amp;ldquo;HG_”. We can list all parameters that are available from Mercurial context applying a filter to PowerShell &amp;ldquo;Env&amp;rdquo; drive&amp;rsquo;s content:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;dir&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;-path&lt;/span&gt;&lt;span style=&#34;color: #ef6155&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;env:&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;|&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;Where-Object&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color: #ef6155&#34;&gt;$_&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;.Name&lt;/span&gt; &lt;span style=&#34;color: #5bc4bf&#34;&gt;-like&lt;/span&gt; &lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;HG_*&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;|&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;Select&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;-Property&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Name,Value&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+dir -path:&#34;env:&#34; |  Where-Object {$_.Name -like &#34;HG_*&#34;} |  Select -Property Name,Value
 
 
 &lt;p&gt;Since pretxncommit is a controlling hook we can control the success of the operation using exit codes from our PowerShell script. Return a non-zero to roll back the transaction or 0 to complete it. We will exit our PowerShell script using the number of files greater than maximum size allowed.&lt;/p&gt;
@@ -827,9 +991,9 @@ The second most important class in TPL is TaskCompletionSource. It enables us to
 
 &lt;p&gt;Hooks are defined in the [hooks] section of your local (hg\hgrc) or global (%USERPROFILE%\mercurial.ini) settings file. Each hook is defined in a type, name and action like format. You can edit settings file directly or use TortoiseHg settings dialog:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #5bc4bf&#34;&gt;[&lt;/span&gt;hooks&lt;span style=&#34;color: #5bc4bf&#34;&gt;]&lt;/span&gt; 
-pretxncommit.fileSizeCheckHook &lt;span style=&#34;color: #5bc4bf&#34;&gt;=&lt;/span&gt; powershell.exe -File &lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+[hooks] 
+pretxncommit.fileSizeCheckHook = powershell.exe -File &#34;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&#34;
 
 
 

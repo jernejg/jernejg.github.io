@@ -1,0 +1,278 @@
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.19" />
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title> Resetting your HP BIOS password by modifying the main BIOS chip &middot; I Love To Delete Code </title>
+
+  
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.com/css/poole.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.com/css/syntax.css">
+  <link rel="stylesheet" href="http://www.ilovetodeletecode.com/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://www.ilovetodeletecode.com/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="http://www.ilovetodeletecode.com/favicon.png">
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="I Love To Delete Code" />
+  <style>
+      #social,
+      #links {
+          margin-top: 10px
+      }
+
+      #social i {
+          margin-left: 25px
+      }
+
+      #social a:hover,
+      #social a:focus {
+          text-decoration: none;
+          color: #bddbed
+      }
+
+      pre {
+        background-color: #202020;
+        color: white;
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+        font-size: 12px;
+      }
+
+
+
+       
+  </style>
+
+
+</head>
+
+	<body class="">
+		<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <img src="http://www.ilovetodeletecode.com/logo.png" alt="Hugo Themes">
+      <a href="http://www.ilovetodeletecode.com/"><h1>I Love To Delete Code</h1></a>
+      <p class="lead">
+      Deleting code is violating the law of entropy and setting the universe right.
+      </p>
+    </div>
+    <ul class="sidebar-nav">
+      <li><a href="http://www.ilovetodeletecode.com/">Home</a> </li>
+      
+        <li><a href="http://www.ilovetodeletecode.com/post/"> Blog </a></li>
+      
+        <li><a href="http://www.ilovetodeletecode.com/about/"> About </a></li>
+      
+    </ul>
+    <div id="social" class="text-center">
+      <a href="https://twitter.com/JernejGoricki" target="new">
+        <i class="fa fa-twitter fa-2x"></i>
+      </a>
+      <a href="http://uk.linkedin.com/in/jernejgoricki" target="new">
+        <i class="fa fa-linkedin fa-2x"></i>
+      </a>
+</div>
+    <p></p>
+  </div>
+</div>
+
+
+
+
+
+
+		<div class="content container">
+			<div class="post">
+			 	<h1>Resetting your HP BIOS password by modifying the main BIOS chip</h1>
+			  <span class="post-date">Mon, Feb 17, 2020</span>
+			      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;My inner security expert turned on the BIOS password on an HP laptop (EliteBook 840 G1), right after I bought it, around 6 years ago. Of course I forgot what the password was after a while, since I did not have a reason to change any of the settings, but this changed recently. I really wanted to play with <a href="https://docs.microsoft.com/en-us/windows/wsl/wsl2-index">WSL2</a> (Windows subtype for Linux) and Docker for Windows, and one of the prerequisites for both is to <a href="https://docs.microsoft.com/en-us/windows/wsl/wsl2-faq">enable Hyper-V</a> which is a setting in BIOS.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Is there a way I can remove the BIOS password? This blog post describes my attempts which have finally resulted in success.</p>
+
+<p></p>
+
+<h2 id="solutions-i-decided-not-to-go-for">Solutions I decided not to go for</h2>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;These are the solutions I have considered, but ended up not going for, because they weren&rsquo;t reasonable or were simply no longer applicable (due to the discountinued HP support). Note, that both item 4 and the solution I ended up with need the BIOS chip to be desoldered. This might sound scary, but it&rsquo;s actually quite simple with a little bit of hardware skills and the necessary equipment (or having a friend with both).</p>
+
+<ol>
+<li>Contact official HP support</li>
+<li>Buy a new laptop</li>
+<li>HP BIOS Unlock</li>
+<li>Buy an unlocked BIOS chip on Ebay</li>
+</ol>
+
+<h5 id="contact-official-hp-support">Contact official HP support</h5>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This was the way to go until <a href="https://support.hp.com/us-en/document/c06368824">HP decided to stop providing the solution</a> sometime in the middle of 2019. The process was to send HP the serial number of your laptop, for which they would generate a SMC.bin file and provide the instructions how to override the existing BIOS. Note that any SMC.bin files you will find on the internet, will not work for you, because the serial numbers will not match. I assume the serial number in the binary file is encrypted, which makes it impossible for you to replace.</p>
+
+<h5 id="buy-a-new-laptop">Buy a new laptop</h5>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To much of an overkill, even though the <a href="https://support.hp.com/gb-en/document/c03961746">laptop</a> is 6 years old I7 with 16 GB of RAM it is still in mint condition and does everything I need.</p>
+
+<h5 id="hp-bios-unlock-tool">HP BIOS Unlock tool</h5>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There is a <a href="http://mazzifsoftware.blogspot.com/p/hp-bios-unlock.html">tool</a> that works with some HP models, but not all of them. I think the newer HP models have extra security that does not allow you to flash the BIOS just like this tool does.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is not the same tool as mentioned and used later in the solution.</p>
+
+<h5 id="buy-unlocked-bios-chip-on-ebay">Buy unlocked BIOS chip on Ebay</h5>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This involves replacing the main BIOS chip on your motherboard with an unlocked one you buy on Ebay. In fact the seller recommended replacing two chips. Main BIOS chip + EC (Embed Controller) chip, but they don&rsquo;t explain why.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You also need to let them know the SKU, serial number and the model of your laptop. BIOS image dumps are not transferable, you can&rsquo;t use the same dump on two machines - even if they are of exactly the same model. They will take this information to <a href="https://www.win-raid.com/t1658f39-Guide-Clean-Dumped-Intel-Engine-CS-ME-CS-TXE-Regions-with-Data-Initialization.html">initialize the ME region (Data section)</a>.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I have not decided to go for this solution because I found a more elegant one. Solution presented below will specifically target only the BIOS password and will leave the ME Data region unchanged.</p>
+
+<h2 id="solution">Solution</h2>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In the end I decided to go with the least invasive solution that doesn&rsquo;t involve changing any hardware parts or making massive modifications to the BIOS dump file.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None of the work in this post is my own. This post is just an aggregate of everything I learned during my research, that gave me the understanding and confidence I needed to get the job done. The amount of information you can find about the hardware components is incredible. Next time one of my gadgets breaks, I will definitely put more effort into trying to get it fixed rather than throwing it away and buying a new one :). You can find all the links to hardware forums used in this project down below.</p>
+
+<p>The final solution includes:</p>
+
+<ol>
+<li>Identifying the correct chip</li>
+<li>Desoldering main bios chip</li>
+<li>Modifying the content</li>
+<li>Putting the main BIOS chip back</li>
+</ol>
+
+<h5 id="identifying-the-correct-chip">Identifying the correct chip</h5>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There are two BIOS flash memory chips and first we need to identify which out of the two we need. I&rsquo;m not sure why there are motherboards with multiple BIOS chips. Separation of concerns, I guess. Anyone interested in this can read about it <a href="http://www.bios-chip24.com/epages/63730052.sf/en_GB/?ObjectPath=/Shops/63730052/Categories/Informationen_zum_Bios/Bios_Chip_lokalisierung">here</a>. As I already mentioned, some sellers on Ebay are offering 2 unlocked bios chips, but after reading up online, I learnt this is not necessary.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In my case the correct chip was marked with a red dot, and was located right above the CMOS battery.</p>
+
+
+<figure >
+    <a href="http://www.ilovetodeletecode.com/img/chip_location.png">
+        <img src="http://www.ilovetodeletecode.com/img/chip_location_small.png" alt="main BIOS memory chip above the CMOS battery" />
+    </a>
+    
+    <figcaption>
+        <p>
+        main BIOS memory chip above the CMOS battery
+        
+            
+        
+        </p> 
+    </figcaption>
+    
+</figure>
+
+
+
+<figure >
+    <a href="http://www.ilovetodeletecode.com/img/winbond_25q128fvsq.jpg">
+        <img src="http://www.ilovetodeletecode.com/img/winbond_25q128fvsq_small.jpg" alt="Winbond 25Q128FVSQ-1318" />
+    </a>
+    
+    <figcaption>
+        <p>
+        Winbond 25Q128FVSQ-1318
+        
+            
+        
+        </p> 
+    </figcaption>
+    
+</figure>
+
+
+<h5 id="desoldering-main-bios-chip">Desoldering main BIOS chip</h5>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This step is easy if you have the right tools and experience (it took a hobby enthusiast 10 minutes). Place the chip into the adapter and plug it into an EEPROM programmer. In my case the main BIOS chip was a &ldquo;Winbond 25Q128FVSQ-1318&rdquo; and when copied its contents I got a dump of size 16MB. You can find all of the equipment used in the post listed below. Make sure you keep a copy of your original BIOS dump&hellip;just in case!!</p>
+
+
+<figure >
+    <a href="http://www.ilovetodeletecode.com/img/Programmer_Adapter_Socket.png">
+        <img src="http://www.ilovetodeletecode.com/img/Programmer_Adapter_Socket_small.png" alt="SOIC8 SOP8 to DIP8 adapter for the BIOS chip" />
+    </a>
+    
+    <figcaption>
+        <p>
+        SOIC8 SOP8 to DIP8 adapter for the BIOS chip
+        
+            
+        
+        </p> 
+    </figcaption>
+    
+</figure>
+
+
+<h5 id="modifying-the-content">Modifying the content</h5>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It is easy if you know what you need to do. In my case I had to clear 87 bytes starting at address 0DB3470. I learned this on <a href="https://forums.mydigitallife.net/threads/solved-hp-elitebook-840-g1-bios-admin-password.61719/">HP EliteBook 840 G1 BIOS Admin Password</a>, there is also an elegant Python application called <a href="https://www.badcaps.net/forum/showthread.php?t=79956">HP BIOS unlock tool</a>. I ended up using the Python script. The application takes a single argument which should be the path to your 16MB BIOS image. After running it, the script should create an unlocked version of your original image. You can view the result in the hex editor below (unlocked vs. locked BIOS dump content).</p>
+
+
+<figure >
+    <a href="http://www.ilovetodeletecode.com/img/bios_dump.png">
+        <img src="http://www.ilovetodeletecode.com/img/bios_dump.png" />
+    </a>
+    
+</figure>
+
+
+<h5 id="putting-the-main-bios-chip-back">Putting the main BIOS chip back</h5>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Not much to add here. Clean the pads a bit and solder the chip back. Make sure you pay attention to markings on the motherboard in order to connect pin 1 correctly (or just take a picture of the chip&rsquo;s rotation before you desolder it).</p>
+
+<p>That&rsquo;s it, you have successfully unlocked your BIOS.</p>
+
+<h2 id="bitlocker">Bitlocker</h2>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;First thing I did after removing the BIOS password was upgrading the BIOS version (you can&rsquo;t upgrade your BIOS if your BIOS is locked). I was swapping between two primary hard-drives and after I re-connected the bootable drive that was encrypted using Bitlocker I could not boot anymore without providing the Bitlocker backup key.<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It was either upgrading the BIOS or modifying the BIOS dump that changed the fingerprint of my laptop, so make sure you have the Bitlocker backup key ready in case your hard drive is encrypted using this technology.</p>
+
+<h2 id="equipment-used">Equipment Used</h2>
+
+<ul>
+<li><strong>Adapter</strong> - SOIC8 SOP8 to DIP8 Wide-body Seat Wide 150mil 200mil Programmer Adapter</li>
+<li><strong>Programmer</strong> - TL866A Tall Speed in-circuit Programmer USB</li>
+<li><strong>Soldering station</strong> - soldering iron + hot air gun</li>
+<li><a href="https://www.badcaps.net/forum/showthread.php?t=79956">HP Unlocking tool</a></li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It took me a while to realise the main BIOS chip will have to be taken off the motherboard. My main concern was this &ldquo;surgical&rdquo; procedure would render the laptop useless. But it turned out that the 8 pin memory chip is quite big, easy to work with and located separately from all critical components. And if there had been a problem with the modified BIOS dump, I could just copy back the original content I backed up before the modification.</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Two online resources I got a lot of information from:</p>
+
+<ul>
+<li><a href="https://www.badcaps.net/forum/">Badcaps Forums - Salvation For Your Electronics!</a></li>
+<li><a href="https://forums.mydigitallife.net/">My Digital Life Forums</a></li>
+</ul>
+			</div>
+
+	
+				<h2>Comments</h2>
+				<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'ilovetodeletecode';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+		
+		</div>
+
+  </body>
+</html>

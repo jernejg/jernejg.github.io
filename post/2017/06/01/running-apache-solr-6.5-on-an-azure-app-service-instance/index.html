@@ -122,25 +122,25 @@
 
 <p>Extract contents of <a href="http://www-eu.apache.org/dist/lucene/solr/6.5.1/">solr-6.5.1.zip</a> to <b>%HOME%\site\wwwroot</b> folder of your App Service and add a Web.config with the following settings:</p>
 
-<div class="highlight" style="background: #202020"><pre style="line-height: 125%"><span></span><span style="color: #cd2828; font-weight: bold">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-<span style="color: #6ab825; font-weight: bold">&lt;configuration&gt;</span>
-  <span style="color: #6ab825; font-weight: bold">&lt;system.webServer&gt;</span>    
-    <span style="color: #6ab825; font-weight: bold">&lt;handlers&gt;</span>
-      <span style="color: #6ab825; font-weight: bold">&lt;add</span>  <span style="color: #bbbbbb">name=</span><span style="color: #ed9d13">&quot;httppPlatformHandler&quot;</span> 
-            <span style="color: #bbbbbb">path=</span><span style="color: #ed9d13">&quot;*&quot;</span> 
-            <span style="color: #bbbbbb">verb=</span><span style="color: #ed9d13">&quot;*&quot;</span> 
-            <span style="color: #bbbbbb">modules=</span><span style="color: #ed9d13">&quot;httpPlatformHandler&quot;</span> 
-            <span style="color: #bbbbbb">resourceType=</span><span style="color: #ed9d13">&quot;Unspecified&quot;</span> <span style="color: #6ab825; font-weight: bold">/&gt;</span>
-    <span style="color: #6ab825; font-weight: bold">&lt;/handlers&gt;</span>
-    <span style="color: #6ab825; font-weight: bold">&lt;httpPlatform</span> <span style="color: #bbbbbb">processPath=</span><span style="color: #ed9d13">&quot;%HOME%\site\wwwroot\bin\solr.cmd&quot;</span> 
-        <span style="color: #bbbbbb">arguments=</span><span style="color: #ed9d13">&quot;start -p %HTTP_PLATFORM_PORT%&quot;</span>
-        <span style="color: #bbbbbb">startupTimeLimit=</span><span style="color: #ed9d13">&quot;20&quot;</span>
-        <span style="color: #bbbbbb">startupRetryCount=</span><span style="color: #ed9d13">&quot;10&quot;</span>
-        <span style="color: #bbbbbb">stdoutLogEnabled=</span><span style="color: #ed9d13">&quot;true&quot;</span><span style="color: #6ab825; font-weight: bold">&gt;</span>
-    <span style="color: #6ab825; font-weight: bold">&lt;/httpPlatform&gt;</span>
-  <span style="color: #6ab825; font-weight: bold">&lt;/system.webServer&gt;</span>
-<span style="color: #6ab825; font-weight: bold">&lt;/configuration&gt;</span>
-</pre></div>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <system.webServer>    
+    <handlers>
+      <add  name="httppPlatformHandler" 
+            path="*" 
+            verb="*" 
+            modules="httpPlatformHandler" 
+            resourceType="Unspecified" />
+    </handlers>
+    <httpPlatform processPath="%HOME%\site\wwwroot\bin\solr.cmd" 
+        arguments="start -p %HTTP_PLATFORM_PORT%"
+        startupTimeLimit="20"
+        startupRetryCount="10"
+        stdoutLogEnabled="true">
+    </httpPlatform>
+  </system.webServer>
+</configuration>
 
 
 <p><code>HTTP_PLATFORM_PORT</code> is the environment variable that holds the port number Azure has dynamically assigned to the Java process. We use its value as a parameter to the <b>-p</b> switch so that Solr does not start on the default port which is <b>8983</b>.</p>
@@ -151,15 +151,15 @@
 
 <p>Although there seem to be some problems during the startup, Solr starts up successfully and you can access the Admin panel at &lt;yoursite&gt;.azurewebsites.net</p>
 
-<p><div class="highlight" style="background: #202020"><pre style="line-height: 125%"><span></span><span style="color: #d0d0d0">Access</span> <span style="color: #d0d0d0">is</span> <span style="color: #d0d0d0">denied.</span>
-<span style="color: #d0d0d0">Waiting</span> <span style="color: #d0d0d0">up</span> <span style="color: #d0d0d0">to</span> <span style="color: #3677a9">30</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">see</span> <span style="color: #d0d0d0">Solr</span> <span style="color: #d0d0d0">running</span> <span style="color: #d0d0d0">on</span> <span style="color: #d0d0d0">port</span> <span style="color: #3677a9">16055</span>
-<span style="color: #40ffff">INFO</span>  <span style="color: #d0d0d0">-</span> <span style="color: #3677a9">2017</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">06</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">09</span> <span style="color: #3677a9">12</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">44</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">49.394</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">org.apache.http.impl.client.DefaultRequestDirector;</span> <span style="color: #40ffff">I</span><span style="color: #d0d0d0">/</span><span style="color: #40ffff">O</span> <span style="color: #d0d0d0">exception</span> <span style="color: #d0d0d0">(java.net.SocketException)</span> <span style="color: #d0d0d0">caught</span> <span style="color: #d0d0d0">when</span> <span style="color: #d0d0d0">connecting</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">{}-&gt;http:</span><span style="color: #999999; font-style: italic">//localhost:16055: Permission denied: connect</span>
-<span style="color: #40ffff">INFO</span>  <span style="color: #d0d0d0">-</span> <span style="color: #3677a9">2017</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">06</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">09</span> <span style="color: #3677a9">12</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">44</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">49.521</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">org.apache.http.impl.client.DefaultRequestDirector;</span> <span style="color: #d0d0d0">Retrying</span> <span style="color: #d0d0d0">connect</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">{}-&gt;http:</span><span style="color: #999999; font-style: italic">//localhost:16055</span>
-<span style="color: #40ffff">INFO</span>  <span style="color: #d0d0d0">-</span> <span style="color: #3677a9">2017</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">06</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">09</span> <span style="color: #3677a9">12</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">44</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">49.659</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">org.apache.http.impl.client.DefaultRequestDirector;</span> <span style="color: #40ffff">I</span><span style="color: #d0d0d0">/</span><span style="color: #40ffff">O</span> <span style="color: #d0d0d0">exception</span> <span style="color: #d0d0d0">(java.net.SocketException)</span> <span style="color: #d0d0d0">caught</span> <span style="color: #d0d0d0">when</span> <span style="color: #d0d0d0">connecting</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">{}-&gt;http:</span><span style="color: #999999; font-style: italic">//localhost:16055: Permission denied: connect</span>
-<span style="color: #40ffff">INFO</span>  <span style="color: #d0d0d0">-</span> <span style="color: #3677a9">2017</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">06</span><span style="color: #d0d0d0">-</span><span style="color: #3677a9">09</span> <span style="color: #3677a9">12</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">44</span><span style="color: #d0d0d0">:</span><span style="color: #3677a9">49.659</span><span style="color: #d0d0d0">;</span> <span style="color: #d0d0d0">org.apache.http.impl.client.DefaultRequestDirector;</span> <span style="color: #d0d0d0">Retrying</span> <span style="color: #d0d0d0">connect</span> <span style="color: #d0d0d0">to</span> <span style="color: #d0d0d0">{}-&gt;http:</span><span style="color: #999999; font-style: italic">//localhost:16055</span>
-<span style="color: #d0d0d0">Started</span> <span style="color: #d0d0d0">Solr</span> <span style="color: #d0d0d0">server</span> <span style="color: #d0d0d0">on</span> <span style="color: #d0d0d0">port</span> <span style="color: #3677a9">16055.</span> <span style="color: #d0d0d0">Happy</span> <span style="color: #d0d0d0">searching!</span>
-</pre></div>
-</p>
+
+Access is denied.
+Waiting up to 30 to see Solr running on port 16055
+INFO  - 2017-06-09 12:44:49.394; org.apache.http.impl.client.DefaultRequestDirector; I/O exception (java.net.SocketException) caught when connecting to {}->http://localhost:16055: Permission denied: connect
+INFO  - 2017-06-09 12:44:49.521; org.apache.http.impl.client.DefaultRequestDirector; Retrying connect to {}->http://localhost:16055
+INFO  - 2017-06-09 12:44:49.659; org.apache.http.impl.client.DefaultRequestDirector; I/O exception (java.net.SocketException) caught when connecting to {}->http://localhost:16055: Permission denied: connect
+INFO  - 2017-06-09 12:44:49.659; org.apache.http.impl.client.DefaultRequestDirector; Retrying connect to {}->http://localhost:16055
+Started Solr server on port 16055. Happy searching!
+
 
 <p>That&rsquo;s it! And oh yeah, don&rsquo;t forget to enable Authentication (Azure App Service / Solr Authentication Plugins) or else everyone will have access to your Admin panel and Solr API.</p>
 

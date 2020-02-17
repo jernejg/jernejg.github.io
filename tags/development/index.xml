@@ -41,25 +41,25 @@
 
 &lt;p&gt;Extract contents of &lt;a href=&#34;http://www-eu.apache.org/dist/lucene/solr/6.5.1/&#34;&gt;solr-6.5.1.zip&lt;/a&gt; to &lt;b&gt;%HOME%\site\wwwroot&lt;/b&gt; folder of your App Service and add a Web.config with the following settings:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #202020&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #cd2828; font-weight: bold&#34;&gt;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot;?&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;system.webServer&amp;gt;&lt;/span&gt;    
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;handlers&amp;gt;&lt;/span&gt;
-      &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;add&lt;/span&gt;  &lt;span style=&#34;color: #bbbbbb&#34;&gt;name=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;httppPlatformHandler&amp;quot;&lt;/span&gt; 
-            &lt;span style=&#34;color: #bbbbbb&#34;&gt;path=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;*&amp;quot;&lt;/span&gt; 
-            &lt;span style=&#34;color: #bbbbbb&#34;&gt;verb=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;*&amp;quot;&lt;/span&gt; 
-            &lt;span style=&#34;color: #bbbbbb&#34;&gt;modules=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;httpPlatformHandler&amp;quot;&lt;/span&gt; 
-            &lt;span style=&#34;color: #bbbbbb&#34;&gt;resourceType=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;Unspecified&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;/&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;/handlers&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;httpPlatform&lt;/span&gt; &lt;span style=&#34;color: #bbbbbb&#34;&gt;processPath=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;%HOME%\site\wwwroot\bin\solr.cmd&amp;quot;&lt;/span&gt; 
-        &lt;span style=&#34;color: #bbbbbb&#34;&gt;arguments=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;start -p %HTTP_PLATFORM_PORT%&amp;quot;&lt;/span&gt;
-        &lt;span style=&#34;color: #bbbbbb&#34;&gt;startupTimeLimit=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;20&amp;quot;&lt;/span&gt;
-        &lt;span style=&#34;color: #bbbbbb&#34;&gt;startupRetryCount=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;10&amp;quot;&lt;/span&gt;
-        &lt;span style=&#34;color: #bbbbbb&#34;&gt;stdoutLogEnabled=&lt;/span&gt;&lt;span style=&#34;color: #ed9d13&#34;&gt;&amp;quot;true&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;gt;&lt;/span&gt;
-    &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;/httpPlatform&amp;gt;&lt;/span&gt;
-  &lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;/system.webServer&amp;gt;&lt;/span&gt;
-&lt;span style=&#34;color: #6ab825; font-weight: bold&#34;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;
+&lt;configuration&gt;
+  &lt;system.webServer&gt;    
+    &lt;handlers&gt;
+      &lt;add  name=&#34;httppPlatformHandler&#34; 
+            path=&#34;*&#34; 
+            verb=&#34;*&#34; 
+            modules=&#34;httpPlatformHandler&#34; 
+            resourceType=&#34;Unspecified&#34; /&gt;
+    &lt;/handlers&gt;
+    &lt;httpPlatform processPath=&#34;%HOME%\site\wwwroot\bin\solr.cmd&#34; 
+        arguments=&#34;start -p %HTTP_PLATFORM_PORT%&#34;
+        startupTimeLimit=&#34;20&#34;
+        startupRetryCount=&#34;10&#34;
+        stdoutLogEnabled=&#34;true&#34;&gt;
+    &lt;/httpPlatform&gt;
+  &lt;/system.webServer&gt;
+&lt;/configuration&gt;
 
 
 &lt;p&gt;&lt;code&gt;HTTP_PLATFORM_PORT&lt;/code&gt; is the environment variable that holds the port number Azure has dynamically assigned to the Java process. We use its value as a parameter to the &lt;b&gt;-p&lt;/b&gt; switch so that Solr does not start on the default port which is &lt;b&gt;8983&lt;/b&gt;.&lt;/p&gt;
@@ -70,15 +70,15 @@
 
 &lt;p&gt;Although there seem to be some problems during the startup, Solr starts up successfully and you can access the Admin panel at &amp;lt;yoursite&amp;gt;.azurewebsites.net&lt;/p&gt;
 
-&lt;p&gt;&lt;div class=&#34;highlight&#34; style=&#34;background: #202020&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;Access&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;is&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;denied.&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;Waiting&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;up&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;30&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;see&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Solr&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;running&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;on&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;port&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;16055&lt;/span&gt;
-&lt;span style=&#34;color: #40ffff&#34;&gt;INFO&lt;/span&gt;  &lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;2017&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;06&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;09&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;12&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;44&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;49.394&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;org.apache.http.impl.client.DefaultRequestDirector;&lt;/span&gt; &lt;span style=&#34;color: #40ffff&#34;&gt;I&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color: #40ffff&#34;&gt;O&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;exception&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(java.net.SocketException)&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;caught&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;when&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;connecting&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{}-&amp;gt;http:&lt;/span&gt;&lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;//localhost:16055: Permission denied: connect&lt;/span&gt;
-&lt;span style=&#34;color: #40ffff&#34;&gt;INFO&lt;/span&gt;  &lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;2017&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;06&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;09&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;12&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;44&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;49.521&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;org.apache.http.impl.client.DefaultRequestDirector;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Retrying&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;connect&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{}-&amp;gt;http:&lt;/span&gt;&lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;//localhost:16055&lt;/span&gt;
-&lt;span style=&#34;color: #40ffff&#34;&gt;INFO&lt;/span&gt;  &lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;2017&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;06&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;09&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;12&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;44&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;49.659&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;org.apache.http.impl.client.DefaultRequestDirector;&lt;/span&gt; &lt;span style=&#34;color: #40ffff&#34;&gt;I&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color: #40ffff&#34;&gt;O&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;exception&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;(java.net.SocketException)&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;caught&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;when&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;connecting&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{}-&amp;gt;http:&lt;/span&gt;&lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;//localhost:16055: Permission denied: connect&lt;/span&gt;
-&lt;span style=&#34;color: #40ffff&#34;&gt;INFO&lt;/span&gt;  &lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;2017&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;06&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;09&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;12&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;44&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #3677a9&#34;&gt;49.659&lt;/span&gt;&lt;span style=&#34;color: #d0d0d0&#34;&gt;;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;org.apache.http.impl.client.DefaultRequestDirector;&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Retrying&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;connect&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;to&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;{}-&amp;gt;http:&lt;/span&gt;&lt;span style=&#34;color: #999999; font-style: italic&#34;&gt;//localhost:16055&lt;/span&gt;
-&lt;span style=&#34;color: #d0d0d0&#34;&gt;Started&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Solr&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;server&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;on&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;port&lt;/span&gt; &lt;span style=&#34;color: #3677a9&#34;&gt;16055.&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;Happy&lt;/span&gt; &lt;span style=&#34;color: #d0d0d0&#34;&gt;searching!&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-&lt;/p&gt;
+
+Access is denied.
+Waiting up to 30 to see Solr running on port 16055
+INFO  - 2017-06-09 12:44:49.394; org.apache.http.impl.client.DefaultRequestDirector; I/O exception (java.net.SocketException) caught when connecting to {}-&gt;http://localhost:16055: Permission denied: connect
+INFO  - 2017-06-09 12:44:49.521; org.apache.http.impl.client.DefaultRequestDirector; Retrying connect to {}-&gt;http://localhost:16055
+INFO  - 2017-06-09 12:44:49.659; org.apache.http.impl.client.DefaultRequestDirector; I/O exception (java.net.SocketException) caught when connecting to {}-&gt;http://localhost:16055: Permission denied: connect
+INFO  - 2017-06-09 12:44:49.659; org.apache.http.impl.client.DefaultRequestDirector; Retrying connect to {}-&gt;http://localhost:16055
+Started Solr server on port 16055. Happy searching!
+
 
 &lt;p&gt;That&amp;rsquo;s it! And oh yeah, don&amp;rsquo;t forget to enable Authentication (Azure App Service / Solr Authentication Plugins) or else everyone will have access to your Admin panel and Solr API.&lt;/p&gt;
 </description>
@@ -119,8 +119,8 @@
 
 &lt;p&gt;For obvious reasons we will go with pretxncommit. This hook will not only call our custom PowerShell script every time a commit, but it will also pass parameters in form of environmental variables to it. Each Hook parameter gets prefixed with &amp;ldquo;HG_”. We can list all parameters that are available from Mercurial context applying a filter to PowerShell &amp;ldquo;Env&amp;rdquo; drive&amp;rsquo;s content:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;dir&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;-path&lt;/span&gt;&lt;span style=&#34;color: #ef6155&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;env:&amp;quot;&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;|&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;Where-Object&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;{&lt;/span&gt;&lt;span style=&#34;color: #ef6155&#34;&gt;$_&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;.Name&lt;/span&gt; &lt;span style=&#34;color: #5bc4bf&#34;&gt;-like&lt;/span&gt; &lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;HG_*&amp;quot;&lt;/span&gt;&lt;span style=&#34;color: #e7e9db&#34;&gt;}&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;|&lt;/span&gt;  &lt;span style=&#34;color: #e7e9db&#34;&gt;Select&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;-Property&lt;/span&gt; &lt;span style=&#34;color: #e7e9db&#34;&gt;Name,Value&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+dir -path:&#34;env:&#34; |  Where-Object {$_.Name -like &#34;HG_*&#34;} |  Select -Property Name,Value
 
 
 &lt;p&gt;Since pretxncommit is a controlling hook we can control the success of the operation using exit codes from our PowerShell script. Return a non-zero to roll back the transaction or 0 to complete it. We will exit our PowerShell script using the number of files greater than maximum size allowed.&lt;/p&gt;
@@ -131,9 +131,9 @@
 
 &lt;p&gt;Hooks are defined in the [hooks] section of your local (hg\hgrc) or global (%USERPROFILE%\mercurial.ini) settings file. Each hook is defined in a type, name and action like format. You can edit settings file directly or use TortoiseHg settings dialog:&lt;/p&gt;
 
-&lt;div class=&#34;highlight&#34; style=&#34;background: #2f1e2e&#34;&gt;&lt;pre style=&#34;line-height: 125%&#34;&gt;&lt;span&gt;&lt;/span&gt;&lt;span style=&#34;color: #5bc4bf&#34;&gt;[&lt;/span&gt;hooks&lt;span style=&#34;color: #5bc4bf&#34;&gt;]&lt;/span&gt; 
-pretxncommit.fileSizeCheckHook &lt;span style=&#34;color: #5bc4bf&#34;&gt;=&lt;/span&gt; powershell.exe -File &lt;span style=&#34;color: #48b685&#34;&gt;&amp;quot;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&amp;quot;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
+
+[hooks] 
+pretxncommit.fileSizeCheckHook = powershell.exe -File &#34;C:\Users\Jernej\Documents\WindowsPowerShell\pretxncommit.ps1&#34;
 
 
 
